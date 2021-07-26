@@ -1,4 +1,4 @@
-# fbTrade
+# fluffytasty
 
 A new Flutter project.
 
