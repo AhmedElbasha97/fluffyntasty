@@ -16,7 +16,7 @@ class PaymentScreen extends StatefulWidget {
   int totalPrice;
   int isSale;
   List<WrokHours> shifts;
-  CreditData creditData;
+  // CreditData creditData;
   String name;
 
   PaymentScreen(
@@ -24,7 +24,7 @@ class PaymentScreen extends StatefulWidget {
       this.totalPrice,
       this.isSale,
       this.shifts,
-      this.creditData,
+      // this.creditData,
       this.name});
 
   @override
@@ -116,7 +116,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
         selectedShift: widget.shifts[selcetedIndex].id,
         paymentType: payment,
         notes: notesController.text ?? "",
-        creditId: widget.creditData.data[0].codes);
+        // creditId: widget.creditData.data[0].codes
+        );
     isPaying = false;
     setState(() {});
     _showMyDialog();
@@ -551,70 +552,70 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       ),
                     ),
                     Padding(padding: EdgeInsets.only(top: 10)),
-                    (widget.creditData != null &&
-                                widget.creditData.data.isNotEmpty) &&
-                            widget.creditData.data[0].active == "1"
-                        ? Padding(
-                            padding: EdgeInsets.only(left: 25.0, top: 10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 10.0, horizontal: 10),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        _agree3 = !_agree3;
-                                        _agree2 = !_agree3;
-                                        payment = _agree3 ? "credit" : "cash";
-                                      });
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: _agree3
-                                                ? Colors.black
-                                                : Color(0xFF636363),
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(50)),
-                                      child: CircleAvatar(
-                                        child: Icon(
-                                          Icons.check_circle,
-                                          color: Colors.white,
-                                          size: 9.0,
-                                        ),
-                                        radius: 10.0,
-                                        backgroundColor: _agree3
-                                            ? Colors.black
-                                            : Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  "${AppLocalizations.of(context).translate('creditPay')} : ${widget.creditData.data[0].codes}",
-                                  style: TextStyle(
-                                      color:
-                                          _agree3 ? Colors.black : Colors.red),
-                                ),
-                              ],
-                            ),
-                          )
-                        : Container(),
+                    // (widget.creditData != null &&
+                    //             widget.creditData.data.isNotEmpty) &&
+                    //         widget.creditData.data[0].active == "1"
+                    //     ? Padding(
+                    //         padding: EdgeInsets.only(left: 25.0, top: 10.0),
+                    //         child: Row(
+                    //           mainAxisAlignment: MainAxisAlignment.start,
+                    //           children: <Widget>[
+                    //             Padding(
+                    //               padding: const EdgeInsets.symmetric(
+                    //                   vertical: 10.0, horizontal: 10),
+                    //               child: GestureDetector(
+                    //                 onTap: () {
+                    //                   setState(() {
+                    //                     _agree3 = !_agree3;
+                    //                     _agree2 = !_agree3;
+                    //                     payment = _agree3 ? "credit" : "cash";
+                    //                   });
+                    //                 },
+                    //                 child: Container(
+                    //                   decoration: BoxDecoration(
+                    //                       border: Border.all(
+                    //                         color: _agree3
+                    //                             ? Colors.black
+                    //                             : Color(0xFF636363),
+                    //                       ),
+                    //                       borderRadius:
+                    //                           BorderRadius.circular(50)),
+                    //                   child: CircleAvatar(
+                    //                     child: Icon(
+                    //                       Icons.check_circle,
+                    //                       color: Colors.white,
+                    //                       size: 9.0,
+                    //                     ),
+                    //                     radius: 10.0,
+                    //                     backgroundColor: _agree3
+                    //                         ? Colors.black
+                    //                         : Colors.white,
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //             SizedBox(
+                    //               width: 5,
+                    //             ),
+                    //             Text(
+                    //               "${AppLocalizations.of(context).translate('creditPay')} : ${widget.creditData.data[0].codes}",
+                    //               style: TextStyle(
+                    //                   color:
+                    //                       _agree3 ? Colors.black : Colors.red),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       )
+                    //     : Container(),
                     Padding(padding: EdgeInsets.only(top: 40)),
-                    Text(
-                      widget.creditData == null ||
-                              widget.creditData.data.isEmpty ||
-                              widget.creditData.data[0].active == "0"
-                          ? "${AppLocalizations.of(context).translate('creditStatus')}"
-                          : "${AppLocalizations.of(context).translate('creditAccepted')}:${widget.name}",
-                      style: TextStyle(color: Colors.black, fontSize: 20),
-                    ),
+                    // Text(
+                    //   widget.creditData == null ||
+                    //           widget.creditData.data.isEmpty ||
+                    //           widget.creditData.data[0].active == "0"
+                    //       ? "${AppLocalizations.of(context).translate('creditStatus')}"
+                    //       : "${AppLocalizations.of(context).translate('creditAccepted')}:${widget.name}",
+                    //   style: TextStyle(color: Colors.black, fontSize: 20),
+                    // ),
                     Padding(padding: EdgeInsets.only(top: 40)),
                     isPaying
                         ? CircularProgressIndicator()

@@ -25,32 +25,32 @@ class _CartScreenState extends State<CartScreen> {
   int totalPrice;
   List<CartProductModel> productModelList = List<CartProductModel>();
   List<String> cart = List<String>();
-  CreditData credit;
+  // CreditData credit;
 
   getData() async {
     await checkToken();
     if (token.isNotEmpty) {
       await getProducts();
-      await getCredit();
+      // await getCredit();
     }
     isLoading = false;
     setState(() {});
   }
 
-  getCredit() async {
-    if (token.isNotEmpty) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String userId = prefs.getString('id') ?? "";
-      print(userId);
-      print( widget.id);
-      print(token);
-      credit = await Checkout().getCreditData(
-        id: userId,
-        token: token,
-        categoryId: widget.id,
-      );
-    }
-  }
+  // getCredit() async {
+  //   if (token.isNotEmpty) {
+  //     SharedPreferences prefs = await SharedPreferences.getInstance();
+  //     String userId = prefs.getString('id') ?? "";
+  //     print(userId);
+  //     print( widget.id);
+  //     print(token);
+  //     credit = await Checkout().getCreditData(
+  //       id: userId,
+  //       token: token,
+  //       categoryId: widget.id,
+  //     );
+  //   }
+  // }
 
   getProducts() async {
     productModelList = await CartServices().viewCart(true);
@@ -190,7 +190,7 @@ class _CartScreenState extends State<CartScreen> {
                             await checkToken();
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => PaymentScreen(
-                                  creditData: credit,
+                                  // creditData: credit,
                                   cart: cart,
                                   name: widget.name,
                                   totalPrice: totalPrice,

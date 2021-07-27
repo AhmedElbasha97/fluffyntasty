@@ -323,9 +323,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(
                       "$name",
                       style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
+                          color: Color(0xFFFa44088),
+                          fontWeight: FontWeight.bold),
                     ),
-                    leading: Icon(Icons.person),
+                    leading: Icon(
+                      Icons.person,
+                      color: Color(0xFFFa44088),
+                    ),
                     onTap: () {
                       if (token.isEmpty)
                         Navigator.of(context).push(MaterialPageRoute(
@@ -344,9 +348,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(
                       "${AppLocalizations.of(context).translate('login')}",
                       style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
+                          color: Color(0xFFFa44088),
+                          fontWeight: FontWeight.bold),
                     ),
-                    leading: Icon(Icons.person),
+                    leading: Icon(
+                      Icons.person,
+                      color: Color(0xFFFa44088),
+                    ),
                     onTap: () {
                       // Update the state of the app
                       // ...
@@ -360,8 +368,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(
                         "${AppLocalizations.of(context).translate('editProfile')}",
                         style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold)),
-                    leading: Icon(Icons.edit),
+                            color: Color(0xFFFa44088),
+                            fontWeight: FontWeight.bold)),
+                    leading: Icon(
+                      Icons.edit,
+                      color: Color(0xFFFa44088),
+                    ),
                     onTap: () async {
                       bool done =
                           await Navigator.of(context).push(MaterialPageRoute(
@@ -384,8 +396,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(
                         "${AppLocalizations.of(context).translate('myProducts')}",
                         style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold)),
-                    leading: Icon(Icons.shopping_cart),
+                            color: Color(0xFFFa44088),
+                            fontWeight: FontWeight.bold)),
+                    leading: Icon(
+                      Icons.shopping_cart,
+                      color: Color(0xFFFa44088),
+                    ),
                     onTap: () async {
                       bool done =
                           await Navigator.of(context).push(MaterialPageRoute(
@@ -403,8 +419,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               title: Text("${AppLocalizations.of(context).translate('home')}",
                   style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold)),
-              leading: Icon(Icons.home),
+                      color: Color(0xFFFa44088), fontWeight: FontWeight.bold)),
+              leading: Icon(
+                Icons.home,
+                color: Color(0xFFFa44088),
+              ),
               onTap: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => SplashScreen(),
@@ -421,8 +440,11 @@ class _HomeScreenState extends State<HomeScreen> {
               title: Text(
                   "${AppLocalizations.of(context).translate('changeLang')}",
                   style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold)),
-              leading: Icon(Icons.language),
+                      color: Color(0xFFFa44088), fontWeight: FontWeight.bold)),
+              leading: Icon(
+                Icons.language,
+                color: Color(0xFFFa44088),
+              ),
               onTap: () => showCupertinoModalPopup(
                   context: context,
                   builder: (BuildContext context) => changeLangPopUp()),
@@ -436,8 +458,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               title: Text("${AppLocalizations.of(context).translate('terms')}",
                   style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold)),
-              leading: Icon(Icons.description),
+                      color: Color(0xFFFa44088), fontWeight: FontWeight.bold)),
+              leading: Icon(
+                Icons.description,
+                color: Color(0xFFFa44088),
+              ),
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TermsScreen(),
               )),
@@ -452,8 +477,11 @@ class _HomeScreenState extends State<HomeScreen> {
               title: Text(
                   "${AppLocalizations.of(context).translate('whoAreWe')}",
                   style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold)),
-              leading: Icon(Icons.category),
+                      color: Color(0xFFFa44088), fontWeight: FontWeight.bold)),
+              leading: Icon(
+                Icons.category,
+                color: Color(0xFFFa44088),
+              ),
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => AboutAppScreen(),
               )),
@@ -470,8 +498,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(
                         "${AppLocalizations.of(context).translate('signOut')}",
                         style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.bold)),
-                    leading: Icon(Icons.exit_to_app),
+                            color: Color(0xFFFa44088),
+                            fontWeight: FontWeight.bold)),
+                    leading: Icon(
+                      Icons.exit_to_app,
+                      color: Color(0xFFFa44088),
+                    ),
                     onTap: () async {
                       SharedPreferences prefs =
                           await SharedPreferences.getInstance();
@@ -490,8 +522,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               title: Text("${AppLocalizations.of(context).translate('callUs')}",
                   style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold)),
-              leading: Icon(Icons.phone),
+                      color: Color(0xFFFa44088), fontWeight: FontWeight.bold)),
+              leading: Icon(
+                Icons.phone,
+                color: Color(0xFFFa44088),
+              ),
               onTap: () async {
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ContactUsScreen(),
@@ -521,13 +556,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   onTap: () => _launchURL("$twitterUrl"),
                   child: Image.asset(
                     "assets/icon/twitter.png",
-                    scale: 1.5,
-                  ),
-                ),
-                InkWell(
-                  onTap: () => _launchURL("$whatsappUrl"),
-                  child: Image.asset(
-                    "assets/icon/whatsapp.png",
                     scale: 1.5,
                   ),
                 ),
@@ -578,22 +606,12 @@ class _HomeScreenState extends State<HomeScreen> {
           scale: 30,
         ),
         actions: [
-          IconButton(
-            icon: Icon(
-              Icons.pin_drop,
-              color: isLocationActive ? Colors.blue : Colors.white,
+          InkWell(
+            onTap: () => _launchURL("$whatsappUrl"),
+            child: Image.asset(
+              "assets/icon/whatsapp.png",
+              scale: 2.0,
             ),
-            onPressed: () {
-              isLocationActive = !isLocationActive;
-              if (isLocationActive) {
-                isLoading = true;
-                setState(() {});
-                getLocation();
-              } else {
-                getCategories();
-              }
-              setState(() {});
-            },
           ),
           IconButton(
             icon: Icon(
