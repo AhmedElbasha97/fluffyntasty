@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:fbTrade/model/product.dart';
 
 class GetAllProducts {
-  final String url = "https://fb-trade.com/api/";
+  final String url = "https://fluffyandtasty.com/api/";
   final String category = "products/page/";
 
   Future getAllProducts(int page, String token) async {

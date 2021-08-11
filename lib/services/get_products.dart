@@ -3,7 +3,7 @@ import 'package:fbTrade/model/product.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GetProducts{
-  final String url = "https://fb-trade.com/api/";
+  final String url = "https://fluffyandtasty.com/api/";
   final String category="products/category/";
   final String subCategory="products/subcategory/";
   static List categoryPhotos;

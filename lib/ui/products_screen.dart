@@ -334,7 +334,7 @@ class _ProductsScreenState extends State<ProductsScreen>
   }
 
   getSeachedItems() async {
-    Response response = await Dio().post("https://fb-trade.com/api/search",
+    Response response = await Dio().post("https://fluffyandtasty.com/api/search",
         data: {"keyword": "${searchController.text}"});
     isLoading = true;
     setState(() {});
@@ -375,7 +375,7 @@ class _ProductsScreenState extends State<ProductsScreen>
     isNewFilterSelected ? newFilter = "new" : newFilter = "";
 
     Response response =
-        await Dio().post("https://fb-trade.com/api/search", data: {
+        await Dio().post("https://fluffyandtasty.com/api/search", data: {
       "filter1": "$highestPriceFilter",
       "filter2": "$lowestPriceFilter",
       "filter3": "$discountFilter",

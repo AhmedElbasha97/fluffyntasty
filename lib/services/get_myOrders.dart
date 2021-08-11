@@ -3,7 +3,7 @@ import 'package:fbTrade/model/orders.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GetMyOrders {
-  final String url = "https://fb-trade.com/api/";
+  final String url = "https://fluffyandtasty.com/api/";
   final String orders = "orders";
   final String confirmOrder = "confirm/order";
 

@@ -3,7 +3,7 @@ import 'package:fbTrade/model/cart_product.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CartServices {
-  final String url = "https://fb-trade.com/api/";
+  final String url = "https://fluffyandtasty.com/api/";
   final String viewCartEndpoint = "mycart";
   final String addToCartEndpoint = "cart";
   final String removeFromCartEndpoint = "deletecart";

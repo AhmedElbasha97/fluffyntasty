@@ -3,7 +3,7 @@ import 'package:fbTrade/model/category.dart';
 import 'package:fbTrade/model/main_model.dart';
 
 class GetCategories {
-  final String url = "https://fb-trade.com/api/";
+  final String url = "https://fluffyandtasty.com/api/";
   final String category = "category";
   final String main = "main/";
   final String location = "/location";

@@ -127,7 +127,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('token');
     await getLocation();
-    Response response = await Dio().post("https://fb-trade.com/api/info",
+    Response response = await Dio().post("https://fluffyandtasty.com/api/info",
         options: Options(headers: {"token": "$token"}));
     print('**************************');
     print(response.data);

@@ -16,7 +16,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
 
   getContacts() async {
     Response response =
-        await Dio().get("https://fb-trade.com/api/settings");
+        await Dio().get("https://fluffyandtasty.com/api/settings");
     phoneTxt = response.data['mobile'];
     emailTxt = response.data['email'];
     isLoading = false;

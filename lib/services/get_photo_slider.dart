@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 class GetPhotoSlider{
-  final String url = "https://fb-trade.com/api/";
+  final String url = "https://fluffyandtasty.com/api/";
   final String slider = "slider";
   
   getPhotoSlider() async{

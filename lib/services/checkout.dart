@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:fbTrade/model/cerditData.dart';
 
 class Checkout {
-  final String url = "https://fb-trade.com/api/";
+  final String url = "https://fluffyandtasty.com/api/";
   final String checkoutEndPoint = "checkout";
   final String creditData = "credit";
 

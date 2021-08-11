@@ -18,7 +18,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   bool isLoading=true;
 
   getWelcomeTxt() async{
-    Response response = await Dio().get("https://fb-trade.com/api/settings");
+    Response response = await Dio().get("https://fluffyandtasty.com/api/settings");
     welcomeText = response.data['welcome'];
     setState(() {});
   }

@@ -28,7 +28,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   getUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('token');
-    Response response = await Dio().post("https://fb-trade.com/api/info",
+    Response response = await Dio().post("https://fluffyandtasty.com/api/info",
         options: Options(headers: {"token": "$token"}));
 
     nameController.text = response.data['data'][0]['name'];
@@ -47,7 +47,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       response = await Dio().post(
-        "https://fb-trade.com/api/editinfo",
+        "https://fluffyandtasty.com/api/editinfo",
         data: passwordController.text.isEmpty
             ? {
                 "name": "${nameController.text}",

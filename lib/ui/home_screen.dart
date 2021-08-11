@@ -155,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   getSocialMediaLinks() async {
-    Response response = await Dio().get("https://fb-trade.com/api/settings");
+    Response response = await Dio().get("https://fluffyandtasty.com/api/settings");
     facebookUrl = response.data['facebook'];
     twitterUrl = response.data['twitter'];
     youtubeUrl = response.data['youtube'];
