@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:fbTrade/model/Custom/homecategory.dart' as home;
 import 'package:fbTrade/model/category.dart';
 import 'package:fbTrade/model/main_model.dart';
 
@@ -27,8 +28,7 @@ class GetCategories {
     Response response;
     List<MainCategory> categoryModelList = List<MainCategory>();
     try {
-      response =
-          await Dio().get('$url$main$category');
+      response = await Dio().get('$url$main$category');
       List data = response.data;
       data.forEach((element) {
         categoryModelList.add(MainCategory.fromJson(element));
@@ -69,5 +69,22 @@ class GetCategories {
       print('error in category => ${e.response}');
     }
     return categoryModelList;
+  }
+
+  Future<List<home.HomeCategory>> getHomeCategory() async {
+    Response response;
+    List<home.HomeCategory> categoriesList = [];
+    try {
+      response = await Dio().get(
+        '$url$category',
+      );
+      List data = response.data;
+      data.forEach((element) {
+        categoriesList.add(home.HomeCategory.fromJson(element));
+      });
+    } on DioError catch (e) {
+      print('error in Home category => ${e.response}');
+    }
+    return categoriesList;
   }
 }

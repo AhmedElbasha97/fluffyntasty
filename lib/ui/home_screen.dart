@@ -299,7 +299,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
+      drawer: 
+      Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
@@ -598,6 +599,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+      
       appBar: AppBar(
         backgroundColor: Color(0xFFFa44088),
         iconTheme: new IconThemeData(color: Colors.white),
