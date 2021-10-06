@@ -6,6 +6,10 @@ import 'package:fbTrade/model/Custom/homecategory.dart';
 import 'package:fbTrade/services/appInfoService.dart';
 import 'package:fbTrade/services/get_photo_slider.dart';
 import 'package:fbTrade/splash_screen.dart';
+import 'package:fbTrade/ui/NewViewScreens/NewView1.dart';
+import 'package:fbTrade/ui/NewViewScreens/NewView4.dart';
+import 'package:fbTrade/ui/NewViewScreens/NewViewScreen2.dart';
+import 'package:fbTrade/ui/NewViewScreens/newView3.dart';
 import 'package:fbTrade/ui/about_app_screen.dart';
 import 'package:fbTrade/ui/contact_us_screen.dart';
 import 'package:fbTrade/ui/edit_profile_screen.dart';
@@ -37,7 +41,8 @@ class _MenOrWomenState extends State<MenOrWomen> {
   AppInfo appInfo;
   bool isCircleView = false;
   bool isNormalView = true;
-  bool isDetailsView = true;
+  bool isDetailsView = false;
+  bool isFullView = false;
 
   String name;
   String token;
@@ -117,10 +122,11 @@ class _MenOrWomenState extends State<MenOrWomen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
         backgroundColor: Color(0xFFFa44088),
-        iconTheme: new IconThemeData(color: Colors.black),
-        automaticallyImplyLeading: false,
+        iconTheme: new IconThemeData(color: Colors.white),
+        // automaticallyImplyLeading: false,
         title: Image.asset(
           "assets/icon/appBarLogo.png",
           scale: 30,
@@ -458,7 +464,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                           children: [
                             IconButton(
                               icon: Icon(
-                                Icons.format_list_bulleted,
+                                Icons.portrait,
                                 color: Color(0xFFFa44088),
                                 size: 30,
                               ),
@@ -466,6 +472,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                                 isNormalView = true;
                                 isDetailsView = false;
                                 isCircleView = false;
+                                isFullView = false;
                                 setState(() {});
                               },
                             ),
@@ -479,6 +486,23 @@ class _MenOrWomenState extends State<MenOrWomen> {
                                 isNormalView = false;
                                 isDetailsView = true;
                                 isCircleView = false;
+                                isFullView = false;
+
+                                setState(() {});
+                              },
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.book_rounded,
+                                color: Color(0xFFFa44088),
+                                size: 30,
+                              ),
+                              onPressed: () {
+                                isNormalView = false;
+                                isDetailsView = false;
+                                isCircleView = false;
+                                isFullView = true;
+
                                 setState(() {});
                               },
                             ),
@@ -492,6 +516,8 @@ class _MenOrWomenState extends State<MenOrWomen> {
                                 isNormalView = false;
                                 isDetailsView = false;
                                 isCircleView = true;
+                                isFullView = false;
+
                                 setState(() {});
                               },
                             ),
@@ -518,164 +544,14 @@ class _MenOrWomenState extends State<MenOrWomen> {
                         ),
                       ),
                       isNormalView
-                          ? ListView.builder(
-                              primary: false,
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: list.length,
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          HomeScreen(id: list[index].id),
-                                    ));
-                                  },
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 5, horizontal: 5),
-                                    child: Image.network(
-                                        Localizations.localeOf(context)
-                                                    .languageCode ==
-                                                "en"
-                                            ? "${list[index].picpathEn}"
-                                            : "${list[index].picpath}"),
-                                  ),
-                                );
-                              },
+                          ? NewViewOne(
+                              list: list,
                             )
                           : isDetailsView
-                              ? ListView.builder(
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: list.length,
-                                  itemBuilder: (context, index) {
-                                    return Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                            Localizations.localeOf(context)
-                                                        .languageCode ==
-                                                    "en"
-                                                ? "${list[index].titleEn}"
-                                                : "${list[index].titleAr}",
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                            textAlign: TextAlign.start,
-                                          ),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            Navigator.of(context)
-                                                .push(MaterialPageRoute(
-                                              builder: (context) => HomeScreen(
-                                                  id: list[index].id),
-                                            ));
-                                          },
-                                          child: Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.2,
-                                            width: MediaQuery.of(context)
-                                                .size
-                                                .width,
-                                            child: CachedNetworkImage(
-                                              imageUrl: Localizations.localeOf(
-                                                              context)
-                                                          .languageCode ==
-                                                      "en"
-                                                  ? "${list[index].picpathEn}"
-                                                  : "${list[index].picpath}",
-                                              height: 200,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.2,
-                                          child: ListView.builder(
-                                            itemCount: list[index].sub.length,
-                                            scrollDirection: Axis.horizontal,
-                                            itemBuilder: (BuildContext context,
-                                                int index2) {
-                                              return Card(
-                                                child: Column(
-                                                  children: [
-                                                    Container(
-                                                      width: 100,
-                                                      height: 80,
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Image.network(
-                                                            "${list[index].sub[index2].picpath}"),
-                                                      ),
-                                                    ),
-                                                    Text(Localizations.localeOf(
-                                                                    context)
-                                                                .languageCode ==
-                                                            "en"
-                                                        ? "${list[index].sub[index2].titleen}"
-                                                        : "${list[index].sub[index2].titlear}")
-                                                  ],
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                        Divider()
-                                      ],
-                                    );
-                                  },
-                                )
-                              : GridView.builder(
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                  ),
-                                  itemCount: list.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return InkWell(
-                                      onTap: () {
-                                        Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                          builder: (context) =>
-                                              HomeScreen(id: list[index].id),
-                                        ));
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.all(10),
-                                        child: CircleAvatar(
-                                          radius: 10,
-                                          backgroundColor: Color(0xFFFa44088),
-                                          backgroundImage: NetworkImage(
-                                              Localizations.localeOf(context)
-                                                          .languageCode ==
-                                                      "en"
-                                                  ? "${list[index].picpathEn}"
-                                                  : "${list[index].picpath}"),
-                                        ),
-                                      ),
-                                    );
-                                    ;
-                                  },
-                                ),
+                              ? NewViewScreenTwo(list: list)
+                              : isFullView
+                                  ? ScreenViewFour(list: list)
+                                  : NewViewScreenThree(list: list)
                     ],
                   ),
                 ),
