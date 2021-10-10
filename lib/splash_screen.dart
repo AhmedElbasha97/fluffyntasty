@@ -12,7 +12,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
-
   @override
   Widget build(BuildContext context) {
     var appLanguage = Provider.of<AppLanguage>(context);
@@ -20,6 +19,9 @@ class _SplashScreenState extends State<SplashScreen>
         backgroundColor: Colors.white,
         body: ListView(
           children: [
+            SizedBox(
+              height: 20.0,
+            ),
             Container(
                 width: 150,
                 height: 200,
@@ -29,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen>
                     fit: BoxFit.scaleDown,
                   ),
                 )),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.1),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
@@ -48,7 +50,10 @@ class _SplashScreenState extends State<SplashScreen>
                         border: Border.all(color: Color(0xFFFf3649c)),
                         color: Color(0xFFFf3649c)),
                     child: Text("english",
-                        style: TextStyle(color: Colors.white, fontSize: 20)),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)),
                   )),
             ),
             SizedBox(
@@ -72,7 +77,10 @@ class _SplashScreenState extends State<SplashScreen>
                       border: Border.all(color: Color(0xFFFf3649c)),
                       color: Color(0xFFFf3649c)),
                   child: Text("عربي",
-                      style: TextStyle(color: Colors.white, fontSize: 20)),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold)),
                 ),
               ),
             )

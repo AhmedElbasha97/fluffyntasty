@@ -58,16 +58,22 @@ class _ProductCard1State extends State<ProductCard1> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Flexible(
-                                    child: Row(
-                                      children: [
-                                        starIcon(Colors.yellow[700]),
-                                        starIcon(Colors.yellow[700]),
-                                        starIcon(Colors.yellow[700]),
-                                        starIcon(Colors.yellow[700]),
-                                        starIcon(Colors.grey[200]),
-                                      ],
-                                    ),
+                                  Row(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          starIcon(Colors.yellow[700]),
+                                          starIcon(Colors.yellow[700]),
+                                          starIcon(Colors.yellow[700]),
+                                          starIcon(Colors.yellow[700]),
+                                          starIcon(Colors.grey[200]),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: 30,
+                                      ),
+                                      Icon(Icons.add_shopping_cart)
+                                    ],
                                   ),
                                 ],
                               ),

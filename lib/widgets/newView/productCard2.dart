@@ -123,11 +123,5 @@ class _ProductCard2State extends State<ProductCard2> {
     );
   }
 
-  Icon starIcon(Color color) {
-    return Icon(
-      Icons.star,
-      size: 10.0,
-      color: color,
-    );
-  }
+
 }

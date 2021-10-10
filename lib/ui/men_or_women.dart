@@ -16,6 +16,7 @@ import 'package:fbTrade/ui/edit_profile_screen.dart';
 import 'package:fbTrade/ui/logIn_screen.dart';
 import 'package:fbTrade/ui/myProducts_screen.dart';
 import 'package:fbTrade/ui/signUp_screen.dart';
+import 'package:fbTrade/ui/supportChat.dart';
 import 'package:fbTrade/ui/terms_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -101,6 +102,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
   void initState() {
     super.initState();
     getMainCategories();
+    getUserData();
   }
 
   getMainCategories() async {
@@ -307,6 +309,30 @@ class _MenOrWomenState extends State<MenOrWomen> {
               endIndent: 30,
               indent: 30,
             ),
+            Divider(
+              height: 1,
+              thickness: 2,
+              endIndent: 30,
+              indent: 30,
+            ),
+            ListTile(
+              title: Text(
+                  "Chat Support",
+                  style: TextStyle(
+                      color: Color(0xFFFa44088), fontWeight: FontWeight.bold)),
+              leading: Icon(Icons.support, color: Color(0xFFFa44088)),
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => SupportChatPage(),
+                ));
+              },
+            ),
+            Divider(
+              height: 1,
+              thickness: 2,
+              endIndent: 30,
+              indent: 30,
+            ),
             ListTile(
               title: Text(
                   "${AppLocalizations.of(context).translate('whoAreWe')}",
@@ -386,6 +412,14 @@ class _MenOrWomenState extends State<MenOrWomen> {
                     scale: 1.5,
                   ),
                 ),
+                IconButton(
+                    onPressed: () {
+                      _launchURL("https://wa.me/${appInfo.whatsapp}");
+                    },
+                    icon: Image.asset(
+                      "assets/icon/whatsapp.png",
+                      scale: 1.5,
+                    )),
                 InkWell(
                   onTap: () => _launchURL("${appInfo.twitter}"),
                   child: Image.asset(

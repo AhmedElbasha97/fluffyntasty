@@ -52,7 +52,12 @@ class _ScreenViewFourState extends State<ScreenViewFour> {
                 ));
               },
               child: Container(
-                height: MediaQuery.of(context).size.height * 0.2,
+                height: (Localizations.localeOf(context).languageCode == "en" &&
+                            widget.list[index].picpathEn.isEmpty) ||
+                        (Localizations.localeOf(context).languageCode == "ar" &&
+                            widget.list[index].picpath.isEmpty)
+                    ? 10
+                    : MediaQuery.of(context).size.height * 0.2,
                 width: MediaQuery.of(context).size.width,
                 child: CachedNetworkImage(
                   imageUrl: Localizations.localeOf(context).languageCode == "en"
@@ -63,7 +68,9 @@ class _ScreenViewFourState extends State<ScreenViewFour> {
                 ),
               ),
             ),
-            SizedBox(height: 5,),
+            SizedBox(
+              height: 5,
+            ),
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.3,
