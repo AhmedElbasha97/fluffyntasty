@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fbTrade/I10n/app_localizations.dart';
 import 'package:fbTrade/model/Custom/homecategory.dart';
 import 'package:fbTrade/ui/home_screen.dart';
+import 'package:fbTrade/ui/productDetails.dart';
 import 'package:fbTrade/widgets/newView/productCard2.dart';
 import 'package:flutter/material.dart';
 
@@ -75,17 +76,19 @@ class _ScreenViewFourState extends State<ScreenViewFour> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.3,
               child: ListView.builder(
-                itemCount: 5,
-                // widget.list[index].sub.length,
+                itemCount: widget.list[index].products.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index2) {
-                  return ProductCard2(
-                    sub: Sub(
-                        id: "1",
-                        titlear: "منتج 1",
-                        titleen: "product",
-                        picpath:
-                            "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-collection-1_large.png?v=1530129113"),
+                  return InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ProductsDetails(
+                            product: widget.list[index].products[index2]),
+                      ));
+                    },
+                    child: ProductCard2(
+                      product: widget.list[index].products[index2],
+                    ),
                   );
                 },
               ),

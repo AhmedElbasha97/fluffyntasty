@@ -22,36 +22,39 @@ class _NewViewScreenThreeState extends State<NewViewScreenThree> {
       ),
       itemCount: widget.list.length,
       itemBuilder: (BuildContext context, int index) {
-        return InkWell(
-          onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => HomeScreen(id: widget.list[index].id),
-            ));
-          },
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.all(5),
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundColor: Color(0xFFFa44088),
-                  backgroundImage: NetworkImage(
-                      Localizations.localeOf(context).languageCode == "en"
-                          ? "${widget.list[index].picpathEn}"
-                          : "${widget.list[index].picpath}"),
+        return Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: InkWell(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => HomeScreen(id: widget.list[index].id),
+              ));
+            },
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(5),
+                  child: CircleAvatar(
+                    radius: 40,
+                    backgroundColor: Color(0xFFFa44088),
+                    backgroundImage: NetworkImage(
+                        Localizations.localeOf(context).languageCode == "en"
+                            ? "${widget.list[index].picpathEn}"
+                            : "${widget.list[index].picpath}"),
+                  ),
                 ),
-              ),
-              Text(
-                Localizations.localeOf(context).languageCode == "en"
-                    ? "${widget.list[index].titleEn}"
-                    : "${widget.list[index].titleAr}",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                Text(
+                  Localizations.localeOf(context).languageCode == "en"
+                      ? "${widget.list[index].titleEn}"
+                      : "${widget.list[index].titleAr}",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              )
-            ],
+              ],
+            ),
           ),
         );
       },

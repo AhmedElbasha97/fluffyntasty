@@ -1,8 +1,12 @@
+import '../product.dart';
+
 class HomeCategory {
   HomeCategory({
     this.id,
     this.mainCategory,
     this.sub,
+    this.wrokHours,
+    this.products,
     this.titleAr,
     this.titleEn,
     this.lat,
@@ -22,6 +26,8 @@ class HomeCategory {
   String id;
   List<MainCategory> mainCategory;
   List<Sub> sub;
+  List<WrokHour> wrokHours;
+  List<ProductModel> products;
   String titleAr;
   String titleEn;
   String lat;
@@ -46,6 +52,14 @@ class HomeCategory {
         sub: json["sub"] == null
             ? null
             : List<Sub>.from(json["sub"].map((x) => Sub.fromJson(x))),
+        wrokHours: json["wrok_hours"] == null
+            ? null
+            : List<WrokHour>.from(
+                json["wrok_hours"].map((x) => WrokHour.fromJson(x))),
+        products: json["products"] == null
+            ? null
+            : List<ProductModel>.from(
+                json["products"].map((x) => ProductModel.fromJson(x))),
         titleAr: json["title_ar"] == null ? null : json["title_ar"],
         titleEn: json["title_en"] == null ? null : json["title_en"],
         lat: json["lat"] == null ? null : json["lat"],
@@ -97,5 +111,27 @@ class Sub {
         titlear: json["titlear"] == null ? null : json["titlear"],
         titleen: json["titleen"] == null ? null : json["titleen"],
         picpath: json["picpath"] == null ? null : json["picpath"],
+      );
+}
+
+class WrokHour {
+  WrokHour({
+    this.workHoursId,
+    this.titlear,
+    this.titleen,
+    this.hours,
+  });
+
+  String workHoursId;
+  String titlear;
+  String titleen;
+  String hours;
+
+  factory WrokHour.fromJson(Map<String, dynamic> json) => WrokHour(
+        workHoursId:
+            json["work_hours_id"] == null ? null : json["work_hours_id"],
+        titlear: json["titlear"] == null ? null : json["titlear"],
+        titleen: json["titleen"] == null ? null : json["titleen"],
+        hours: json["hours"] == null ? null : json["hours"],
       );
 }

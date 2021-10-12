@@ -8,6 +8,7 @@ import 'package:fbTrade/services/get_photo_slider.dart';
 import 'package:fbTrade/splash_screen.dart';
 import 'package:fbTrade/ui/NewViewScreens/NewView1.dart';
 import 'package:fbTrade/ui/NewViewScreens/NewView4.dart';
+import 'package:fbTrade/ui/NewViewScreens/NewView5.dart';
 import 'package:fbTrade/ui/NewViewScreens/NewViewScreen2.dart';
 import 'package:fbTrade/ui/NewViewScreens/newView3.dart';
 import 'package:fbTrade/ui/about_app_screen.dart';
@@ -44,6 +45,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
   bool isNormalView = true;
   bool isDetailsView = false;
   bool isFullView = false;
+  bool isFullCircleView = false;
 
   String name;
   String token;
@@ -316,8 +318,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
               indent: 30,
             ),
             ListTile(
-              title: Text(
-                  "Chat Support",
+              title: Text("Chat Support",
                   style: TextStyle(
                       color: Color(0xFFFa44088), fontWeight: FontWeight.bold)),
               leading: Icon(Icons.support, color: Color(0xFFFa44088)),
@@ -489,6 +490,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                           },
                         ),
                       ),
+                      
                       Container(
                         width: MediaQuery.of(context).size.width,
                         color: Colors.grey[300],
@@ -507,6 +509,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                                 isDetailsView = false;
                                 isCircleView = false;
                                 isFullView = false;
+                                isFullCircleView = false;
                                 setState(() {});
                               },
                             ),
@@ -521,7 +524,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                                 isDetailsView = true;
                                 isCircleView = false;
                                 isFullView = false;
-
+                                isFullCircleView = false;
                                 setState(() {});
                               },
                             ),
@@ -536,7 +539,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                                 isDetailsView = false;
                                 isCircleView = false;
                                 isFullView = true;
-
+                                isFullCircleView = false;
                                 setState(() {});
                               },
                             ),
@@ -551,6 +554,23 @@ class _MenOrWomenState extends State<MenOrWomen> {
                                 isDetailsView = false;
                                 isCircleView = true;
                                 isFullView = false;
+                                isFullCircleView = false;
+
+                                setState(() {});
+                              },
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.star,
+                                color: Color(0xFFFa44088),
+                                size: 30,
+                              ),
+                              onPressed: () {
+                                isNormalView = false;
+                                isDetailsView = false;
+                                isCircleView = false;
+                                isFullView = false;
+                                isFullCircleView = true;
 
                                 setState(() {});
                               },
@@ -585,7 +605,9 @@ class _MenOrWomenState extends State<MenOrWomen> {
                               ? NewViewScreenTwo(list: list)
                               : isFullView
                                   ? ScreenViewFour(list: list)
-                                  : NewViewScreenThree(list: list)
+                                  : isFullCircleView
+                                      ? NewViewScreen5(list: list)
+                                      : NewViewScreenThree(list: list)
                     ],
                   ),
                 ),

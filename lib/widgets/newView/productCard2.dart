@@ -1,9 +1,10 @@
 import 'package:fbTrade/model/Custom/homecategory.dart';
+import 'package:fbTrade/model/product.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard2 extends StatefulWidget {
-  Sub sub;
-  ProductCard2({this.sub});
+  ProductModel product;
+  ProductCard2({this.product});
   @override
   _ProductCard2State createState() => _ProductCard2State();
 }
@@ -32,7 +33,8 @@ class _ProductCard2State extends State<ProductCard2> {
                       borderRadius: BorderRadius.circular(10.0),
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: NetworkImage('${widget.sub.picpath}'),
+                        image: NetworkImage(
+                            '${widget.product.images.isEmpty ? "" : widget.product.images.first}'),
                       ),
                     ),
                   ),
@@ -45,8 +47,8 @@ class _ProductCard2State extends State<ProductCard2> {
                             child: Text(
                               Localizations.localeOf(context).languageCode ==
                                       "en"
-                                  ? '${widget.sub.titleen}'
-                                  : '${widget.sub.titlear}',
+                                  ? '${widget.product.titleEn}'
+                                  : '${widget.product.titleAr}',
                               style: TextStyle(
                                 fontSize: 16.0,
                               ),
@@ -70,7 +72,7 @@ class _ProductCard2State extends State<ProductCard2> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text('\$50',
+                                          Text('${widget.product.price}',
                                               style: TextStyle(fontSize: 20)),
                                           Text(
                                             '\$100',
@@ -122,6 +124,4 @@ class _ProductCard2State extends State<ProductCard2> {
       ),
     );
   }
-
-
 }
