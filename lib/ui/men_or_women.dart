@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fbTrade/I10n/AppLanguage.dart';
+import 'package:fbTrade/global.dart';
 import 'package:fbTrade/model/Custom/appInfo.dart';
 import 'package:fbTrade/model/Custom/homecategory.dart';
 import 'package:fbTrade/services/appInfoService.dart';
@@ -40,7 +41,6 @@ class _MenOrWomenState extends State<MenOrWomen> {
   List child;
   int _current = 0;
   String whatsappNubmer = "";
-  AppInfo appInfo;
   bool isCircleView = false;
   bool isNormalView = true;
   bool isDetailsView = false;
@@ -110,7 +110,6 @@ class _MenOrWomenState extends State<MenOrWomen> {
   getMainCategories() async {
     list = await GetCategories().getHomeCategory();
     await photoSlider();
-    appInfo = await AppInfoService().getAppInfo();
     isLoading = false;
     setState(() {});
   }
@@ -128,7 +127,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        backgroundColor: Color(0xFFFa44088),
+        backgroundColor: mainColor,
         iconTheme: new IconThemeData(color: Colors.white),
         // automaticallyImplyLeading: false,
         title: Image.asset(
@@ -161,12 +160,11 @@ class _MenOrWomenState extends State<MenOrWomen> {
                     title: Text(
                       "$name",
                       style: TextStyle(
-                          color: Color(0xFFFa44088),
-                          fontWeight: FontWeight.bold),
+                          color: mainColor, fontWeight: FontWeight.bold),
                     ),
                     leading: Icon(
                       Icons.person,
-                      color: Color(0xFFFa44088),
+                      color: mainColor,
                     ),
                     onTap: () {
                       if (token.isEmpty)
@@ -186,12 +184,11 @@ class _MenOrWomenState extends State<MenOrWomen> {
                     title: Text(
                       "${AppLocalizations.of(context).translate('login')}",
                       style: TextStyle(
-                          color: Color(0xFFFa44088),
-                          fontWeight: FontWeight.bold),
+                          color: mainColor, fontWeight: FontWeight.bold),
                     ),
                     leading: Icon(
                       Icons.person,
-                      color: Color(0xFFFa44088),
+                      color: mainColor,
                     ),
                     onTap: () {
                       // Update the state of the app
@@ -206,11 +203,10 @@ class _MenOrWomenState extends State<MenOrWomen> {
                     title: Text(
                         "${AppLocalizations.of(context).translate('editProfile')}",
                         style: TextStyle(
-                            color: Color(0xFFFa44088),
-                            fontWeight: FontWeight.bold)),
+                            color: mainColor, fontWeight: FontWeight.bold)),
                     leading: Icon(
                       Icons.edit,
-                      color: Color(0xFFFa44088),
+                      color: mainColor,
                     ),
                     onTap: () async {
                       bool done =
@@ -234,11 +230,10 @@ class _MenOrWomenState extends State<MenOrWomen> {
                     title: Text(
                         "${AppLocalizations.of(context).translate('myProducts')}",
                         style: TextStyle(
-                            color: Color(0xFFFa44088),
-                            fontWeight: FontWeight.bold)),
+                            color: mainColor, fontWeight: FontWeight.bold)),
                     leading: Icon(
                       Icons.shopping_cart,
-                      color: Color(0xFFFa44088),
+                      color: mainColor,
                     ),
                     onTap: () async {
                       bool done =
@@ -256,11 +251,11 @@ class _MenOrWomenState extends State<MenOrWomen> {
             ),
             ListTile(
               title: Text("${AppLocalizations.of(context).translate('home')}",
-                  style: TextStyle(
-                      color: Color(0xFFFa44088), fontWeight: FontWeight.bold)),
+                  style:
+                      TextStyle(color: mainColor, fontWeight: FontWeight.bold)),
               leading: Icon(
                 Icons.home,
-                color: Color(0xFFFa44088),
+                color: mainColor,
               ),
               onTap: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -277,11 +272,11 @@ class _MenOrWomenState extends State<MenOrWomen> {
             ListTile(
               title: Text(
                   "${AppLocalizations.of(context).translate('changeLang')}",
-                  style: TextStyle(
-                      color: Color(0xFFFa44088), fontWeight: FontWeight.bold)),
+                  style:
+                      TextStyle(color: mainColor, fontWeight: FontWeight.bold)),
               leading: Icon(
                 Icons.language,
-                color: Color(0xFFFa44088),
+                color: mainColor,
               ),
               onTap: () => showCupertinoModalPopup(
                   context: context,
@@ -295,11 +290,11 @@ class _MenOrWomenState extends State<MenOrWomen> {
             ),
             ListTile(
               title: Text("${AppLocalizations.of(context).translate('terms')}",
-                  style: TextStyle(
-                      color: Color(0xFFFa44088), fontWeight: FontWeight.bold)),
+                  style:
+                      TextStyle(color: mainColor, fontWeight: FontWeight.bold)),
               leading: Icon(
                 Icons.description,
-                color: Color(0xFFFa44088),
+                color: mainColor,
               ),
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TermsScreen(),
@@ -319,9 +314,9 @@ class _MenOrWomenState extends State<MenOrWomen> {
             ),
             ListTile(
               title: Text("Chat Support",
-                  style: TextStyle(
-                      color: Color(0xFFFa44088), fontWeight: FontWeight.bold)),
-              leading: Icon(Icons.support, color: Color(0xFFFa44088)),
+                  style:
+                      TextStyle(color: mainColor, fontWeight: FontWeight.bold)),
+              leading: Icon(Icons.support, color: mainColor),
               onTap: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => SupportChatPage(),
@@ -337,11 +332,11 @@ class _MenOrWomenState extends State<MenOrWomen> {
             ListTile(
               title: Text(
                   "${AppLocalizations.of(context).translate('whoAreWe')}",
-                  style: TextStyle(
-                      color: Color(0xFFFa44088), fontWeight: FontWeight.bold)),
+                  style:
+                      TextStyle(color: mainColor, fontWeight: FontWeight.bold)),
               leading: Icon(
                 Icons.category,
-                color: Color(0xFFFa44088),
+                color: mainColor,
               ),
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => AboutAppScreen(),
@@ -359,11 +354,10 @@ class _MenOrWomenState extends State<MenOrWomen> {
                     title: Text(
                         "${AppLocalizations.of(context).translate('signOut')}",
                         style: TextStyle(
-                            color: Color(0xFFFa44088),
-                            fontWeight: FontWeight.bold)),
+                            color: mainColor, fontWeight: FontWeight.bold)),
                     leading: Icon(
                       Icons.exit_to_app,
-                      color: Color(0xFFFa44088),
+                      color: mainColor,
                     ),
                     onTap: () async {
                       SharedPreferences prefs =
@@ -382,11 +376,11 @@ class _MenOrWomenState extends State<MenOrWomen> {
             ),
             ListTile(
               title: Text("${AppLocalizations.of(context).translate('callUs')}",
-                  style: TextStyle(
-                      color: Color(0xFFFa44088), fontWeight: FontWeight.bold)),
+                  style:
+                      TextStyle(color: mainColor, fontWeight: FontWeight.bold)),
               leading: Icon(
                 Icons.phone,
-                color: Color(0xFFFa44088),
+                color: mainColor,
               ),
               onTap: () async {
                 Navigator.of(context).push(MaterialPageRoute(
@@ -490,7 +484,6 @@ class _MenOrWomenState extends State<MenOrWomen> {
                           },
                         ),
                       ),
-                      
                       Container(
                         width: MediaQuery.of(context).size.width,
                         color: Colors.grey[300],
@@ -498,83 +491,6 @@ class _MenOrWomenState extends State<MenOrWomen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            IconButton(
-                              icon: Icon(
-                                Icons.portrait,
-                                color: Color(0xFFFa44088),
-                                size: 30,
-                              ),
-                              onPressed: () {
-                                isNormalView = true;
-                                isDetailsView = false;
-                                isCircleView = false;
-                                isFullView = false;
-                                isFullCircleView = false;
-                                setState(() {});
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.view_module,
-                                color: Color(0xFFFa44088),
-                                size: 30,
-                              ),
-                              onPressed: () {
-                                isNormalView = false;
-                                isDetailsView = true;
-                                isCircleView = false;
-                                isFullView = false;
-                                isFullCircleView = false;
-                                setState(() {});
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.book_rounded,
-                                color: Color(0xFFFa44088),
-                                size: 30,
-                              ),
-                              onPressed: () {
-                                isNormalView = false;
-                                isDetailsView = false;
-                                isCircleView = false;
-                                isFullView = true;
-                                isFullCircleView = false;
-                                setState(() {});
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.circle,
-                                color: Color(0xFFFa44088),
-                                size: 30,
-                              ),
-                              onPressed: () {
-                                isNormalView = false;
-                                isDetailsView = false;
-                                isCircleView = true;
-                                isFullView = false;
-                                isFullCircleView = false;
-
-                                setState(() {});
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.star,
-                                color: Color(0xFFFa44088),
-                                size: 30,
-                              ),
-                              onPressed: () {
-                                isNormalView = false;
-                                isDetailsView = false;
-                                isCircleView = false;
-                                isFullView = false;
-                                isFullCircleView = true;
-
-                                setState(() {});
-                              },
-                            ),
                             IconButton(
                                 onPressed: () {
                                   _launchURL(
@@ -587,7 +503,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                             IconButton(
                               icon: Icon(
                                 Icons.info,
-                                color: Color(0xFFFa44088),
+                                color: mainColor,
                                 size: 30,
                               ),
                               onPressed: () {
@@ -597,15 +513,15 @@ class _MenOrWomenState extends State<MenOrWomen> {
                           ],
                         ),
                       ),
-                      isNormalView
+                      appInfo.themeId == "1"
                           ? NewViewOne(
                               list: list,
                             )
-                          : isDetailsView
+                          : appInfo.themeId == "2"
                               ? NewViewScreenTwo(list: list)
-                              : isFullView
+                              : appInfo.themeId == "3"
                                   ? ScreenViewFour(list: list)
-                                  : isFullCircleView
+                                  : appInfo.themeId == "4"
                                       ? NewViewScreen5(list: list)
                                       : NewViewScreenThree(list: list)
                     ],

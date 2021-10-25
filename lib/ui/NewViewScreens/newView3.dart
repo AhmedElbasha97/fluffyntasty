@@ -1,3 +1,4 @@
+import 'package:fbTrade/global.dart';
 import 'package:fbTrade/model/Custom/homecategory.dart';
 import 'package:fbTrade/ui/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class _NewViewScreenThreeState extends State<NewViewScreenThree> {
                   padding: EdgeInsets.all(5),
                   child: CircleAvatar(
                     radius: 40,
-                    backgroundColor: Color(0xFFFa44088),
+                    backgroundColor: mainColor,
                     backgroundImage: NetworkImage(
                         Localizations.localeOf(context).languageCode == "en"
                             ? "${widget.list[index].picpathEn}"

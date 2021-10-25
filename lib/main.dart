@@ -1,4 +1,4 @@
-import 'package:fbTrade/intro.dart';
+import 'package:fbTrade/global.dart';
 import 'package:fbTrade/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +13,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   AppLanguage appLanguage = AppLanguage();
   await appLanguage.fetchLocale();
+  await getAppInfo();
   runApp(MyApp(appLanguage: appLanguage));
 }
 

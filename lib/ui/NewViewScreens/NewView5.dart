@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fbTrade/global.dart';
 import 'package:fbTrade/model/Custom/homecategory.dart';
 import 'package:fbTrade/ui/home_screen.dart';
 import 'package:fbTrade/ui/productDetails.dart';
@@ -33,7 +34,7 @@ class _NewViewScreen5State extends State<NewViewScreen5> {
               child: Column(
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.2,
+                    height: MediaQuery.of(context).size.height * 0.22,
                     width: MediaQuery.of(context).size.width,
                     child: CachedNetworkImage(
                       imageUrl:
@@ -66,8 +67,8 @@ class _NewViewScreen5State extends State<NewViewScreen5> {
                               Padding(
                                 padding: EdgeInsets.all(5),
                                 child: CircleAvatar(
-                                    radius: 30,
-                                    backgroundColor: Color(0xFFFa44088),
+                                    radius: 28,
+                                    backgroundColor: mainColor,
                                     backgroundImage: NetworkImage(
                                       "${widget.list[index].products[index2].images.isEmpty ? "" : widget.list[index].products[index2].images.first}",
                                     )),
@@ -78,7 +79,7 @@ class _NewViewScreen5State extends State<NewViewScreen5> {
                                     ? "${widget.list[index].products[index2].titleEn}"
                                     : "${widget.list[index].products[index2].titleAr}",
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   fontWeight: FontWeight.w600,
                                 ),
                                 textAlign: TextAlign.center,

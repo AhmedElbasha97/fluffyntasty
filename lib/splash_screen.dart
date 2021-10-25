@@ -1,3 +1,4 @@
+import 'package:fbTrade/global.dart';
 import 'package:fbTrade/ui/men_or_women.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,8 +48,8 @@ class _SplashScreenState extends State<SplashScreen>
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
-                        border: Border.all(color: Color(0xFFFf3649c)),
-                        color: Color(0xFFFf3649c)),
+                        border: Border.all(color: mainColor),
+                        color: mainColor),
                     child: Text("english",
                         style: TextStyle(
                             color: Colors.white,
@@ -74,8 +75,8 @@ class _SplashScreenState extends State<SplashScreen>
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
-                      border: Border.all(color: Color(0xFFFf3649c)),
-                      color: Color(0xFFFf3649c)),
+                      border: Border.all(color: mainColor),
+                      color: mainColor),
                   child: Text("عربي",
                       style: TextStyle(
                           color: Colors.white,

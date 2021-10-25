@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
+import 'package:fbTrade/global.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:fbTrade/I10n/AppLanguage.dart';
 import 'package:fbTrade/I10n/app_localizations.dart';
@@ -324,12 +325,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(
                       "$name",
                       style: TextStyle(
-                          color: Color(0xFFFa44088),
+                          color: mainColor,
                           fontWeight: FontWeight.bold),
                     ),
                     leading: Icon(
                       Icons.person,
-                      color: Color(0xFFFa44088),
+                      color: mainColor,
                     ),
                     onTap: () {
                       if (token.isEmpty)
@@ -349,12 +350,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(
                       "${AppLocalizations.of(context).translate('login')}",
                       style: TextStyle(
-                          color: Color(0xFFFa44088),
+                          color: mainColor,
                           fontWeight: FontWeight.bold),
                     ),
                     leading: Icon(
                       Icons.person,
-                      color: Color(0xFFFa44088),
+                      color: mainColor,
                     ),
                     onTap: () {
                       // Update the state of the app
@@ -369,11 +370,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(
                         "${AppLocalizations.of(context).translate('editProfile')}",
                         style: TextStyle(
-                            color: Color(0xFFFa44088),
+                            color: mainColor,
                             fontWeight: FontWeight.bold)),
                     leading: Icon(
                       Icons.edit,
-                      color: Color(0xFFFa44088),
+                      color: mainColor,
                     ),
                     onTap: () async {
                       bool done =
@@ -397,11 +398,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(
                         "${AppLocalizations.of(context).translate('myProducts')}",
                         style: TextStyle(
-                            color: Color(0xFFFa44088),
+                            color: mainColor,
                             fontWeight: FontWeight.bold)),
                     leading: Icon(
                       Icons.shopping_cart,
-                      color: Color(0xFFFa44088),
+                      color: mainColor,
                     ),
                     onTap: () async {
                       bool done =
@@ -420,10 +421,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               title: Text("${AppLocalizations.of(context).translate('home')}",
                   style: TextStyle(
-                      color: Color(0xFFFa44088), fontWeight: FontWeight.bold)),
+                      color: mainColor, fontWeight: FontWeight.bold)),
               leading: Icon(
                 Icons.home,
-                color: Color(0xFFFa44088),
+                color: mainColor,
               ),
               onTap: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -441,10 +442,10 @@ class _HomeScreenState extends State<HomeScreen> {
               title: Text(
                   "${AppLocalizations.of(context).translate('changeLang')}",
                   style: TextStyle(
-                      color: Color(0xFFFa44088), fontWeight: FontWeight.bold)),
+                      color: mainColor, fontWeight: FontWeight.bold)),
               leading: Icon(
                 Icons.language,
-                color: Color(0xFFFa44088),
+                color: mainColor,
               ),
               onTap: () => showCupertinoModalPopup(
                   context: context,
@@ -459,10 +460,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               title: Text("${AppLocalizations.of(context).translate('terms')}",
                   style: TextStyle(
-                      color: Color(0xFFFa44088), fontWeight: FontWeight.bold)),
+                      color: mainColor, fontWeight: FontWeight.bold)),
               leading: Icon(
                 Icons.description,
-                color: Color(0xFFFa44088),
+                color: mainColor,
               ),
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => TermsScreen(),
@@ -478,10 +479,10 @@ class _HomeScreenState extends State<HomeScreen> {
               title: Text(
                   "${AppLocalizations.of(context).translate('whoAreWe')}",
                   style: TextStyle(
-                      color: Color(0xFFFa44088), fontWeight: FontWeight.bold)),
+                      color: mainColor, fontWeight: FontWeight.bold)),
               leading: Icon(
                 Icons.category,
-                color: Color(0xFFFa44088),
+                color: mainColor,
               ),
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => AboutAppScreen(),
@@ -499,11 +500,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(
                         "${AppLocalizations.of(context).translate('signOut')}",
                         style: TextStyle(
-                            color: Color(0xFFFa44088),
+                            color: mainColor,
                             fontWeight: FontWeight.bold)),
                     leading: Icon(
                       Icons.exit_to_app,
-                      color: Color(0xFFFa44088),
+                      color: mainColor,
                     ),
                     onTap: () async {
                       SharedPreferences prefs =
@@ -523,10 +524,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ListTile(
               title: Text("${AppLocalizations.of(context).translate('callUs')}",
                   style: TextStyle(
-                      color: Color(0xFFFa44088), fontWeight: FontWeight.bold)),
+                      color: mainColor, fontWeight: FontWeight.bold)),
               leading: Icon(
                 Icons.phone,
-                color: Color(0xFFFa44088),
+                color: mainColor,
               ),
               onTap: () async {
                 Navigator.of(context).push(MaterialPageRoute(
@@ -601,7 +602,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       
       appBar: AppBar(
-        backgroundColor: Color(0xFFFa44088),
+        backgroundColor: mainColor,
         iconTheme: new IconThemeData(color: Colors.white),
         title: Image.asset(
           "assets/icon/appBarLogo.png",

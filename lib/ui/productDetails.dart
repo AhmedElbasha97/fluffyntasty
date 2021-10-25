@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fbTrade/global.dart';
 import 'package:fbTrade/model/product.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -40,7 +41,7 @@ class _ProductsDetailsState extends State<ProductsDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xFFFa44088),
+        backgroundColor: mainColor,
         child: Center(
           child: Icon(
             Icons.add_shopping_cart,
@@ -50,7 +51,7 @@ class _ProductsDetailsState extends State<ProductsDetails> {
         onPressed: () {},
       ),
       appBar: AppBar(
-        backgroundColor: Color(0xFFFa44088),
+        backgroundColor: mainColor,
         iconTheme: new IconThemeData(color: Colors.white),
       ),
       body: ListView(

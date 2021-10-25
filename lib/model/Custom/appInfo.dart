@@ -13,6 +13,10 @@ class AppInfo {
     this.youtube,
     this.instagram,
     this.url,
+    this.theme,
+    this.themeId,
+    this.themes,
+    this.color,
   });
 
   String siteName;
@@ -28,6 +32,10 @@ class AppInfo {
   String youtube;
   String instagram;
   String url;
+  String theme;
+  String themeId;
+  List<Theme> themes;
+  String color;
 
   factory AppInfo.fromJson(Map<String, dynamic> json) => AppInfo(
         siteName: json["site_name"] == null ? null : json["site_name"],
@@ -43,5 +51,26 @@ class AppInfo {
         youtube: json["youtube"] == null ? null : json["youtube"],
         instagram: json["instagram"] == null ? null : json["instagram"],
         url: json["url"] == null ? null : json["url"],
+        theme: json["theme"] == null ? null : json["theme"],
+        themeId: json["theme_id"] == null ? null : json["theme_id"],
+        themes: json["themes"] == null
+            ? null
+            : List<Theme>.from(json["themes"].map((x) => Theme.fromJson(x))),
+        color: json["color"] == null ? null : json["color"],
+      );
+}
+
+class Theme {
+  Theme({
+    this.themeId,
+    this.title,
+  });
+
+  String themeId;
+  String title;
+
+  factory Theme.fromJson(Map<String, dynamic> json) => Theme(
+        themeId: json["theme_id"] == null ? null : json["theme_id"],
+        title: json["title"] == null ? null : json["title"],
       );
 }
