@@ -129,27 +129,41 @@ class _MenOrWomenState extends State<MenOrWomen> {
       appBar: AppBar(
         backgroundColor: mainColor,
         iconTheme: new IconThemeData(color: Colors.white),
-        // automaticallyImplyLeading: false,
-        title: Image.asset(
-          "assets/icon/appBarLogo.png",
-          scale: 30,
-        ),
+        title: appInfo.logo == null || appInfo.logo == ""
+            ? Image.asset(
+                "assets/icon/appBarLogo.png",
+                scale: 30,
+              )
+            : Container(
+              color:Colors.white,
+              height: 50,
+              width: 50,
+              child: CachedNetworkImage(
+                  imageUrl: "${appInfo.logo}",
+                  fit: BoxFit.scaleDown,
+                ),
+            ),
         centerTitle: true,
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            Padding(
-                padding:
-                    EdgeInsets.only(top: MediaQuery.of(context).padding.top)),
+            SizedBox(
+              height: 10,
+            ),
             SizedBox(
               height: 150,
               child: Container(
-                child: Image.asset(
-                  "assets/icon/logo.png",
-                  scale: 3,
-                ),
+                child: appInfo.logo == null || appInfo.logo == ""
+                    ? Image.asset(
+                        "assets/icon/logo.png",
+                        scale: 3,
+                      )
+                    : CachedNetworkImage(
+                        imageUrl: "${appInfo.logo}",
+                        fit: BoxFit.scaleDown,
+                      ),
               ),
             ),
             Padding(
@@ -407,11 +421,11 @@ class _MenOrWomenState extends State<MenOrWomen> {
                     scale: 1.5,
                   ),
                 ),
-                IconButton(
-                    onPressed: () {
+                InkWell(
+                    onTap: () {
                       _launchURL("https://wa.me/${appInfo.whatsapp}");
                     },
-                    icon: Image.asset(
+                    child: Image.asset(
                       "assets/icon/whatsapp.png",
                       scale: 1.5,
                     )),
@@ -509,6 +523,38 @@ class _MenOrWomenState extends State<MenOrWomen> {
                               onPressed: () {
                                 _showMyDialog();
                               },
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.search,
+                                color: mainColor,
+                                size: 30,
+                              ),
+                              onPressed: () {},
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.notifications,
+                                color: mainColor,
+                                size: 30,
+                              ),
+                              onPressed: () {},
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.favorite,
+                                color: mainColor,
+                                size: 30,
+                              ),
+                              onPressed: () {},
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.filter,
+                                color: mainColor,
+                                size: 30,
+                              ),
+                              onPressed: () {},
                             ),
                           ],
                         ),

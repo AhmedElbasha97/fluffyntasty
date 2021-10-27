@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:fbTrade/I10n/app_localizations.dart';
+import 'package:fbTrade/global.dart';
 import 'package:fbTrade/ui/men_or_women.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
@@ -17,7 +19,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   String token;
   String userAddress;
   DateTime dateTime = DateTime.now();
-  String birthDate ="";
+  String birthDate = "";
   PickResult selectedPlace;
   TextEditingController nameController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
@@ -122,10 +124,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   Padding(
                     padding: EdgeInsets.only(
                         top: MediaQuery.of(context).padding.top),
-                    child: Image.asset(
-                      "assets/icon/logo.png",
-                      scale: 7,
-                    ),
+                    child: appInfo.logo == null || appInfo.logo == ""
+                        ? Image.asset(
+                            "assets/icon/logo.png",
+                            scale: 7,
+                          )
+                        : CachedNetworkImage(imageUrl: "${appInfo.logo}"),
                   ),
                   Column(
                     children: <Widget>[

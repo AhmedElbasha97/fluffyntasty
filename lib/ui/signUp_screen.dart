@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fbTrade/I10n/app_localizations.dart';
+import 'package:fbTrade/global.dart';
 import 'package:fbTrade/services/registration.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -109,10 +111,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Padding(
                     padding: EdgeInsets.only(
                         top: MediaQuery.of(context).padding.top + 20)),
-                Image.asset(
-                  "assets/icon/logo.png",
-                  scale: 3,
-                ),
+                appInfo.logo == null || appInfo.logo == ""
+                    ? Image.asset(
+                        "assets/icon/logo.png",
+                        scale: 3,
+                      )
+                    : CachedNetworkImage(
+                        imageUrl: "${appInfo.logo}",
+                        fit: BoxFit.scaleDown,
+                      ),
                 Padding(
                     padding: EdgeInsets.only(
                         top: MediaQuery.of(context).padding.top + 20)),

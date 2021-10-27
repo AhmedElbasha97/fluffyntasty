@@ -219,9 +219,9 @@ class _LinearProductCardState extends State<LinearProductCard> {
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
                 child: CachedNetworkImage(
-                  imageUrl: widget.image.isEmpty
-                      ? widget.imgList.first
-                      : widget.image,
+                  imageUrl: widget.imgList.isEmpty
+                      ? widget.image
+                      : widget.imgList.first,
                   fit: BoxFit.cover,
                 ),
               )

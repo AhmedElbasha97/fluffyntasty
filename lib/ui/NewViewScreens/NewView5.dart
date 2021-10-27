@@ -34,7 +34,7 @@ class _NewViewScreen5State extends State<NewViewScreen5> {
               child: Column(
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.22,
+                    height: MediaQuery.of(context).size.height * 0.2,
                     width: MediaQuery.of(context).size.width,
                     child: CachedNetworkImage(
                       imageUrl:
@@ -54,7 +54,7 @@ class _NewViewScreen5State extends State<NewViewScreen5> {
                     itemCount: widget.list[index].products.length,
                     itemBuilder: (BuildContext context, int index2) {
                       return Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
                         child: InkWell(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
