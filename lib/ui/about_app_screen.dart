@@ -1,7 +1,9 @@
 import 'package:fbTrade/I10n/app_localizations.dart';
 import 'package:dio/dio.dart';
+import 'package:fbTrade/global.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class AboutAppScreen extends StatefulWidget {
   @override
@@ -9,11 +11,11 @@ class AboutAppScreen extends StatefulWidget {
 }
 
 class _AboutAppScreenState extends State<AboutAppScreen> {
+  String term = "";
 
-  String term="";
-
-  getTermTxt() async{
-    Response response = await Dio().get("https://fluffyandtasty.com/api/settings");
+  getTermTxt() async {
+    Response response =
+        await Dio().get("https://fluffyandtasty.com/api/settings");
     term = response.data['about_app'];
     setState(() {});
   }
@@ -28,20 +30,16 @@ class _AboutAppScreenState extends State<AboutAppScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: mainColor,
         iconTheme: new IconThemeData(color: Colors.white),
         title: Text(
           "${AppLocalizations.of(context).translate('aboutApp')}",
-          style: TextStyle(color: Colors.black),
         ),
         centerTitle: true,
       ),
-      body: Scaffold(
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("$term"),
-          ),
-        ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Html(data: "$term"),
       ),
     );
   }

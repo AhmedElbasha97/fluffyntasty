@@ -21,6 +21,9 @@ class _NewViewScreen5State extends State<NewViewScreen5> {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: ListView.builder(
+        primary: false,
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
         itemCount: widget.list.length,
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
