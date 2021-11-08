@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:fbTrade/global.dart';
 import 'package:fbTrade/widgets/product_card.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:fbTrade/I10n/AppLanguage.dart';
 import 'package:fbTrade/I10n/app_localizations.dart';
 import 'package:fbTrade/model/category.dart';
 import 'package:fbTrade/model/product.dart';
@@ -12,19 +11,16 @@ import 'package:fbTrade/services/cart_services.dart';
 import 'package:fbTrade/services/get_all_products.dart';
 import 'package:fbTrade/services/get_categories.dart';
 import 'package:fbTrade/services/get_photo_slider.dart';
-import 'package:fbTrade/ui/products_screen.dart';
 import 'package:fbTrade/ui/signUp_screen.dart';
-import 'package:fbTrade/widgets/home_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'logIn_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  String id;
+  final String id;
   HomeScreen({this.id});
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -41,9 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
   List imgList;
   List child;
   List photoSliderList;
-  List<CategoryModel> categoryModelList = List<CategoryModel>();
-  List<ProductModel> productModelList = List<ProductModel>();
-  List<String> cart = List<String>();
+  List<CategoryModel> categoryModelList = [];
+  List<ProductModel> productModelList = [];
+  List<String> cart = [];
   Position position;
 
   String name;
@@ -101,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
       print(apiPage);
       apiPage++;
       print(apiPage);
-      List<ProductModel> productModelList = List<ProductModel>();
+      List<ProductModel> productModelList = [];
       productModelList = await GetAllProducts().getAllProducts(apiPage, token);
       if (productModelList.isNotEmpty) {
         this.productModelList.addAll(productModelList);

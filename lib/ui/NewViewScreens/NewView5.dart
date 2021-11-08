@@ -19,9 +19,9 @@ class _NewViewScreen5State extends State<NewViewScreen5> {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
+      // height: MediaQuery.of(context).size.height,
       child: ListView.builder(
-        primary: false,
+        primary: true,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemCount: widget.list.length,
@@ -37,16 +37,23 @@ class _NewViewScreen5State extends State<NewViewScreen5> {
               child: Column(
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.2,
-                    width: MediaQuery.of(context).size.width,
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          Localizations.localeOf(context).languageCode == "en"
-                              ? "${widget.list[index].picpathEn}"
-                              : "${widget.list[index].picpath}",
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      width: MediaQuery.of(context).size.width,
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            Localizations.localeOf(context).languageCode == "en"
+                                ? "${widget.list[index].picpathEn}"
+                                : "${widget.list[index].picpath}",
+                        fit: BoxFit.cover,
+                      ),
+                      decoration: BoxDecoration(boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset: Offset(0, 3), // changes position of shadow
+                        ),
+                      ])),
                   GridView.builder(
                     primary: false,
                     shrinkWrap: true,

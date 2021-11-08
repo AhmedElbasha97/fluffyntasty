@@ -1,5 +1,6 @@
 import 'package:fbTrade/model/Custom/homecategory.dart';
 import 'package:fbTrade/model/product.dart';
+import 'package:fbTrade/services/get_products.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard2 extends StatefulWidget {
@@ -26,9 +27,12 @@ class _ProductCard2State extends State<ProductCard2> {
               ),
               child: Column(
                 children: [
+                  SizedBox(
+                    height: 10,
+                  ),
                   Container(
-                    height: 130.0,
-                    width: 130.0,
+                    height: 140.0,
+                    width: 140.0,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
                       image: DecorationImage(
@@ -74,14 +78,18 @@ class _ProductCard2State extends State<ProductCard2> {
                                         children: [
                                           Text('${widget.product.price}',
                                               style: TextStyle(fontSize: 20)),
-                                          Text(
-                                            '\$100',
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                color: Colors.red,
-                                                decoration:
-                                                    TextDecoration.lineThrough),
-                                          ),
+                                          double.parse(widget
+                                                      .product.salePrice) !=
+                                                  0
+                                              ? Text(
+                                                  '${widget.product.salePrice}',
+                                                  style: TextStyle(
+                                                      fontSize: 17,
+                                                      color: Colors.red,
+                                                      decoration: TextDecoration
+                                                          .lineThrough),
+                                                )
+                                              : Container(),
                                         ],
                                       ),
                                     ],
@@ -89,7 +97,9 @@ class _ProductCard2State extends State<ProductCard2> {
                                 ),
                               ),
                               IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    GetProducts().addToFav(widget.product.id);
+                                  },
                                   icon: Icon(
                                     Icons.favorite,
                                     color: Colors.pink,
@@ -103,22 +113,24 @@ class _ProductCard2State extends State<ProductCard2> {
                 ],
               ),
             ),
-            Positioned(
-              top: 0,
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
-                decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      bottomRight: Radius.circular(8),
-                    )),
-                child: Text(
-                  "offer",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-            )
+            double.parse(widget.product.salePrice) == 0
+                ? Container()
+                : Positioned(
+                    top: 0,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
+                      decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            bottomRight: Radius.circular(8),
+                          )),
+                      child: Text(
+                        "offer",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  )
           ],
         ),
       ),

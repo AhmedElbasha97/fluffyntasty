@@ -17,6 +17,7 @@ class AppInfo {
       this.themeId,
       this.themes,
       this.color,
+      this.support,
       this.logo});
 
   String siteName;
@@ -37,6 +38,7 @@ class AppInfo {
   List<Theme> themes;
   String color;
   String logo;
+  String support;
 
   factory AppInfo.fromJson(Map<String, dynamic> json) => AppInfo(
       siteName: json["site_name"] == null ? null : json["site_name"],
@@ -58,6 +60,7 @@ class AppInfo {
           ? null
           : List<Theme>.from(json["themes"].map((x) => Theme.fromJson(x))),
       color: json["color"] == null ? null : json["color"],
+      support: json["support"] == null ? null : json["support"],
       logo: json["logo"] == null ? null : json["logo"]);
 }
 

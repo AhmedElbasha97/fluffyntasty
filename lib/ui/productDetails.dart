@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fbTrade/global.dart';
 import 'package:fbTrade/model/product.dart';
+import 'package:fbTrade/services/cart_services.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -15,6 +16,8 @@ class ProductsDetails extends StatefulWidget {
 
 class _ProductsDetailsState extends State<ProductsDetails> {
   int _current = 0;
+  String selectedColorId;
+  String selectedSizeId;
   YoutubePlayerController _controller;
 
   List<T> map<T>(List list, Function handler) {
@@ -23,6 +26,10 @@ class _ProductsDetailsState extends State<ProductsDetails> {
       result.add(handler(i, list[i]));
     }
     return result;
+  }
+
+  addItemToCart() async {
+    CartServices().addToCart(widget.product.id);
   }
 
   @override
@@ -48,11 +55,15 @@ class _ProductsDetailsState extends State<ProductsDetails> {
             color: Colors.white,
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          addItemToCart();
+        },
       ),
       appBar: AppBar(
         backgroundColor: mainColor,
         iconTheme: new IconThemeData(color: Colors.white),
+        automaticallyImplyLeading: true,
+        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.favorite))],
       ),
       body: ListView(
         padding: const EdgeInsets.all(8.0),
@@ -127,7 +138,55 @@ class _ProductsDetailsState extends State<ProductsDetails> {
                         showVideoProgressIndicator: true,
                         aspectRatio: 16 / 9,
                       )))
-              : Container()
+              : Container(),
+          widget.product.color == null || widget.product.color.isEmpty
+              ? Container()
+              : Container(
+                  child: ListView.builder(
+                    itemCount: widget.product.color.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return CheckboxListTile(
+                        title: Text(
+                            Localizations.localeOf(context).languageCode == "en"
+                                ? widget.product.color[index].titleen
+                                : widget.product.color[index].titlear),
+                        activeColor: mainColor,
+                        checkColor: mainColor,
+                        selected: widget.product.color[index].colorId ==
+                            selectedColorId,
+                        value: widget.product.color[index].colorId ==
+                            selectedColorId,
+                        onChanged: (bool value) {
+                          selectedColorId = widget.product.color[index].colorId;
+                        },
+                      );
+                    },
+                  ),
+                ),
+          widget.product.size == null || widget.product.size.isEmpty
+              ? Container()
+              : Container(
+                  child: ListView.builder(
+                    itemCount: widget.product.size.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return CheckboxListTile(
+                        title: Text(
+                            Localizations.localeOf(context).languageCode == "en"
+                                ? widget.product.size[index].titleen
+                                : widget.product.size[index].titlear),
+                        activeColor: mainColor,
+                        checkColor: mainColor,
+                        selected:
+                            widget.product.size[index].sizeId == selectedSizeId,
+                        value:
+                            widget.product.size[index].sizeId == selectedSizeId,
+                        onChanged: (bool value) {
+                          selectedSizeId = widget.product.size[index].sizeId;
+                        },
+                      );
+                    },
+                  ),
+                )
         ],
       ),
     );

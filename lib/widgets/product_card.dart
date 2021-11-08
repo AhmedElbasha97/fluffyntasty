@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fbTrade/global.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fbTrade/I10n/app_localizations.dart';
@@ -49,19 +50,14 @@ class _LinearProductCardState extends State<LinearProductCard> {
   List child;
   int _current = 0;
   bool checkBoxValue;
-
-  // VideoPlayerController _controller;
   YoutubePlayerController _controller;
-
   bool isLoadingVideo = false;
-  bool _isPlayerReady = false;
 
   static List<T> map<T>(List list, Function handler) {
     List<T> result = [];
     for (var i = 0; i < list.length; i++) {
       result.add(handler(i, list[i]));
     }
-
     return result;
   }
 
@@ -73,7 +69,12 @@ class _LinearProductCardState extends State<LinearProductCard> {
           margin: EdgeInsets.all(5.0),
           child: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
-            child: Image.network(i, fit: BoxFit.cover, width: 1000.0),
+            child: Image.network(
+              i,
+              fit: BoxFit.cover,
+              width: 1000.0,
+              height: 300,
+            ),
           ),
         );
       },
@@ -119,21 +120,6 @@ class _LinearProductCardState extends State<LinearProductCard> {
                         ),
                       )
                     : Container(),
-//              Row(
-//                mainAxisAlignment: MainAxisAlignment.center,
-//                children: map<Widget>(
-//                  widget.imgList,
-//                      (index, url) {
-//                    return Container(
-//                      width: 8.0,
-//                      height: 8.0,
-//                      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-//                      decoration: BoxDecoration(
-//                          shape: BoxShape.circle, color: _current == index ? Color(0xFF0D986A) : Color(0xFFD8D8D8)),
-//                    );
-//                  },
-//                ),
-//              ),
                 Padding(padding: EdgeInsets.only(top: 10)),
                 widget.video.isNotEmpty
                     ? InkWell(
@@ -150,38 +136,26 @@ class _LinearProductCardState extends State<LinearProductCard> {
                             controller: _controller,
                             showVideoProgressIndicator: true,
                             aspectRatio: 16 / 9,
-//                    onReady: (){
-//                      _controller.addListener(listener);
-//                    },
                           ),
-
-//                  Center(
-//                    child: _controller.value.initialized
-//                        ? AspectRatio(
-//                      aspectRatio: _controller.value.aspectRatio,
-//                      child: VideoPlayer(_controller),
-//                    )
-//                        : Container(),
-//                  ),
                         ),
                       )
                     : Container(),
                 Padding(padding: EdgeInsets.only(top: 20)),
-
                 Text(
                   "${Localizations.localeOf(context).languageCode == "en" ? widget.titleEn : widget.titleAr}",
-                  style: TextStyle(
-                      color: Colors.blue, fontWeight: FontWeight.bold),
+                  style:
+                      TextStyle(color: mainColor, fontWeight: FontWeight.bold),
                 ),
-
                 Padding(padding: EdgeInsets.only(top: 10)),
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   alignment: Alignment.topRight,
                   child: Text(
-                    "${Localizations.localeOf(context).languageCode == "en" ? widget.detailsEn : widget.detailsAr}",
-                    textAlign: TextAlign.right,
-                  ),
+                      "${Localizations.localeOf(context).languageCode == "en" ? widget.detailsEn : widget.detailsAr}",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        color: mainColor,
+                      )),
                 ),
               ],
             ),
@@ -214,7 +188,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
               ),
               Container(
                 width: 300,
-                height: 250,
+                height: 300,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
@@ -397,7 +371,8 @@ class _LinearProductCardState extends State<LinearProductCard> {
                                   ? Text(
                                       "${widget.price} .Qr",
                                       textDirection: TextDirection.ltr,
-                                      style: TextStyle(fontSize: 14),
+                                      style: TextStyle(
+                                          fontSize: 14, color: mainColor),
                                     )
                                   : FittedBox(
                                       fit: BoxFit.scaleDown,
@@ -425,7 +400,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
                                                 child: Text(
                                                   "_____________",
                                                   style: TextStyle(
-                                                      color: Colors.blue),
+                                                      color: mainColor),
                                                 ),
                                               )
                                             ],
@@ -458,7 +433,6 @@ class _LinearProductCardState extends State<LinearProductCard> {
                               if (_controller == null) {
                                 isLoadingVideo = true;
                                 setState(() {});
-                                //initVideo();
                                 Future.delayed(Duration(seconds: 2), () {
                                   isLoadingVideo = false;
                                   setState(() {});
@@ -503,7 +477,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
                       ? "${widget.imgList.first}"
                       : "${widget.image}",
                   placeholder: (context, url) => SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.2,
+                    width: MediaQuery.of(context).size.width * 0.22,
                     height: MediaQuery.of(context).size.height * 0.1,
                     child: FittedBox(
                       fit: BoxFit.scaleDown,

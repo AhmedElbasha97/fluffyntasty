@@ -2,9 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fbTrade/I10n/AppLanguage.dart';
 import 'package:fbTrade/global.dart';
-import 'package:fbTrade/model/Custom/appInfo.dart';
 import 'package:fbTrade/model/Custom/homecategory.dart';
-import 'package:fbTrade/services/appInfoService.dart';
 import 'package:fbTrade/services/get_photo_slider.dart';
 import 'package:fbTrade/splash_screen.dart';
 import 'package:fbTrade/ui/NewViewScreens/NewView1.dart';
@@ -17,6 +15,8 @@ import 'package:fbTrade/ui/contact_us_screen.dart';
 import 'package:fbTrade/ui/edit_profile_screen.dart';
 import 'package:fbTrade/ui/logIn_screen.dart';
 import 'package:fbTrade/ui/myProducts_screen.dart';
+import 'package:fbTrade/ui/notificationsScreen.dart';
+import 'package:fbTrade/ui/privacyPolicy.dart';
 import 'package:fbTrade/ui/signUp_screen.dart';
 import 'package:fbTrade/ui/supportChat.dart';
 import 'package:fbTrade/ui/terms_screen.dart';
@@ -24,6 +24,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fbTrade/I10n/app_localizations.dart';
 import 'package:fbTrade/services/get_categories.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -135,14 +136,14 @@ class _MenOrWomenState extends State<MenOrWomen> {
                 scale: 30,
               )
             : Container(
-              color:Colors.white,
-              height: 50,
-              width: 50,
-              child: CachedNetworkImage(
+                color: Colors.white,
+                height: 50,
+                width: 50,
+                child: CachedNetworkImage(
                   imageUrl: "${appInfo.logo}",
                   fit: BoxFit.scaleDown,
                 ),
-            ),
+              ),
         centerTitle: true,
       ),
       drawer: Drawer(
@@ -150,7 +151,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             SizedBox(
-              height: 10,
+              height: 50,
             ),
             SizedBox(
               height: 150,
@@ -166,9 +167,6 @@ class _MenOrWomenState extends State<MenOrWomen> {
                       ),
               ),
             ),
-            Padding(
-                padding:
-                    EdgeInsets.only(top: MediaQuery.of(context).padding.top)),
             token == null || token.isEmpty
                 ? ListTile(
                     title: Text(
@@ -285,16 +283,16 @@ class _MenOrWomenState extends State<MenOrWomen> {
             ),
             ListTile(
               title: Text(
-                  "${AppLocalizations.of(context).translate('changeLang')}",
+                  "${AppLocalizations.of(context).translate('whoAreWe')}",
                   style:
                       TextStyle(color: mainColor, fontWeight: FontWeight.bold)),
               leading: Icon(
-                Icons.language,
+                Icons.category,
                 color: mainColor,
               ),
-              onTap: () => showCupertinoModalPopup(
-                  context: context,
-                  builder: (BuildContext context) => changeLangPopUp()),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => AboutAppScreen(),
+              )),
             ),
             Divider(
               height: 1,
@@ -320,6 +318,19 @@ class _MenOrWomenState extends State<MenOrWomen> {
               endIndent: 30,
               indent: 30,
             ),
+            ListTile(
+              title: Text(
+                  "${AppLocalizations.of(context).translate('privacyPolicy')}",
+                  style:
+                      TextStyle(color: mainColor, fontWeight: FontWeight.bold)),
+              leading: Icon(
+                Icons.description,
+                color: mainColor,
+              ),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => PolicyScreen(),
+              )),
+            ),
             Divider(
               height: 1,
               thickness: 2,
@@ -332,9 +343,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                       TextStyle(color: mainColor, fontWeight: FontWeight.bold)),
               leading: Icon(Icons.support, color: mainColor),
               onTap: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => SupportChatPage(),
-                ));
+                _launchURL("${appInfo.support}");
               },
             ),
             Divider(
@@ -345,16 +354,16 @@ class _MenOrWomenState extends State<MenOrWomen> {
             ),
             ListTile(
               title: Text(
-                  "${AppLocalizations.of(context).translate('whoAreWe')}",
+                  "${AppLocalizations.of(context).translate('changeLang')}",
                   style:
                       TextStyle(color: mainColor, fontWeight: FontWeight.bold)),
               leading: Icon(
-                Icons.category,
+                Icons.language,
                 color: mainColor,
               ),
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => AboutAppScreen(),
-              )),
+              onTap: () => showCupertinoModalPopup(
+                  context: context,
+                  builder: (BuildContext context) => changeLangPopUp()),
             ),
             Divider(
               height: 1,
@@ -500,19 +509,19 @@ class _MenOrWomenState extends State<MenOrWomen> {
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width,
-                        color: Colors.grey[300],
+                        color: Colors.white,
                         padding: EdgeInsets.symmetric(vertical: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             IconButton(
                                 onPressed: () {
-                                  _launchURL(
-                                      "https://wa.me/${appInfo.whatsapp}");
+                                  _launchURL("${appInfo.support}");
                                 },
-                                icon: Image.asset(
-                                  "assets/icon/whatsapp.png",
-                                  scale: 2.0,
+                                icon: Icon(
+                                  Icons.chat,
+                                  color: mainColor,
+                                  size: 30,
                                 )),
                             IconButton(
                               icon: Icon(
@@ -530,7 +539,9 @@ class _MenOrWomenState extends State<MenOrWomen> {
                                 color: mainColor,
                                 size: 30,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                
+                              },
                             ),
                             IconButton(
                               icon: Icon(
@@ -538,7 +549,11 @@ class _MenOrWomenState extends State<MenOrWomen> {
                                 color: mainColor,
                                 size: 30,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => NotificationsScreen(),
+                                ));
+                              },
                             ),
                             IconButton(
                               icon: Icon(
@@ -550,7 +565,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                             ),
                             IconButton(
                               icon: Icon(
-                                Icons.filter,
+                                Icons.tune,
                                 color: mainColor,
                                 size: 30,
                               ),
@@ -586,19 +601,11 @@ class _MenOrWomenState extends State<MenOrWomen> {
               child: Text(
                   '${AppLocalizations.of(context).translate('aboutTheApp')}')),
           content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "${appInfo.aboutApp}",
-                      style: TextStyle(fontSize: 16),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                )
-              ],
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Html(
+                data: "${appInfo.aboutApp}",
+              ),
             ),
           ),
           actions: <Widget>[
