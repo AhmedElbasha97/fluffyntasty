@@ -146,335 +146,369 @@ class _MenOrWomenState extends State<MenOrWomen> {
               ),
         centerTitle: true,
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            SizedBox(
-              height: 50,
-            ),
-            SizedBox(
-              height: 150,
-              child: Container(
-                child: appInfo.logo == null || appInfo.logo == ""
-                    ? Image.asset(
-                        "assets/icon/logo.png",
-                        scale: 3,
-                      )
-                    : CachedNetworkImage(
-                        imageUrl: "${appInfo.logo}",
-                        fit: BoxFit.scaleDown,
-                      ),
+      drawer: Container(
+        width: MediaQuery.of(context).size.width * 0.65,
+        child: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              SizedBox(
+                height: 50,
               ),
-            ),
-            token == null || token.isEmpty
-                ? ListTile(
-                    title: Text(
-                      "$name",
-                      style: TextStyle(
-                          color: mainColor, fontWeight: FontWeight.bold),
-                    ),
-                    leading: Icon(
-                      Icons.person,
-                      color: mainColor,
-                    ),
-                    onTap: () {
-                      if (token.isEmpty)
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SignUpScreen(),
-                        ));
-                    })
-                : Container(),
-            Divider(
-              height: 1,
-              thickness: 2,
-              endIndent: 30,
-              indent: 30,
-            ),
-            token == null || token.isEmpty
-                ? ListTile(
-                    title: Text(
-                      "${AppLocalizations.of(context).translate('login')}",
-                      style: TextStyle(
-                          color: mainColor, fontWeight: FontWeight.bold),
-                    ),
-                    leading: Icon(
-                      Icons.person,
-                      color: mainColor,
-                    ),
-                    onTap: () {
-                      // Update the state of the app
-                      // ...
-                      // Then close the drawer
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => LogInScreen(),
-                      ));
-                    },
-                  )
-                : ListTile(
-                    title: Text(
-                        "${AppLocalizations.of(context).translate('editProfile')}",
-                        style: TextStyle(
-                            color: mainColor, fontWeight: FontWeight.bold)),
-                    leading: Icon(
-                      Icons.edit,
-                      color: mainColor,
-                    ),
-                    onTap: () async {
-                      bool done =
-                          await Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => EditProfileScreen(),
-                      ));
-                      getUserData();
-                    },
-                  ),
-            token == null || token.isEmpty
-                ? Container()
-                : Divider(
-                    height: 1,
-                    thickness: 2,
-                    endIndent: 30,
-                    indent: 30,
-                  ),
-            token == null || token.isEmpty
-                ? Container()
-                : ListTile(
-                    title: Text(
-                        "${AppLocalizations.of(context).translate('myProducts')}",
-                        style: TextStyle(
-                            color: mainColor, fontWeight: FontWeight.bold)),
-                    leading: Icon(
-                      Icons.shopping_cart,
-                      color: mainColor,
-                    ),
-                    onTap: () async {
-                      bool done =
-                          await Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => MyProductsScreen(),
-                      ));
-                      getUserData();
-                    },
-                  ),
-            Divider(
-              height: 1,
-              thickness: 2,
-              endIndent: 30,
-              indent: 30,
-            ),
-            ListTile(
-              title: Text("${AppLocalizations.of(context).translate('home')}",
-                  style:
-                      TextStyle(color: mainColor, fontWeight: FontWeight.bold)),
-              leading: Icon(
-                Icons.home,
-                color: mainColor,
-              ),
-              onTap: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => SplashScreen(),
-                ));
-              },
-            ),
-            Divider(
-              height: 1,
-              thickness: 2,
-              endIndent: 30,
-              indent: 30,
-            ),
-            ListTile(
-              title: Text(
-                  "${AppLocalizations.of(context).translate('whoAreWe')}",
-                  style:
-                      TextStyle(color: mainColor, fontWeight: FontWeight.bold)),
-              leading: Icon(
-                Icons.category,
-                color: mainColor,
-              ),
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => AboutAppScreen(),
-              )),
-            ),
-            Divider(
-              height: 1,
-              thickness: 2,
-              endIndent: 30,
-              indent: 30,
-            ),
-            ListTile(
-              title: Text("${AppLocalizations.of(context).translate('terms')}",
-                  style:
-                      TextStyle(color: mainColor, fontWeight: FontWeight.bold)),
-              leading: Icon(
-                Icons.description,
-                color: mainColor,
-              ),
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => TermsScreen(),
-              )),
-            ),
-            Divider(
-              height: 1,
-              thickness: 2,
-              endIndent: 30,
-              indent: 30,
-            ),
-            ListTile(
-              title: Text(
-                  "${AppLocalizations.of(context).translate('privacyPolicy')}",
-                  style:
-                      TextStyle(color: mainColor, fontWeight: FontWeight.bold)),
-              leading: Icon(
-                Icons.description,
-                color: mainColor,
-              ),
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => PolicyScreen(),
-              )),
-            ),
-            Divider(
-              height: 1,
-              thickness: 2,
-              endIndent: 30,
-              indent: 30,
-            ),
-            ListTile(
-              title: Text("Chat Support",
-                  style:
-                      TextStyle(color: mainColor, fontWeight: FontWeight.bold)),
-              leading: Icon(Icons.support, color: mainColor),
-              onTap: () {
-                _launchURL("${appInfo.support}");
-              },
-            ),
-            Divider(
-              height: 1,
-              thickness: 2,
-              endIndent: 30,
-              indent: 30,
-            ),
-            ListTile(
-              title: Text(
-                  "${AppLocalizations.of(context).translate('changeLang')}",
-                  style:
-                      TextStyle(color: mainColor, fontWeight: FontWeight.bold)),
-              leading: Icon(
-                Icons.language,
-                color: mainColor,
-              ),
-              onTap: () => showCupertinoModalPopup(
-                  context: context,
-                  builder: (BuildContext context) => changeLangPopUp()),
-            ),
-            Divider(
-              height: 1,
-              thickness: 2,
-              endIndent: 30,
-              indent: 30,
-            ),
-            token == null || token.isEmpty
-                ? Container()
-                : ListTile(
-                    title: Text(
-                        "${AppLocalizations.of(context).translate('signOut')}",
-                        style: TextStyle(
-                            color: mainColor, fontWeight: FontWeight.bold)),
-                    leading: Icon(
-                      Icons.exit_to_app,
-                      color: mainColor,
-                    ),
-                    onTap: () async {
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      prefs.clear();
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => SplashScreen(),
-                      ));
-                    },
-                  ),
-            Divider(
-              height: 1,
-              thickness: 2,
-              endIndent: 30,
-              indent: 30,
-            ),
-            ListTile(
-              title: Text("${AppLocalizations.of(context).translate('callUs')}",
-                  style:
-                      TextStyle(color: mainColor, fontWeight: FontWeight.bold)),
-              leading: Icon(
-                Icons.phone,
-                color: mainColor,
-              ),
-              onTap: () async {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => ContactUsScreen(),
-                ));
-              },
-            ),
-            Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Padding(padding: EdgeInsets.symmetric(horizontal: 1)),
-                InkWell(
-                  onTap: () => _launchURL("${appInfo.facebook}"),
-                  child: Image.asset(
-                    "assets/icon/facebook.png",
-                    scale: 1.5,
-                  ),
+              SizedBox(
+                height: 150,
+                child: Container(
+                  child: appInfo.logo == null || appInfo.logo == ""
+                      ? Image.asset(
+                          "assets/icon/logo.png",
+                          scale: 3,
+                        )
+                      : CachedNetworkImage(
+                          imageUrl: "${appInfo.logo}",
+                          fit: BoxFit.scaleDown,
+                        ),
                 ),
-                InkWell(
-                  onTap: () => _launchURL("${appInfo.instagram}"),
-                  child: Image.asset(
-                    "assets/icon/instagram.png",
-                    scale: 1.5,
-                  ),
-                ),
-                InkWell(
-                    onTap: () {
-                      _launchURL("https://wa.me/${appInfo.whatsapp}");
-                    },
-                    child: Image.asset(
-                      "assets/icon/whatsapp.png",
-                      scale: 1.5,
-                    )),
-                InkWell(
-                  onTap: () => _launchURL("${appInfo.twitter}"),
-                  child: Image.asset(
-                    "assets/icon/twitter.png",
-                    scale: 1.5,
-                  ),
-                ),
-                Padding(padding: EdgeInsets.symmetric(horizontal: 1)),
-              ],
-            ),
-            Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-            Padding(padding: EdgeInsets.symmetric(vertical: 15)),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                "${AppLocalizations.of(context).translate('policy1')}",
-                style: TextStyle(fontSize: 15),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text("${AppLocalizations.of(context).translate('policy2')}",
-                      style: TextStyle(fontSize: 16)),
-                  InkWell(
-                    onTap: () => _launchURL("https://www.syncqatar.com/"),
-                    child: Text(
-                      "سينك",
-                      style: TextStyle(color: Colors.blue, fontSize: 16),
-                    ),
-                  )
+                  token == null || token.isEmpty
+                      ? InkWell(
+                          onTap: () {
+                            if (token.isEmpty)
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => SignUpScreen(),
+                              ));
+                          },
+                          child: Container(
+                            width: 100,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                border: Border.all(color: mainColor),
+                                color: mainColor),
+                            child: Center(
+                              child: Text(
+                                "$name",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        )
+                      : Container(),
+                  token == null || token.isEmpty
+                      ? InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => LogInScreen(),
+                            ));
+                          },
+                          child: Container(
+                            width: 100,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                border: Border.all(color: mainColor),
+                                color: mainColor),
+                            child: Center(
+                              child: Text(
+                                "${AppLocalizations.of(context).translate('login')}",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        )
+                      : InkWell(
+                          onTap: () async {
+                            bool done = await Navigator.of(context)
+                                .push(MaterialPageRoute(
+                              builder: (context) => EditProfileScreen(),
+                            ));
+                            getUserData();
+                          },
+                          child: Container(
+                            width: 100,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                border: Border.all(
+                                  color: Colors.white,
+                                ),
+                                color: mainColor),
+                            child: Center(
+                              child: Text(
+                                  "${AppLocalizations.of(context).translate('editProfile')}",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                          ),
+                        ),
                 ],
               ),
-            ),
-            Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-          ],
+              token == null || token.isEmpty
+                  ? Container()
+                  : Divider(
+                      height: 1,
+                      thickness: 2,
+                      endIndent: 30,
+                      indent: 30,
+                    ),
+              token == null || token.isEmpty
+                  ? Container()
+                  : ListTile(
+                      title: Text(
+                          "${AppLocalizations.of(context).translate('myProducts')}",
+                          style: TextStyle(
+                              color: mainColor, fontWeight: FontWeight.bold)),
+                      leading: Icon(
+                        Icons.shopping_cart,
+                        color: mainColor,
+                      ),
+                      onTap: () async {
+                        bool done =
+                            await Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => MyProductsScreen(),
+                        ));
+                        getUserData();
+                      },
+                    ),
+              SizedBox(
+                height: 10,
+              ),
+              Divider(
+                height: 1,
+                thickness: 2,
+                endIndent: 30,
+                indent: 30,
+              ),
+              ListTile(
+                title: Text("${AppLocalizations.of(context).translate('home')}",
+                    style: TextStyle(
+                        color: mainColor, fontWeight: FontWeight.bold)),
+                leading: Icon(
+                  Icons.home,
+                  color: mainColor,
+                ),
+                onTap: () {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => SplashScreen(),
+                  ));
+                },
+              ),
+              Divider(
+                height: 1,
+                thickness: 2,
+                endIndent: 30,
+                indent: 30,
+              ),
+              ListTile(
+                title: Text(
+                    "${AppLocalizations.of(context).translate('whoAreWe')}",
+                    style: TextStyle(
+                        color: mainColor, fontWeight: FontWeight.bold)),
+                leading: Icon(
+                  Icons.category,
+                  color: mainColor,
+                ),
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => AboutAppScreen(),
+                )),
+              ),
+              Divider(
+                height: 1,
+                thickness: 2,
+                endIndent: 30,
+                indent: 30,
+              ),
+              ListTile(
+                title: Text(
+                    "${AppLocalizations.of(context).translate('terms')}",
+                    style: TextStyle(
+                        color: mainColor, fontWeight: FontWeight.bold)),
+                leading: Icon(
+                  Icons.description,
+                  color: mainColor,
+                ),
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => TermsScreen(),
+                )),
+              ),
+              Divider(
+                height: 1,
+                thickness: 2,
+                endIndent: 30,
+                indent: 30,
+              ),
+              ListTile(
+                title: Text(
+                    "${AppLocalizations.of(context).translate('privacyPolicy')}",
+                    style: TextStyle(
+                        color: mainColor, fontWeight: FontWeight.bold)),
+                leading: Icon(
+                  Icons.description,
+                  color: mainColor,
+                ),
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => PolicyScreen(),
+                )),
+              ),
+              Divider(
+                height: 1,
+                thickness: 2,
+                endIndent: 30,
+                indent: 30,
+              ),
+              ListTile(
+                title: Text("Chat Support",
+                    style: TextStyle(
+                        color: mainColor, fontWeight: FontWeight.bold)),
+                leading: Icon(Icons.support, color: mainColor),
+                onTap: () {
+                  _launchURL("${appInfo.support}");
+                },
+              ),
+              Divider(
+                height: 1,
+                thickness: 2,
+                endIndent: 30,
+                indent: 30,
+              ),
+              ListTile(
+                title: Text(
+                    "${AppLocalizations.of(context).translate('changeLang')}",
+                    style: TextStyle(
+                        color: mainColor, fontWeight: FontWeight.bold)),
+                leading: Icon(
+                  Icons.language,
+                  color: mainColor,
+                ),
+                onTap: () => showCupertinoModalPopup(
+                    context: context,
+                    builder: (BuildContext context) => changeLangPopUp()),
+              ),
+              Divider(
+                height: 1,
+                thickness: 2,
+                endIndent: 30,
+                indent: 30,
+              ),
+              token == null || token.isEmpty
+                  ? Container()
+                  : ListTile(
+                      title: Text(
+                          "${AppLocalizations.of(context).translate('signOut')}",
+                          style: TextStyle(
+                              color: mainColor, fontWeight: FontWeight.bold)),
+                      leading: Icon(
+                        Icons.exit_to_app,
+                        color: mainColor,
+                      ),
+                      onTap: () async {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.clear();
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => SplashScreen(),
+                        ));
+                      },
+                    ),
+              Divider(
+                height: 1,
+                thickness: 2,
+                endIndent: 30,
+                indent: 30,
+              ),
+              ListTile(
+                title: Text(
+                    "${AppLocalizations.of(context).translate('callUs')}",
+                    style: TextStyle(
+                        color: mainColor, fontWeight: FontWeight.bold)),
+                leading: Icon(
+                  Icons.phone,
+                  color: mainColor,
+                ),
+                onTap: () async {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => ContactUsScreen(),
+                  ));
+                },
+              ),
+              Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Padding(padding: EdgeInsets.symmetric(horizontal: 1)),
+                  InkWell(
+                    onTap: () => _launchURL("${appInfo.facebook}"),
+                    child: Image.asset(
+                      "assets/icon/facebook.png",
+                      scale: 1.5,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () => _launchURL("${appInfo.instagram}"),
+                    child: Image.asset(
+                      "assets/icon/instagram.png",
+                      scale: 1.5,
+                    ),
+                  ),
+                  InkWell(
+                      onTap: () {
+                        _launchURL("https://wa.me/${appInfo.whatsapp}");
+                      },
+                      child: Image.asset(
+                        "assets/icon/whatsapp.png",
+                        scale: 1.5,
+                      )),
+                  InkWell(
+                    onTap: () => _launchURL("${appInfo.twitter}"),
+                    child: Image.asset(
+                      "assets/icon/twitter.png",
+                      scale: 1.5,
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.symmetric(horizontal: 1)),
+                ],
+              ),
+              Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+              Padding(padding: EdgeInsets.symmetric(vertical: 15)),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  "${AppLocalizations.of(context).translate('policy1')}",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    Text("${AppLocalizations.of(context).translate('policy2')}",
+                        style: TextStyle(fontSize: 16)),
+                    InkWell(
+                      onTap: () => _launchURL("https://www.syncqatar.com/"),
+                      child: Text(
+                        "سينك",
+                        style: TextStyle(color: Colors.blue, fontSize: 16),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+            ],
+          ),
         ),
       ),
       body: isLoading
@@ -539,9 +573,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                                 color: mainColor,
                                 size: 30,
                               ),
-                              onPressed: () {
-                                
-                              },
+                              onPressed: () {},
                             ),
                             IconButton(
                               icon: Icon(

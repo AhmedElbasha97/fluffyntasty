@@ -82,7 +82,7 @@ class _ScreenViewFourState extends State<ScreenViewFour> {
             ),
             Container(
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.3,
+              height: MediaQuery.of(context).size.height * 0.4,
               child: ListView.builder(
                 itemCount: widget.list[index].products.length,
                 scrollDirection: Axis.horizontal,

@@ -19,8 +19,8 @@ class _ProductCard2State extends State<ProductCard2> {
         child: Stack(
           children: [
             Container(
-              height: 220,
-              width: 140.0,
+              height: 250,
+              width: 150.0,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10.0),
@@ -30,15 +30,18 @@ class _ProductCard2State extends State<ProductCard2> {
                   SizedBox(
                     height: 10,
                   ),
-                  Container(
-                    height: 140.0,
-                    width: 140.0,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                            '${widget.product.images.isEmpty ? "" : widget.product.images.first}'),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 140.0,
+                      width: 140.0,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                              '${widget.product.images.isEmpty ? "" : widget.product.images.first}'),
+                        ),
                       ),
                     ),
                   ),
