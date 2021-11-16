@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:fbTrade/global.dart';
 import 'package:fbTrade/model/category.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -334,7 +335,8 @@ class _ProductsScreenState extends State<ProductsScreen>
   }
 
   getSeachedItems() async {
-    Response response = await Dio().post("https://fluffyandtasty.com/api/search",
+    Response response = await Dio().post(
+        "https://fluffyandtasty.com/api/search",
         data: {"keyword": "${searchController.text}"});
     isLoading = true;
     setState(() {});
@@ -663,7 +665,7 @@ class _ProductsScreenState extends State<ProductsScreen>
     return Scaffold(
         backgroundColor: Colors.grey[100],
         appBar: AppBar(
-          backgroundColor: Colors.grey[300],
+          backgroundColor: mainColor,
           title: Text(
             "${widget.categoryName}",
             style: TextStyle(color: Colors.black, fontFamily: 'tajawal'),
@@ -1120,7 +1122,7 @@ class _ProductsScreenState extends State<ProductsScreen>
                                 decoration: BoxDecoration(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(20)),
-                                  color: Colors.green,
+                                  color: mainColor,
                                 ),
                                 alignment: Alignment.center,
                                 child: Text(

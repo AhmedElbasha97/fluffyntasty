@@ -1,4 +1,5 @@
 import 'package:fbTrade/I10n/app_localizations.dart';
+import 'package:fbTrade/global.dart';
 import 'package:fbTrade/model/orders.dart';
 import 'package:fbTrade/services/get_myOrders.dart';
 import 'package:fbTrade/ui/pervious_order_details.dart';
@@ -37,7 +38,7 @@ class _MyProductsScreenState extends State<MyProductsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: mainColor,
         title: Text(
           "${AppLocalizations.of(context).translate('myProducts')}",
           style: TextStyle(color: Colors.black),

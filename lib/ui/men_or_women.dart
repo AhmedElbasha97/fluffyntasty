@@ -31,7 +31,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'home_screen.dart';
 
 class MenOrWomen extends StatefulWidget {
-  MenOrWomen();
+  String id;
+  MenOrWomen({this.id});
   @override
   _MenOrWomenState createState() => _MenOrWomenState();
 }
@@ -302,7 +303,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                 ),
                 onTap: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => SplashScreen(),
+                    builder: (context) => MenOrWomen(),
                   ));
                 },
               ),
@@ -593,7 +594,9 @@ class _MenOrWomenState extends State<MenOrWomen> {
                                 color: mainColor,
                                 size: 30,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                _showMysigninDialog();
+                              },
                             ),
                             IconButton(
                               icon: Icon(
@@ -629,9 +632,31 @@ class _MenOrWomenState extends State<MenOrWomen> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Center(
-              child: Text(
-                  '${AppLocalizations.of(context).translate('aboutTheApp')}')),
+          title: Column(
+            children: [
+              Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      icon: Icon(
+                        Icons.close,
+                        color: mainColor,
+                      ))
+                ],
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 40,
+                color: mainColor,
+                child: Center(
+                    child: Text(
+                        '${AppLocalizations.of(context).translate('aboutTheApp')}',
+                        style: TextStyle(color: Colors.white))),
+              ),
+            ],
+          ),
           content: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -687,6 +712,66 @@ class _MenOrWomenState extends State<MenOrWomen> {
           Navigator.pop(context, 'Cancel');
         },
       ),
+    );
+  }
+
+  Future<void> _showMysigninDialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: 
+            ListBody(
+              children: <Widget>[
+                Container(
+                    color: mainColor,
+                    width: MediaQuery.of(context).size.width,
+                    height: 40,
+                    child: Center(
+                        child: Text('تسجيل الدخول',
+                            style: TextStyle(color: Colors.white)))),
+                Center(
+                    child: Text(
+                  'قم بتسجيل الدخول لتتمكن من إتمام عملية الشراء.',
+                  textAlign: TextAlign.center,
+                )),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    FlatButton(
+                      color: mainColor,
+                      child: Text(
+                        'تسجيل الدخول',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => LogInScreen(
+                            isCheck: false,
+                          ),
+                        ));
+                      },
+                    ),
+                    FlatButton(
+                      child: Text('مستخدم جديد',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => SignUpScreen(
+                            isCheck: false,
+                          ),
+                        ));
+                      },
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

@@ -1,5 +1,7 @@
 import 'package:fbTrade/model/Custom/favoratieProduct.dart';
 import 'package:flutter/material.dart';
+import 'package:fbTrade/global.dart';
+
 
 class FavorateProductScreen extends StatefulWidget {
   @override
@@ -25,7 +27,10 @@ class _FavorateProductScreenState extends State<FavorateProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+                backgroundColor: mainColor,
+
+      ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(

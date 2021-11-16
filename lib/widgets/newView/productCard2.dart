@@ -28,12 +28,12 @@ class _ProductCard2State extends State<ProductCard2> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 10,
+                    height: 7,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      height: 140.0,
+                      height: 150.0,
                       width: 140.0,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),

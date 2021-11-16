@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen>
         body: ListView(
           children: [
             SizedBox(
-              height: 20.0,
+              height: 50.0,
             ),
             Container(
                 width: 150,
@@ -46,14 +46,14 @@ class _SplashScreenState extends State<SplashScreen>
                     ));
                   },
                   child: Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
+                    width: MediaQuery.of(context).size.width * 0.7,
                     padding: EdgeInsets.symmetric(vertical: 15),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                         border: Border.all(color: mainColor),
                         color: mainColor),
-                    child: Text("english",
+                    child: Text("English",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
@@ -73,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen>
                   ));
                 },
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.8,
+                  width: MediaQuery.of(context).size.width * 0.7,
                   padding: EdgeInsets.symmetric(vertical: 15),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(

@@ -1,4 +1,5 @@
 import 'package:fbTrade/I10n/app_localizations.dart';
+import 'package:fbTrade/global.dart';
 import 'package:fbTrade/model/orders.dart';
 import 'package:fbTrade/widgets/myProduct_card.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class _PreviousOrderDetailsState extends State<PreviousOrderDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: mainColor,
         title: Text("${AppLocalizations.of(context).translate('myProducts')}",style: TextStyle(color: Colors.black),),
         centerTitle: true,
         leading: IconButton(

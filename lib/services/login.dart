@@ -1,16 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginService{
+class LoginService {
   final String url = "https://fluffyandtasty.com/api/";
-  final String loginEndPoint="login";
+  final String loginEndPoint = "login";
 
-  Future loginService({String phone, String password}) async{
+  loginService({String phone, String password}) async {
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    try{
-      response = await Dio().post("$url$loginEndPoint",data: {"mobile":"$phone","password":"$password"});
-      if(response.data['status'] == true) {
+    try {
+      response = await Dio().post("$url$loginEndPoint",
+          data: {"mobile": "$phone", "password": "$password"});
+      if (response.data['status'] == true) {
         print(response.data);
         prefs.setString("id", response.data['data'][0]['id']);
         prefs.setString("name", response.data['data'][0]['name']);
@@ -21,18 +22,12 @@ class LoginService{
         prefs.setString("birthdayDate", response.data['data'][0]['birth_date']);
         prefs.setString("token", response.data['data'][0]['token']);
         return 'success';
-      }
-      else{
+      } else {
         return response.data['message'];
       }
-      print(response.data);
-      return response.data;
-    }
-    on DioError catch(e){
+    } on DioError catch (e) {
       print('error in LoginService => ${e.response}');
       return e.response;
     }
-
   }
-
 }

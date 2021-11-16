@@ -88,7 +88,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: mainColor,
         title: Text(
           "${AppLocalizations.of(context).translate('signUp')}",
           style: TextStyle(color: Colors.white),
@@ -308,7 +308,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
-                        color: Colors.green),
+                                color: mainColor,
+),
                     child: Text(
                       "${AppLocalizations.of(context).translate('login')}",
                       style: TextStyle(color: Colors.white),

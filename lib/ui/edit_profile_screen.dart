@@ -98,7 +98,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.grey[50],
+        backgroundColor: mainColor,
         title: Text(
           "${AppLocalizations.of(context).translate('editProfile')}",
           style: TextStyle(color: Colors.blue),

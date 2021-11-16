@@ -73,7 +73,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
               i,
               fit: BoxFit.cover,
               width: 1000.0,
-              height: 300,
+              height: 350,
             ),
           ),
         );
@@ -173,7 +173,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
         child: Container(
           width: 300,
-          height: 300,
+          height: 400,
           child: Column(
             children: <Widget>[
               Align(
@@ -264,7 +264,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
                       "${Localizations.localeOf(context).languageCode == "en" ? widget.titleEn : widget.titleAr}",
                       style: TextStyle(
                           fontSize: 18,
-                          color: Colors.red[900],
+                          color: mainColor,
                           fontWeight: FontWeight.bold),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -324,9 +324,9 @@ class _LinearProductCardState extends State<LinearProductCard> {
                                       Container(
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 10, vertical: 5),
-                                        color: Colors.grey,
+                                        color: mainColor,
                                         child: Text(
-                                          "${totalAmount}",
+                                          "$totalAmount",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white),
@@ -477,7 +477,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
                       ? "${widget.imgList.first}"
                       : "${widget.image}",
                   placeholder: (context, url) => SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.22,
+                    width: MediaQuery.of(context).size.width * 0.23,
                     height: MediaQuery.of(context).size.height * 0.1,
                     child: FittedBox(
                       fit: BoxFit.scaleDown,

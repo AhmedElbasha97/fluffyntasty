@@ -3,6 +3,7 @@ import 'package:fbTrade/I10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:fbTrade/global.dart';
 
 class ContactUsScreen extends StatefulWidget {
   @override
@@ -55,14 +56,14 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: mainColor,
         title: Text("${AppLocalizations.of(context).translate('callUs')}",
-            style: TextStyle(color: Colors.black)),
+            style: TextStyle(color: Colors.white)),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
-            color: Colors.black,
+            color: Colors.white,
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -83,23 +84,23 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                           top: MediaQuery.of(context).padding.top + 20)),
                   Text(
                     "اتصل بنا على",
-                    style: TextStyle(color: Colors.green),
+                    style: TextStyle(color: mainColor),
                   ),
                   InkWell(
                     onTap: () => _makePhoneCall('tel: $phoneTxt'),
                     child: Text(
                       "$phoneTxt",
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: mainColor),
                     ),
                   ),
                   Padding(padding: EdgeInsets.only(top: 10)),
                   Text(
                     "او راسلنا على",
-                    style: TextStyle(color: Colors.green),
+                    style: TextStyle(color: mainColor),
                   ),
                   Text(
                     "$emailTxt",
-                    style: TextStyle(color: Colors.green),
+                    style: TextStyle(color: mainColor),
                   ),
                   Padding(
                     padding: EdgeInsets.only(
@@ -212,7 +213,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                         height: MediaQuery.of(context).size.height * 0.075,
                         width: MediaQuery.of(context).size.width * 0.8,
                         decoration: BoxDecoration(
-                          color: Colors.green,
+                          color: mainColor,
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                         alignment: Alignment.center,

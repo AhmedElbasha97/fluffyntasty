@@ -1,33 +1,28 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fbTrade/model/Custom/homecategory.dart';
-import 'package:fbTrade/ui/home_screen.dart';
+import 'package:fbTrade/ui/men_or_women.dart';
 import 'package:flutter/material.dart';
 
-class NewViewOne extends StatefulWidget {
-  List<HomeCategory> list = [];
-
-  NewViewOne({this.list});
+class MainCategoriesScreen extends StatefulWidget {
   @override
-  _NewViewOneState createState() => _NewViewOneState();
+  _MainCategoriesScreenState createState() => _MainCategoriesScreenState();
 }
 
-class _NewViewOneState extends State<NewViewOne> {
+class _MainCategoriesScreenState extends State<MainCategoriesScreen> {
+  List list = [];
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      child: 
-      ListView.builder(
+    return Scaffold(
+      body: ListView.builder(
         primary: false,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemCount: widget.list.length,
+        itemCount: list.length,
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => HomeScreen(id: widget.list[index].id),
+                builder: (context) => MenOrWomen(id: list[index].id),
               ));
             },
             child: Padding(
@@ -45,8 +40,8 @@ class _NewViewOneState extends State<NewViewOne> {
                 ]),
                 child: CachedNetworkImage(
                   imageUrl: Localizations.localeOf(context).languageCode == "en"
-                      ? "${widget.list[index].picpathEn}"
-                      : "${widget.list[index].picpath}",
+                      ? "${list[index].picpathEn}"
+                      : "${list[index].picpath}",
                   fit: BoxFit.cover,
                 ),
               ),
@@ -54,7 +49,6 @@ class _NewViewOneState extends State<NewViewOne> {
           );
         },
       ),
-   
     );
   }
 }

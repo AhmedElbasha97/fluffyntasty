@@ -27,7 +27,9 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: mainColor,
+      ),
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
@@ -44,5 +46,4 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             ),
     );
   }
-
 }

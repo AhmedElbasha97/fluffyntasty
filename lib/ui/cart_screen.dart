@@ -8,6 +8,8 @@ import 'package:fbTrade/ui/payment_screen.dart';
 import 'package:fbTrade/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fbTrade/global.dart';
+
 
 class CartScreen extends StatefulWidget {
   List<WrokHours> shifts;
@@ -75,7 +77,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: mainColor,
         title: Text(
           "سله المشتريات",
           style: TextStyle(color: Colors.black),

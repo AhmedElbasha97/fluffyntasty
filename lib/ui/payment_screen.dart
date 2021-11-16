@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:fbTrade/I10n/app_localizations.dart';
+import 'package:fbTrade/global.dart';
 import 'package:fbTrade/model/category.dart';
 import 'package:fbTrade/model/cerditData.dart';
 import 'package:fbTrade/services/checkout.dart';
@@ -99,25 +100,24 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   checkout() async {
     await Checkout().checkout(
-        name: nameController.text ?? "",
-        mobile: mobileController.text ?? "",
-        address: addressController.text ?? "",
-        email: emailController.text ?? "",
-        birthDate: birthDate,
-        totalPrice: widget.totalPrice,
-        isSale: widget.isSale,
-        token: token,
-        long:
-            selectedPlace == null ? long : selectedPlace.geometry.location.lng,
-        lat: selectedPlace == null ? lat : selectedPlace.geometry.location.lat,
-        streetNumber: streetNumberController.text,
-        buildingNumber: buildingNumberController.text,
-        discretNumber: addressNumberController.text,
-        selectedShift: widget.shifts[selcetedIndex].id,
-        paymentType: payment,
-        notes: notesController.text ?? "",
-        // creditId: widget.creditData.data[0].codes
-        );
+      name: nameController.text ?? "",
+      mobile: mobileController.text ?? "",
+      address: addressController.text ?? "",
+      email: emailController.text ?? "",
+      birthDate: birthDate,
+      totalPrice: widget.totalPrice,
+      isSale: widget.isSale,
+      token: token,
+      long: selectedPlace == null ? long : selectedPlace.geometry.location.lng,
+      lat: selectedPlace == null ? lat : selectedPlace.geometry.location.lat,
+      streetNumber: streetNumberController.text,
+      buildingNumber: buildingNumberController.text,
+      discretNumber: addressNumberController.text,
+      selectedShift: widget.shifts[selcetedIndex].id,
+      paymentType: payment,
+      notes: notesController.text ?? "",
+      // creditId: widget.creditData.data[0].codes
+    );
     isPaying = false;
     setState(() {});
     _showMyDialog();
@@ -160,7 +160,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: mainColor,
         title: Text(
           "${AppLocalizations.of(context).translate('buyConfirm')}",
           style: TextStyle(color: Colors.black),
@@ -633,7 +633,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20)),
-                                color: Colors.green,
+                                color: mainColor,
                               ),
                               alignment: Alignment.center,
                               child: Text(

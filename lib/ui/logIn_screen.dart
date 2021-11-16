@@ -60,7 +60,7 @@ class _LogInScreenState extends State<LogInScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.grey[50],
+          backgroundColor: mainColor,
           title: Text(
             "${AppLocalizations.of(context).translate('login')}",
             style: TextStyle(color: Colors.black),
@@ -176,9 +176,10 @@ class _LogInScreenState extends State<LogInScreen> {
                                 padding: EdgeInsets.symmetric(vertical: 15),
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
-                                    color: Colors.green),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20)),
+                                  color: mainColor,
+                                ),
                                 child: Text(
                                     "${AppLocalizations.of(context).translate('login')}",
                                     style: TextStyle(color: Colors.white)),
