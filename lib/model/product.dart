@@ -42,7 +42,7 @@ class ProductModel {
         salePrice: parsedJson['sale'],
         detailsAr: parsedJson['details_ar'],
         detailsEn: parsedJson['details_en'],
-        quantity: parsedJson['in_mycart'],
+        quantity: 0,
         color: parsedJson["colors"] == null
             ? null
             : List<ProductColor>.from(

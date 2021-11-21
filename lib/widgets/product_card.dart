@@ -326,7 +326,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
                                             horizontal: 10, vertical: 5),
                                         color: mainColor,
                                         child: Text(
-                                          "$totalAmount",
+                                          "${totalAmount?? 0}",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white),

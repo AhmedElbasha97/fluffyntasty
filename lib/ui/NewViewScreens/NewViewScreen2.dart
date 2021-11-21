@@ -1,10 +1,13 @@
 import 'package:fbTrade/I10n/app_localizations.dart';
 import 'package:fbTrade/model/Custom/homecategory.dart';
+import 'package:fbTrade/ui/NewViewScreens/CategoryDetails.dart';
 import 'package:fbTrade/ui/home_screen.dart';
 import 'package:fbTrade/ui/productDetails.dart';
 import 'package:fbTrade/widgets/newView/productCard1.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+
+import '../products_screen.dart';
 
 class NewViewScreenTwo extends StatefulWidget {
   List<HomeCategory> list = [];
@@ -32,16 +35,17 @@ class _NewViewScreenTwoState extends State<NewViewScreenTwo> {
                 children: [
                   Text(
                     Localizations.localeOf(context).languageCode == "en"
-                        ? "${widget.list[index].titleEn}"
-                        : "${widget.list[index].titleAr}",
+                        ? "${widget.list[index].titleen}"
+                        : "${widget.list[index].titlear}",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.start,
                   ),
                   InkWell(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            HomeScreen(id: widget.list[index].id),
+                        builder: (context) => CategoryDetails(
+                            widget.list[index],
+                            Localizations.localeOf(context).languageCode),
                       ));
                     },
                     child: Text(
@@ -57,7 +61,8 @@ class _NewViewScreenTwoState extends State<NewViewScreenTwo> {
             InkWell(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => HomeScreen(id: widget.list[index].id),
+                  builder: (context) => CategoryDetails(widget.list[index],
+                      Localizations.localeOf(context).languageCode),
                 ));
               },
               child: Container(
@@ -85,12 +90,12 @@ class _NewViewScreenTwoState extends State<NewViewScreenTwo> {
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index2) {
                   return InkWell(
-                    onTap:() {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ProductsDetails(
-                                  product: widget.list[index].products[index2]),
-                            ));
-                          },
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ProductsDetails(
+                            product: widget.list[index].products[index2]),
+                      ));
+                    },
                     child: ProductCard1(
                       product: widget.list[index].products[index2],
                     ),

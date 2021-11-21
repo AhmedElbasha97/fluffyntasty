@@ -10,12 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fbTrade/global.dart';
 
-
 class CartScreen extends StatefulWidget {
-  List<WrokHours> shifts;
   String id;
   String name;
-  CartScreen({this.shifts, this.id, this.name});
+  CartScreen({this.id, this.name});
 
   @override
   _CartScreenState createState() => _CartScreenState();
@@ -38,21 +36,6 @@ class _CartScreenState extends State<CartScreen> {
     isLoading = false;
     setState(() {});
   }
-
-  // getCredit() async {
-  //   if (token.isNotEmpty) {
-  //     SharedPreferences prefs = await SharedPreferences.getInstance();
-  //     String userId = prefs.getString('id') ?? "";
-  //     print(userId);
-  //     print( widget.id);
-  //     print(token);
-  //     credit = await Checkout().getCreditData(
-  //       id: userId,
-  //       token: token,
-  //       categoryId: widget.id,
-  //     );
-  //   }
-  // }
 
   getProducts() async {
     productModelList = await CartServices().viewCart(true);
@@ -80,7 +63,7 @@ class _CartScreenState extends State<CartScreen> {
         backgroundColor: mainColor,
         title: Text(
           "سله المشتريات",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
         leading: IconButton(
@@ -173,12 +156,12 @@ class _CartScreenState extends State<CartScreen> {
                           padding: EdgeInsets.symmetric(vertical: 15),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(20)),
-                            color: Colors.black,
+                            color: mainColor,
                           ),
                           alignment: Alignment.center,
                           child: Text(
                             "${"${AppLocalizations.of(context).translate('totalPrice')}"} : $totalPrice",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.white, fontSize: 20),
                           ),
                         ),
                   Padding(padding: EdgeInsets.only(top: 20)),
@@ -192,12 +175,11 @@ class _CartScreenState extends State<CartScreen> {
                             await checkToken();
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => PaymentScreen(
-                                  // creditData: credit,
                                   cart: cart,
                                   name: widget.name,
                                   totalPrice: totalPrice,
                                   isSale: 0,
-                                  shifts: widget.shifts),
+                                  shifts: []),
                             ));
                           },
                           child: Container(
@@ -206,12 +188,13 @@ class _CartScreenState extends State<CartScreen> {
                             decoration: BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(20)),
-                              color: Colors.green,
+                              color: mainColor,
                             ),
                             alignment: Alignment.center,
                             child: Text(
                               "${AppLocalizations.of(context).translate('buy')}",
-                              style: TextStyle(color: Colors.white),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
                             ),
                           ),
                         ),

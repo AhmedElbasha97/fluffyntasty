@@ -63,13 +63,13 @@ class _LogInScreenState extends State<LogInScreen> {
           backgroundColor: mainColor,
           title: Text(
             "${AppLocalizations.of(context).translate('login')}",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back_ios,
-              color: Colors.black,
+              color: Colors.white,
             ),
             onPressed: () => Navigator.of(context).pop(false),
           ),

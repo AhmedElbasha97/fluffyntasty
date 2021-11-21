@@ -13,7 +13,7 @@ class GetProducts {
   static String offerDialogAr;
   static String offerDialogEn;
 
-  Future<List<ProductModel>> getProducts(String categoryId, int page) async {
+  Future<List<ProductModel>> getProducts(String categoryId, int page, [bool isSubCats = false]) async {
     Response response;
     List<ProductModel> productModelList = List<ProductModel>();
     SharedPreferences preferences = await SharedPreferences.getInstance();

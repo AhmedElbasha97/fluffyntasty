@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fbTrade/model/Custom/homecategory.dart';
+import 'package:fbTrade/ui/NewViewScreens/CategoryDetails.dart';
 import 'package:fbTrade/ui/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +18,7 @@ class _NewViewOneState extends State<NewViewOne> {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      child: 
-      ListView.builder(
+      child: ListView.builder(
         primary: false,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
@@ -27,7 +27,8 @@ class _NewViewOneState extends State<NewViewOne> {
           return InkWell(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => HomeScreen(id: widget.list[index].id),
+                builder: (context) => CategoryDetails(widget.list[index],
+                    Localizations.localeOf(context).languageCode),
               ));
             },
             child: Padding(
@@ -54,7 +55,6 @@ class _NewViewOneState extends State<NewViewOne> {
           );
         },
       ),
-   
     );
   }
 }

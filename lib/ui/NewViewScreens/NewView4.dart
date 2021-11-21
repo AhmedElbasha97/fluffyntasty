@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fbTrade/I10n/app_localizations.dart';
 import 'package:fbTrade/model/Custom/homecategory.dart';
+import 'package:fbTrade/ui/NewViewScreens/CategoryDetails.dart';
 import 'package:fbTrade/ui/home_screen.dart';
 import 'package:fbTrade/ui/productDetails.dart';
 import 'package:fbTrade/widgets/newView/productCard2.dart';
@@ -32,8 +33,8 @@ class _ScreenViewFourState extends State<ScreenViewFour> {
                 children: [
                   Text(
                     Localizations.localeOf(context).languageCode == "en"
-                        ? "${widget.list[index].titleEn}"
-                        : "${widget.list[index].titleAr}",
+                        ? "${widget.list[index].titleen}"
+                        : "${widget.list[index].titlear}",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.start,
                   ),
@@ -49,7 +50,8 @@ class _ScreenViewFourState extends State<ScreenViewFour> {
             InkWell(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => HomeScreen(id: widget.list[index].id),
+                  builder: (context) => CategoryDetails(widget.list[index], 
+                      Localizations.localeOf(context).languageCode),
                 ));
               },
               child: Container(

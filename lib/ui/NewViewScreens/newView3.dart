@@ -1,5 +1,6 @@
 import 'package:fbTrade/global.dart';
 import 'package:fbTrade/model/Custom/homecategory.dart';
+import 'package:fbTrade/ui/NewViewScreens/CategoryDetails.dart';
 import 'package:fbTrade/ui/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +29,8 @@ class _NewViewScreenThreeState extends State<NewViewScreenThree> {
           child: InkWell(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => HomeScreen(id: widget.list[index].id),
+                builder: (context) => CategoryDetails(widget.list[index], 
+                    Localizations.localeOf(context).languageCode),
               ));
             },
             child: Column(
@@ -46,8 +48,8 @@ class _NewViewScreenThreeState extends State<NewViewScreenThree> {
                 ),
                 Text(
                   Localizations.localeOf(context).languageCode == "en"
-                      ? "${widget.list[index].titleEn}"
-                      : "${widget.list[index].titleAr}",
+                      ? "${widget.list[index].titleen}"
+                      : "${widget.list[index].titlear}",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,

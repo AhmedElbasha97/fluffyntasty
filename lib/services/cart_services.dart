@@ -18,15 +18,15 @@ class CartServices {
 
     List<CartProductModel> cartProductModelList = List<CartProductModel>();
     try {
-      response = await Dio().post("$url$viewCartEndpoint", options: Options(headers: {"token": "$token"}));
+      response = await Dio().post("$url$viewCartEndpoint",
+          options: Options(headers: {"token": "$token"}));
       List data = response.data['data'];
       totalPrice = response.data['total'];
       totalQuantity = response.data['total_quantity'];
-      if(data != null)
-      data.forEach((element) {
-        cartProductModelList.add(CartProductModel.fromJson(element));
-      });
-
+      if (data != null)
+        data.forEach((element) {
+          cartProductModelList.add(CartProductModel.fromJson(element));
+        });
     } on DioError catch (e) {
       print('error from viewcart => ${e.response}');
     }
@@ -38,8 +38,9 @@ class CartServices {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('token');
     try {
-      response = await Dio()
-          .post('$url$addToCartEndpoint', data: {"product_id": "$productId", "quantity": "1"}, options: Options(headers: {"token": "$token"}));
+      response = await Dio().post('$url$addToCartEndpoint',
+          data: {"product_id": "$productId", "quantity": "1"},
+          options: Options(headers: {"token": "$token"}));
       print(response);
     } on DioError catch (e) {
       print('error from addToCart => ${e.response}');
@@ -52,7 +53,8 @@ class CartServices {
     String token = prefs.getString('token');
     try {
       response = await Dio().post('$url$decreaseFromCartEnPoint',
-          data: {"product_id": "$productId", "quantity": "$quantity"}, options: Options(headers: {"token": "$token"}));
+          data: {"product_id": "$productId", "quantity": "$quantity"},
+          options: Options(headers: {"token": "$token"}));
       print(response.data);
     } on DioError catch (e) {
       print('error from removeFromCart => ${e.response}');
@@ -64,11 +66,12 @@ class CartServices {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('token');
     try {
-      response = await Dio().post('$url$removeFromCartEndpoint', data: {"product_id": "$productId"}, options: Options(headers: {"token": "$token"}));
+      response = await Dio().post('$url$removeFromCartEndpoint',
+          data: {"product_id": "$productId"},
+          options: Options(headers: {"token": "$token"}));
       print(response.data);
     } on DioError catch (e) {
       print('error from removeFromCart => ${e.response}');
     }
   }
-
 }

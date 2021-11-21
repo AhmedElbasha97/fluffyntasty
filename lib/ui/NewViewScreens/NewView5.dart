@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fbTrade/global.dart';
 import 'package:fbTrade/model/Custom/homecategory.dart';
+import 'package:fbTrade/ui/NewViewScreens/CategoryDetails.dart';
 import 'package:fbTrade/ui/home_screen.dart';
 import 'package:fbTrade/ui/productDetails.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +29,10 @@ class _NewViewScreen5State extends State<NewViewScreen5> {
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => HomeScreen(id: widget.list[index].id),
-              ));
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => CategoryDetails(widget.list[index],
+                      Localizations.localeOf(context).languageCode),
+                ));
             },
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
