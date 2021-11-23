@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fbTrade/I10n/app_localizations.dart';
 import 'package:fbTrade/global.dart';
 import 'package:fbTrade/services/registration.dart';
+import 'package:fbTrade/ui/men_or_women.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_place_picker/google_maps_place_picker.dart';
@@ -74,8 +75,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         long: position == null ? 0.0 : position.longitude,
       );
       if (response == 'success') {
-        Navigator.of(context).pop();
-        Navigator.of(context).pop();
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => MenOrWomen(),
+        ));
       } else {
         final snackBar = SnackBar(content: Text('$response'));
         Scaffold.of(context).showSnackBar(snackBar);
@@ -307,9 +309,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     padding: EdgeInsets.symmetric(vertical: 15),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                                color: mainColor,
-),
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      color: mainColor,
+                    ),
                     child: Text(
                       "${AppLocalizations.of(context).translate('login')}",
                       style: TextStyle(color: Colors.white),

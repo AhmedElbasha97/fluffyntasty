@@ -9,11 +9,13 @@ class GetProducts {
   final String subCategory = "products/subcategory/";
   final String fav = "myfav";
   final String addFav = "addfav";
+  final String search = "search";
   static List categoryPhotos;
   static String offerDialogAr;
   static String offerDialogEn;
 
-  Future<List<ProductModel>> getProducts(String categoryId, int page, [bool isSubCats = false]) async {
+  Future<List<ProductModel>> getProducts(String categoryId, int page,
+      [bool isSubCats = false]) async {
     Response response;
     List<ProductModel> productModelList = List<ProductModel>();
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -33,6 +35,22 @@ class GetProducts {
       });
     } on DioError catch (e) {
       print('error in get products => ${e.response.data}');
+    }
+
+    return productModelList;
+  }
+
+  Future<List<ProductModel>> searchForProducts(String searchKey) async {
+    Response response;
+    List<ProductModel> productModelList = List<ProductModel>();
+    try {
+      response = await Dio().post("$url$search", data: {"keyword": searchKey});
+      List data = response.data['products'];
+      data.forEach((element) {
+        productModelList.add(ProductModel.fromJson(element));
+      });
+    } on DioError catch (e) {
+      print('error in search products => ${e.response.data}');
     }
 
     return productModelList;
@@ -69,7 +87,7 @@ class GetProducts {
     if (userId != "") {
       try {
         Response response = await Dio().post('$url$fav', data: body);
-        var data = response.data;
+        List data = response.data["data"];
         data.forEach((element) {
           FavProducts.add(FavProduct.fromJson(element));
         });
@@ -80,19 +98,18 @@ class GetProducts {
     return FavProducts;
   }
 
-  addToFav(String id) async {
+  Future<String> addToFav(String id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userId = prefs.getString('id') ?? "";
     var body = FormData.fromMap({"product_id": id, "member_id": userId});
     if (userId != "") {
       try {
-        await Dio().post(
-          '$url$addFav',
-        );
+        Response res = await Dio().post('$url$addFav', data: body);
+        print(res.data);
+        return res.data['message'];
       } on DioError catch (e) {
         print('error in fav product => ${e.response}');
       }
     }
-    return [];
   }
 }

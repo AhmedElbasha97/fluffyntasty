@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class GetMyOrders {
   final String url = "https://fluffyandtasty.com/api/";
   final String orders = "orders";
-  final String confirmOrder = "confirm/order";
+  final String confirmOrder = "status/order";
 
   Future<List<OrdersModel>> getMyOrders() async {
     Response response;

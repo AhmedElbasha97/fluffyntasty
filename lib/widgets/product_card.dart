@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fbTrade/I10n/app_localizations.dart';
 import 'package:fbTrade/services/cart_services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class LinearProductCard extends StatefulWidget {
@@ -286,11 +287,20 @@ class _LinearProductCardState extends State<LinearProductCard> {
                             padding: EdgeInsets.symmetric(horizontal: 5),
                             child: totalAmount == 0
                                 ? InkWell(
-                                    onTap: () {
-                                      widget.addItemToCart();
-                                      addItemToCart();
-                                      totalAmount++;
-                                      setState(() {});
+                                    onTap: () async {
+                                      SharedPreferences prefs =
+                                          await SharedPreferences.getInstance();
+                                      String token =
+                                          prefs.getString('token') ?? "";
+
+                                      if (token == "") {
+                                        showMysigninDialog(context);
+                                      } else {
+                                        widget.addItemToCart();
+                                        addItemToCart();
+                                        totalAmount++;
+                                        setState(() {});
+                                      }
                                     },
                                     child: Text(
                                       "Add +",
@@ -326,7 +336,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
                                             horizontal: 10, vertical: 5),
                                         color: mainColor,
                                         child: Text(
-                                          "${totalAmount?? 0}",
+                                          "${totalAmount ?? 0}",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white),

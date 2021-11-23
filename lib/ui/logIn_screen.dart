@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fbTrade/I10n/app_localizations.dart';
 import 'package:fbTrade/global.dart';
 import 'package:fbTrade/services/login.dart';
+import 'package:fbTrade/ui/men_or_women.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -42,12 +43,12 @@ class _LogInScreenState extends State<LogInScreen> {
         password: passwordController.text,
       );
       if (response == 'success') {
-        Navigator.of(context).pop(true);
-        Navigator.of(context).pop(true);
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => MenOrWomen(),
+        ));
       } else {
         final snackBar = SnackBar(content: Text('$response'));
 
-// Find the Scaffold in the widget tree and use it to show a SnackBar.
         Scaffold.of(context).showSnackBar(snackBar);
       }
       isServerLoading = false;

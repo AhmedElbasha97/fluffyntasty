@@ -8,6 +8,7 @@ import 'package:fbTrade/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:fbTrade/model/product.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CategoryDetails extends StatefulWidget {
   home.HomeCategory category;
@@ -27,14 +28,21 @@ class _CategoryDetailsState extends State<CategoryDetails>
   int totalProductsInCart = 0;
   List<ProductModel> productsList = [];
   String selectedSubCategoryId;
+  String token;
 
   @override
   void initState() {
     productsList = widget.category.products;
     super.initState();
+    getToken();
     tabController =
         TabController(length: (widget.category.sub.length + 1), vsync: this);
     initListOfTabs();
+  }
+
+  getToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString('token') ?? "";
   }
 
   @override
@@ -60,14 +68,18 @@ class _CategoryDetailsState extends State<CategoryDetails>
         actions: [
           InkWell(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => CartScreen(
-                  id: widget.category.mainCategoryId,
-                  name: widget.lang == "en"
-                      ? widget.category.titleen
-                      : widget.category.titlear,
-                ),
-              ));
+              if (token == "") {
+                showMysigninDialog(context);
+              } else {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => CartScreen(
+                    id: widget.category.mainCategoryId,
+                    name: widget.lang == "en"
+                        ? widget.category.titleen
+                        : widget.category.titlear,
+                  ),
+                ));
+              }
             },
             child: Row(
               children: [

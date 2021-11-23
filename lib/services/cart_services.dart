@@ -33,14 +33,19 @@ class CartServices {
     return cartProductModelList;
   }
 
-  addToCart(var productId) async {
+  addToCart(var productId, [String colorId, String sizeId]) async {
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('token');
     try {
+      var body = FormData.fromMap({
+        "product_id": "$productId",
+        "quantity": "1",
+        "color_id": colorId,
+        "size_id": sizeId
+      });
       response = await Dio().post('$url$addToCartEndpoint',
-          data: {"product_id": "$productId", "quantity": "1"},
-          options: Options(headers: {"token": "$token"}));
+          data: body, options: Options(headers: {"token": "$token"}));
       print(response);
     } on DioError catch (e) {
       print('error from addToCart => ${e.response}');

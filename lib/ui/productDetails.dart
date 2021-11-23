@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fbTrade/global.dart';
 import 'package:fbTrade/model/product.dart';
 import 'package:fbTrade/services/cart_services.dart';
+import 'package:fbTrade/services/get_products.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -29,7 +30,8 @@ class _ProductsDetailsState extends State<ProductsDetails> {
   }
 
   addItemToCart() async {
-    CartServices().addToCart(widget.product.id);
+    CartServices()
+        .addToCart(widget.product.id, selectedColorId, selectedSizeId);
   }
 
   @override
@@ -57,13 +59,24 @@ class _ProductsDetailsState extends State<ProductsDetails> {
         ),
         onPressed: () {
           addItemToCart();
+          final snackBar = SnackBar(content: Text('تم الاضافة للسلة'));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
         },
       ),
       appBar: AppBar(
         backgroundColor: mainColor,
         iconTheme: new IconThemeData(color: Colors.white),
         automaticallyImplyLeading: true,
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.favorite))],
+        actions: [
+          IconButton(
+              onPressed: () async {
+                String response =
+                    await GetProducts().addToFav(widget.product.id);
+                final snackBar = SnackBar(content: Text('$response'));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              },
+              icon: Icon(Icons.favorite))
+        ],
       ),
       body: ListView(
         padding: const EdgeInsets.all(8.0),
@@ -142,14 +155,17 @@ class _ProductsDetailsState extends State<ProductsDetails> {
           widget.product.color == null || widget.product.color.isEmpty
               ? Container()
               : Container(
+                  width: 100,
+                  height: 100,
                   child: ListView.builder(
                     itemCount: widget.product.color.length,
                     itemBuilder: (BuildContext context, int index) {
                       return CheckboxListTile(
                         title: Text(
-                            Localizations.localeOf(context).languageCode == "en"
-                                ? widget.product.color[index].titleen
-                                : widget.product.color[index].titlear),
+                          Localizations.localeOf(context).languageCode == "en"
+                              ? widget.product.color[index].titleen
+                              : widget.product.color[index].titlear,
+                        ),
                         activeColor: mainColor,
                         checkColor: mainColor,
                         selected: widget.product.color[index].colorId ==
@@ -166,14 +182,17 @@ class _ProductsDetailsState extends State<ProductsDetails> {
           widget.product.size == null || widget.product.size.isEmpty
               ? Container()
               : Container(
+                  width: 100,
+                  height: 100,
                   child: ListView.builder(
                     itemCount: widget.product.size.length,
                     itemBuilder: (BuildContext context, int index) {
                       return CheckboxListTile(
                         title: Text(
-                            Localizations.localeOf(context).languageCode == "en"
-                                ? widget.product.size[index].titleen
-                                : widget.product.size[index].titlear),
+                          Localizations.localeOf(context).languageCode == "en"
+                              ? widget.product.size[index].titleen
+                              : widget.product.size[index].titlear,
+                        ),
                         activeColor: mainColor,
                         checkColor: mainColor,
                         selected:

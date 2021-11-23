@@ -3,7 +3,9 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fbTrade/I10n/AppLanguage.dart';
 import 'package:fbTrade/global.dart';
 import 'package:fbTrade/model/Custom/homecategory.dart';
+import 'package:fbTrade/model/product.dart';
 import 'package:fbTrade/services/get_photo_slider.dart';
+import 'package:fbTrade/services/get_products.dart';
 import 'package:fbTrade/splash_screen.dart';
 import 'package:fbTrade/ui/NewViewScreens/NewView1.dart';
 import 'package:fbTrade/ui/NewViewScreens/NewView4.dart';
@@ -13,6 +15,7 @@ import 'package:fbTrade/ui/NewViewScreens/newView3.dart';
 import 'package:fbTrade/ui/about_app_screen.dart';
 import 'package:fbTrade/ui/contact_us_screen.dart';
 import 'package:fbTrade/ui/edit_profile_screen.dart';
+import 'package:fbTrade/ui/favProductsList.dart';
 import 'package:fbTrade/ui/logIn_screen.dart';
 import 'package:fbTrade/ui/myProducts_screen.dart';
 import 'package:fbTrade/ui/notificationsScreen.dart';
@@ -20,6 +23,7 @@ import 'package:fbTrade/ui/privacyPolicy.dart';
 import 'package:fbTrade/ui/signUp_screen.dart';
 import 'package:fbTrade/ui/supportChat.dart';
 import 'package:fbTrade/ui/terms_screen.dart';
+import 'package:fbTrade/widgets/product_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fbTrade/I10n/app_localizations.dart';
@@ -38,7 +42,11 @@ class MenOrWomen extends StatefulWidget {
 }
 
 class _MenOrWomenState extends State<MenOrWomen> {
+  TextEditingController searchController = TextEditingController();
+  FocusNode searchFocusNode = FocusNode();
+
   List<HomeCategory> list = [];
+  List<ProductModel> products = [];
   List imgList;
   List child;
   int _current = 0;
@@ -48,6 +56,9 @@ class _MenOrWomenState extends State<MenOrWomen> {
   bool isDetailsView = false;
   bool isFullView = false;
   bool isFullCircleView = false;
+  bool isBodyLoading = false;
+  bool isLoading = true;
+  bool isSearchClicked = false;
 
   String name;
   String token;
@@ -58,6 +69,14 @@ class _MenOrWomenState extends State<MenOrWomen> {
         "${AppLocalizations.of(context).translate('newUser')}";
     token = prefs.getString('token') ?? "";
     return prefs;
+  }
+
+  getProducts(searchKey) async {
+    isBodyLoading = true;
+    setState(() {});
+    products = await GetProducts().searchForProducts(searchKey);
+    isBodyLoading = false;
+    setState(() {});
   }
 
   getPhotoSlider() async {
@@ -101,7 +120,6 @@ class _MenOrWomenState extends State<MenOrWomen> {
     ).toList();
   }
 
-  bool isLoading = true;
   @override
   void initState() {
     super.initState();
@@ -524,103 +542,198 @@ class _MenOrWomenState extends State<MenOrWomen> {
                         "${AppLocalizations.of(context).translate('noCats')}"),
                   ),
                 )
-              : SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CarouselSlider(
-                        items: child,
-                        options: CarouselOptions(
-                          autoPlay: true,
-                          enlargeCenterPage: true,
-                          aspectRatio: 2.0,
-                          onPageChanged: (index, reason) {
-                            setState(() {
-                              _current = index;
-                            });
-                          },
+              : GestureDetector(
+                  onTap: () => searchFocusNode.unfocus(),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        isSearchClicked
+                            ? SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                child: TextField(
+                                  controller: searchController,
+                                  focusNode: searchFocusNode,
+                                  textInputAction: TextInputAction.search,
+                                  onSubmitted: (value) {
+                                    getProducts(searchController.text);
+                                  },
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20)),
+                                          borderSide:
+                                              BorderSide(color: Colors.grey)),
+                                      disabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20)),
+                                          borderSide:
+                                              BorderSide(color: Colors.grey)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20)),
+                                          borderSide:
+                                              BorderSide(color: Colors.black)),
+                                      suffixIcon: IconButton(
+                                        onPressed: () {
+                                          getProducts(searchController.text);
+                                        },
+                                        icon: Icon(
+                                          Icons.search,
+                                          color: searchFocusNode.hasFocus
+                                              ? Colors.blue
+                                              : Colors.grey,
+                                        ),
+                                      ),
+                                      hintText: "search...",
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 1)),
+                                ),
+                              )
+                            : Container(),
+                        CarouselSlider(
+                          items: child,
+                          options: CarouselOptions(
+                            autoPlay: true,
+                            enlargeCenterPage: true,
+                            aspectRatio: 2.0,
+                            onPageChanged: (index, reason) {
+                              setState(() {
+                                _current = index;
+                              });
+                            },
+                          ),
                         ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        color: Colors.white,
-                        padding: EdgeInsets.symmetric(vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            IconButton(
-                                onPressed: () {
-                                  _launchURL("${appInfo.support}");
-                                },
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          color: Colors.white,
+                          padding: EdgeInsets.symmetric(vertical: 5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    _launchURL("${appInfo.support}");
+                                  },
+                                  icon: Icon(
+                                    Icons.chat,
+                                    color: mainColor,
+                                    size: 30,
+                                  )),
+                              IconButton(
                                 icon: Icon(
-                                  Icons.chat,
+                                  Icons.info,
                                   color: mainColor,
                                   size: 30,
-                                )),
-                            IconButton(
-                              icon: Icon(
-                                Icons.info,
-                                color: mainColor,
-                                size: 30,
+                                ),
+                                onPressed: () {
+                                  _showMyDialog();
+                                },
                               ),
-                              onPressed: () {
-                                _showMyDialog();
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.search,
-                                color: mainColor,
-                                size: 30,
+                              IconButton(
+                                icon: Icon(
+                                  Icons.search,
+                                  color: mainColor,
+                                  size: 30,
+                                ),
+                                onPressed: () {
+                                  isSearchClicked = !isSearchClicked;
+                                  setState(() {});
+                                },
                               ),
-                              onPressed: () {},
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.notifications,
-                                color: mainColor,
-                                size: 30,
+                              IconButton(
+                                icon: Icon(
+                                  Icons.notifications,
+                                  color: mainColor,
+                                  size: 30,
+                                ),
+                                onPressed: () {
+                                  if (token == null) {
+                                    showMysigninDialog(context);
+                                  } else {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) =>
+                                          NotificationsScreen(),
+                                    ));
+                                  }
+                                },
                               ),
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => NotificationsScreen(),
-                                ));
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.favorite,
-                                color: mainColor,
-                                size: 30,
+                              IconButton(
+                                icon: Icon(
+                                  Icons.favorite,
+                                  color: mainColor,
+                                  size: 30,
+                                ),
+                                onPressed: () {
+                                  if (token == null) {
+                                    showMysigninDialog(context);
+                                  } else {
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => FavProductsScreen(),
+                                    ));
+                                  }
+                                },
                               ),
-                              onPressed: () {
-                                _showMysigninDialog();
-                              },
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.tune,
-                                color: mainColor,
-                                size: 30,
-                              ),
-                              onPressed: () {},
-                            ),
-                          ],
+                              // IconButton(
+                              //   icon: Icon(
+                              //     Icons.tune,
+                              //     color: mainColor,
+                              //     size: 30,
+                              //   ),
+                              //   onPressed: () {},
+                              // ),
+                            ],
+                          ),
                         ),
-                      ),
-                      appInfo.themeId == "1"
-                          ? NewViewOne(
-                              list: list,
-                            )
-                          : appInfo.themeId == "2"
-                              ? NewViewScreenTwo(list: list)
-                              : appInfo.themeId == "3"
-                                  ? ScreenViewFour(list: list)
-                                  : appInfo.themeId == "4"
-                                      ? NewViewScreen5(list: list)
-                                      : NewViewScreenThree(list: list)
-                    ],
+                        isSearchClicked
+                            ? Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: MediaQuery.of(context).size.height,
+                                child: ListView.builder(
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: products.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 5, horizontal: 5),
+                                      child: LinearProductCard(
+                                        id: products[index].id,
+                                        titleEn: products[index].titleEn,
+                                        titleAr: products[index].titleAr,
+                                        detailsEn: products[index].detailsEn,
+                                        detailsAr: products[index].detailsAr,
+                                        price: products[index].price,
+                                        video: products[index].video ?? "",
+                                        salePrice: products[index].salePrice,
+                                        isAllChecked: false,
+                                        totalAmountInCart:
+                                            products[index].quantity ?? 0,
+                                        addItemToCart: () {},
+                                        removeItemFromCart: () {},
+                                        imgList: products[index].images,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              )
+                            : appInfo.themeId == "1"
+                                ? NewViewOne(
+                                    list: list,
+                                  )
+                                : appInfo.themeId == "2"
+                                    ? NewViewScreenTwo(list: list)
+                                    : appInfo.themeId == "3"
+                                        ? ScreenViewFour(list: list)
+                                        : appInfo.themeId == "4"
+                                            ? NewViewScreen5(list: list)
+                                            : NewViewScreenThree(list: list)
+                      ],
+                    ),
                   ),
                 ),
     );
@@ -712,66 +825,6 @@ class _MenOrWomenState extends State<MenOrWomen> {
           Navigator.pop(context, 'Cancel');
         },
       ),
-    );
-  }
-
-  Future<void> _showMysigninDialog() async {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: SingleChildScrollView(
-            child: 
-            ListBody(
-              children: <Widget>[
-                Container(
-                    color: mainColor,
-                    width: MediaQuery.of(context).size.width,
-                    height: 40,
-                    child: Center(
-                        child: Text('تسجيل الدخول',
-                            style: TextStyle(color: Colors.white)))),
-                Center(
-                    child: Text(
-                  'قم بتسجيل الدخول لتتمكن من إتمام عملية الشراء.',
-                  textAlign: TextAlign.center,
-                )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    FlatButton(
-                      color: mainColor,
-                      child: Text(
-                        'تسجيل الدخول',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.white),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => LogInScreen(
-                            isCheck: false,
-                          ),
-                        ));
-                      },
-                    ),
-                    FlatButton(
-                      child: Text('مستخدم جديد',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SignUpScreen(
-                            isCheck: false,
-                          ),
-                        ));
-                      },
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ),
-        );
-      },
     );
   }
 }
