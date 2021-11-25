@@ -59,7 +59,12 @@ class _PaymentScreenState extends State<PaymentScreen> {
   String payment = "cash";
 
   getLocation() async {
-    position = await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    try {
+      position =
+          await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    } catch (e) {
+      position = Position(latitude: 25.3548, longitude: 51.1839);
+    }
   }
 
   Future<void> _showMyDialog() async {
@@ -113,7 +118,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       streetNumber: streetNumberController.text,
       buildingNumber: buildingNumberController.text,
       discretNumber: addressNumberController.text,
-      selectedShift: widget.shifts[selcetedIndex].id,
+      // selectedShift: widget.shifts[selcetedIndex].id,
       paymentType: payment,
       notes: notesController.text ?? "",
       // creditId: widget.creditData.data[0].codes
@@ -163,13 +168,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
         backgroundColor: mainColor,
         title: Text(
           "${AppLocalizations.of(context).translate('buyConfirm')}",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
-            color: Colors.black,
+            color: Colors.white,
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -436,7 +441,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       padding: EdgeInsets.symmetric(vertical: 15),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
-                        color: Colors.black,
+                        color: mainColor,
                       ),
                       alignment: Alignment.center,
                       child: Text(

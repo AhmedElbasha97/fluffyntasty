@@ -204,7 +204,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                           },
                           child: Container(
                             width: 100,
-                            height: 50,
+                            height: 40,
                             decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)),
@@ -230,7 +230,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                           },
                           child: Container(
                             width: 100,
-                            height: 50,
+                            height: 40,
                             decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)),
@@ -256,7 +256,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                           },
                           child: Container(
                             width: 100,
-                            height: 50,
+                            height: 40,
                             decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)),
@@ -649,7 +649,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                                   size: 30,
                                 ),
                                 onPressed: () {
-                                  if (token == null) {
+                                  if (token == "") {
                                     showMysigninDialog(context);
                                   } else {
                                     Navigator.of(context)
@@ -667,7 +667,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                                   size: 30,
                                 ),
                                 onPressed: () {
-                                  if (token == null) {
+                                  if (token == "") {
                                     showMysigninDialog(context);
                                   } else {
                                     Navigator.of(context)

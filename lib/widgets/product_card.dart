@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fbTrade/I10n/app_localizations.dart';
 import 'package:fbTrade/services/cart_services.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -72,9 +73,9 @@ class _LinearProductCardState extends State<LinearProductCard> {
             borderRadius: BorderRadius.all(Radius.circular(5.0)),
             child: Image.network(
               i,
-              fit: BoxFit.cover,
+              fit: BoxFit.fitHeight,
               width: 1000.0,
-              height: 350,
+              height: 450,
             ),
           ),
         );
@@ -149,15 +150,12 @@ class _LinearProductCardState extends State<LinearProductCard> {
                 ),
                 Padding(padding: EdgeInsets.only(top: 10)),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  alignment: Alignment.topRight,
-                  child: Text(
-                      "${Localizations.localeOf(context).languageCode == "en" ? widget.detailsEn : widget.detailsAr}",
-                      textAlign: TextAlign.right,
-                      style: TextStyle(
-                        color: mainColor,
-                      )),
-                ),
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    alignment: Alignment.topRight,
+                    child: Html(
+                      data:
+                          "${Localizations.localeOf(context).languageCode == "en" ? widget.detailsEn : widget.detailsAr}",
+                    )),
               ],
             ),
           ),
@@ -475,7 +473,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
             InkWell(
               onTap: () => photoViewDialog(),
               child: Container(
-                width: MediaQuery.of(context).size.width * 0.225,
+                width: MediaQuery.of(context).size.width * 0.3,
                 height: MediaQuery.of(context).size.height * 0.145,
                 padding: EdgeInsets.all(2),
                 decoration: BoxDecoration(
@@ -487,7 +485,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
                       ? "${widget.imgList.first}"
                       : "${widget.image}",
                   placeholder: (context, url) => SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.23,
+                    width: MediaQuery.of(context).size.width * 0.3,
                     height: MediaQuery.of(context).size.height * 0.1,
                     child: FittedBox(
                       fit: BoxFit.scaleDown,

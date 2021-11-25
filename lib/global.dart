@@ -39,15 +39,13 @@ Future<void> showMysigninDialog(context) async {
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              Expanded(
-                child: Container(
-                    color: mainColor,
-                    width: MediaQuery.of(context).size.width,
-                    height: 40,
-                    child: Center(
-                        child: Text('تسجيل الدخول',
-                            style: TextStyle(color: Colors.white)))),
-              ),
+              Container(
+                  color: mainColor,
+                  width: MediaQuery.of(context).size.width,
+                  height: 40,
+                  child: Center(
+                      child: Text('تسجيل الدخول',
+                          style: TextStyle(color: Colors.white)))),
               SizedBox(
                 height: 10,
               ),
