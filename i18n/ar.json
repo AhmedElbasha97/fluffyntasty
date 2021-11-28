@@ -48,5 +48,8 @@
   "creditAccepted": "يمكنك الشراء بالاجل من  ",
   "notes": "ملاحظات",
   "seeall": "عرض الكل",
-  "privacyPolicy": "سياسة الخصوصية"
+  "privacyPolicy": "سياسة الخصوصية",
+  "addedToCart": "تم الاضافة للسلة",
+  "cart": "السلة",
+  "gotoCart": "الذهاب للسلة"
 }

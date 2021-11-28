@@ -13,7 +13,7 @@ import 'package:fbTrade/global.dart';
 class CartScreen extends StatefulWidget {
   String id;
   String name;
-  CartScreen({this.id, this.name});
+  CartScreen({this.id, this.name = ""});
 
   @override
   _CartScreenState createState() => _CartScreenState();

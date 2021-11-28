@@ -73,8 +73,10 @@ Future<void> showMysigninDialog(context) async {
                     },
                   ),
                   FlatButton(
+                    color: mainColor,
                     child: Text('مستخدم جديد',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.white)),
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => SignUpScreen(

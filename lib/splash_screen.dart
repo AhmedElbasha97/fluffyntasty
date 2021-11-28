@@ -29,7 +29,9 @@ class _SplashScreenState extends State<SplashScreen>
                 height: 200,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: appInfo.logo == null || appInfo.logo == ""
+                    image: appInfo == null ||
+                            appInfo.logo == null ||
+                            appInfo.logo == ""
                         ? AssetImage("assets/icon/logo.png")
                         : CachedNetworkImageProvider("${appInfo.logo}"),
                     fit: BoxFit.scaleDown,

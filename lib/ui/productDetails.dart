@@ -1,10 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fbTrade/I10n/app_localizations.dart';
 import 'package:fbTrade/global.dart';
 import 'package:fbTrade/model/product.dart';
 import 'package:fbTrade/services/cart_services.dart';
 import 'package:fbTrade/services/get_products.dart';
+import 'package:fbTrade/ui/cart_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter_html/flutter_html.dart';
 
@@ -19,6 +22,8 @@ class _ProductsDetailsState extends State<ProductsDetails> {
   int _current = 0;
   String selectedColorId;
   String selectedSizeId;
+  String name;
+  String token;
   YoutubePlayerController _controller;
 
   List<T> map<T>(List list, Function handler) {
@@ -32,6 +37,13 @@ class _ProductsDetailsState extends State<ProductsDetails> {
   addItemToCart() async {
     CartServices()
         .addToCart(widget.product.id, selectedColorId, selectedSizeId);
+  }
+
+  Future getUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    name = prefs.getString('name');
+    token = prefs.getString('token') ?? "";
+    return prefs;
   }
 
   @override
@@ -58,9 +70,24 @@ class _ProductsDetailsState extends State<ProductsDetails> {
           ),
         ),
         onPressed: () {
-          addItemToCart();
-          final snackBar = SnackBar(content: Text('تم الاضافة للسلة'));
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          if (token == null || token == "") {
+            showMysigninDialog(context);
+          } else {
+            addItemToCart();
+            final snackBar = SnackBar(
+              content: Text(
+                  "${AppLocalizations.of(context).translate('addedToCart')}"),
+              action: SnackBarAction(
+                label: "${AppLocalizations.of(context).translate('gotoCart')}",
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => CartScreen(),
+                  ));
+                },
+              ),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
         },
       ),
       appBar: AppBar(
@@ -156,8 +183,9 @@ class _ProductsDetailsState extends State<ProductsDetails> {
               ? Container()
               : Container(
                   width: 100,
-                  height: 100,
+                  height: (widget.product.color.length * 70.0),
                   child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
                     itemCount: widget.product.color.length,
                     itemBuilder: (BuildContext context, int index) {
                       return CheckboxListTile(
@@ -183,8 +211,9 @@ class _ProductsDetailsState extends State<ProductsDetails> {
               ? Container()
               : Container(
                   width: 100,
-                  height: 100,
+                  height: (widget.product.color.length * 70.0),
                   child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
                     itemCount: widget.product.size.length,
                     itemBuilder: (BuildContext context, int index) {
                       return CheckboxListTile(
@@ -205,7 +234,10 @@ class _ProductsDetailsState extends State<ProductsDetails> {
                       );
                     },
                   ),
-                )
+                ),
+          SizedBox(
+            height: 100,
+          )
         ],
       ),
     );

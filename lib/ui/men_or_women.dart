@@ -13,6 +13,7 @@ import 'package:fbTrade/ui/NewViewScreens/NewView5.dart';
 import 'package:fbTrade/ui/NewViewScreens/NewViewScreen2.dart';
 import 'package:fbTrade/ui/NewViewScreens/newView3.dart';
 import 'package:fbTrade/ui/about_app_screen.dart';
+import 'package:fbTrade/ui/cart_screen.dart';
 import 'package:fbTrade/ui/contact_us_screen.dart';
 import 'package:fbTrade/ui/edit_profile_screen.dart';
 import 'package:fbTrade/ui/favProductsList.dart';
@@ -65,8 +66,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
 
   Future getUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    name = prefs.getString('name') ??
-        "${AppLocalizations.of(context).translate('newUser')}";
+    name = prefs.getString('name');
     token = prefs.getString('token') ?? "";
     return prefs;
   }
@@ -212,7 +212,9 @@ class _MenOrWomenState extends State<MenOrWomen> {
                                 color: mainColor),
                             child: Center(
                               child: Text(
-                                "$name",
+                                name == null || name == ""
+                                    ? "${AppLocalizations.of(context).translate('newUser')}"
+                                    : "$name",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
@@ -300,6 +302,32 @@ class _MenOrWomenState extends State<MenOrWomen> {
                           builder: (context) => MyProductsScreen(),
                         ));
                         getUserData();
+                      },
+                    ),
+              SizedBox(
+                height: 10,
+              ),
+              Divider(
+                height: 1,
+                thickness: 2,
+                endIndent: 30,
+                indent: 30,
+              ),
+              token == null || token.isEmpty
+                  ? Container()
+                  : ListTile(
+                      title: Text(
+                          "${AppLocalizations.of(context).translate('cart')}",
+                          style: TextStyle(
+                              color: mainColor, fontWeight: FontWeight.bold)),
+                      leading: Icon(
+                        Icons.shopping_cart,
+                        color: mainColor,
+                      ),
+                      onTap: () async {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => CartScreen(),
+                        ));
                       },
                     ),
               SizedBox(
@@ -549,49 +577,6 @@ class _MenOrWomenState extends State<MenOrWomen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        isSearchClicked
-                            ? SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.8,
-                                child: TextField(
-                                  controller: searchController,
-                                  focusNode: searchFocusNode,
-                                  textInputAction: TextInputAction.search,
-                                  onSubmitted: (value) {
-                                    getProducts(searchController.text);
-                                  },
-                                  decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(20)),
-                                          borderSide:
-                                              BorderSide(color: Colors.grey)),
-                                      disabledBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(20)),
-                                          borderSide:
-                                              BorderSide(color: Colors.grey)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(20)),
-                                          borderSide:
-                                              BorderSide(color: Colors.black)),
-                                      suffixIcon: IconButton(
-                                        onPressed: () {
-                                          getProducts(searchController.text);
-                                        },
-                                        icon: Icon(
-                                          Icons.search,
-                                          color: searchFocusNode.hasFocus
-                                              ? Colors.blue
-                                              : Colors.grey,
-                                        ),
-                                      ),
-                                      hintText: "search...",
-                                      contentPadding: EdgeInsets.symmetric(
-                                          horizontal: 20, vertical: 1)),
-                                ),
-                              )
-                            : Container(),
                         CarouselSlider(
                           items: child,
                           options: CarouselOptions(
@@ -687,6 +672,55 @@ class _MenOrWomenState extends State<MenOrWomen> {
                               // ),
                             ],
                           ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        isSearchClicked
+                            ? SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                child: TextField(
+                                  controller: searchController,
+                                  focusNode: searchFocusNode,
+                                  textInputAction: TextInputAction.search,
+                                  onSubmitted: (value) {
+                                    getProducts(searchController.text);
+                                  },
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20)),
+                                          borderSide:
+                                              BorderSide(color: Colors.grey)),
+                                      disabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20)),
+                                          borderSide:
+                                              BorderSide(color: Colors.grey)),
+                                      focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(20)),
+                                          borderSide:
+                                              BorderSide(color: Colors.black)),
+                                      suffixIcon: IconButton(
+                                        onPressed: () {
+                                          getProducts(searchController.text);
+                                        },
+                                        icon: Icon(
+                                          Icons.search,
+                                          color: searchFocusNode.hasFocus
+                                              ? Colors.blue
+                                              : Colors.grey,
+                                        ),
+                                      ),
+                                      hintText: "search...",
+                                      contentPadding: EdgeInsets.symmetric(
+                                          horizontal: 20, vertical: 1)),
+                                ),
+                              )
+                            : Container(),
+                        SizedBox(
+                          height: 10,
                         ),
                         isSearchClicked
                             ? Container(
