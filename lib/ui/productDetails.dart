@@ -3,10 +3,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fbTrade/I10n/app_localizations.dart';
 import 'package:fbTrade/global.dart';
 import 'package:fbTrade/model/product.dart';
+import 'package:fbTrade/model/productColor.dart';
+import 'package:fbTrade/model/productSize.dart';
 import 'package:fbTrade/services/cart_services.dart';
 import 'package:fbTrade/services/get_products.dart';
 import 'package:fbTrade/ui/cart_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:group_radio_button/group_radio_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -21,7 +24,9 @@ class ProductsDetails extends StatefulWidget {
 class _ProductsDetailsState extends State<ProductsDetails> {
   int _current = 0;
   String selectedColorId;
+  ProductColor selectedcolor;
   String selectedSizeId;
+  ProductSize selectedsize;
   String name;
   String token;
   YoutubePlayerController _controller;
@@ -61,49 +66,59 @@ class _ProductsDetailsState extends State<ProductsDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: mainColor,
-        child: Center(
-          child: Icon(
-            Icons.add_shopping_cart,
-            color: Colors.white,
-          ),
-        ),
-        onPressed: () {
-          if (token == null || token == "") {
-            showMysigninDialog(context);
-          } else {
-            addItemToCart();
-            final snackBar = SnackBar(
-              content: Text(
-                  "${AppLocalizations.of(context).translate('addedToCart')}"),
-              action: SnackBarAction(
-                label: "${AppLocalizations.of(context).translate('gotoCart')}",
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => CartScreen(),
-                  ));
-                },
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          FloatingActionButton(
+            backgroundColor: mainColor,
+            child: Center(
+              child: Icon(
+                Icons.add_shopping_cart,
+                color: Colors.white,
               ),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          }
-        },
+            ),
+            onPressed: () {
+              if (token == null || token == "") {
+                showMysigninDialog(context);
+              } else {
+                addItemToCart();
+                final snackBar = SnackBar(
+                  content: Text(
+                      "${AppLocalizations.of(context).translate('addedToCart')}"),
+                  action: SnackBarAction(
+                    label:
+                        "${AppLocalizations.of(context).translate('gotoCart')}",
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => CartScreen(),
+                      ));
+                    },
+                  ),
+                );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
+            },
+          ),
+          FloatingActionButton(
+            backgroundColor: mainColor,
+            child: Center(
+              child: Icon(
+                Icons.favorite,
+                color: Colors.white,
+              ),
+            ),
+            onPressed: () async {
+              String response = await GetProducts().addToFav(widget.product.id);
+              final snackBar = SnackBar(content: Text('$response'));
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            },
+          ),
+        ],
       ),
       appBar: AppBar(
         backgroundColor: mainColor,
         iconTheme: new IconThemeData(color: Colors.white),
         automaticallyImplyLeading: true,
-        actions: [
-          IconButton(
-              onPressed: () async {
-                String response =
-                    await GetProducts().addToFav(widget.product.id);
-                final snackBar = SnackBar(content: Text('$response'));
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              },
-              icon: Icon(Icons.favorite))
-        ],
       ),
       body: ListView(
         padding: const EdgeInsets.all(8.0),
@@ -118,7 +133,7 @@ class _ProductsDetailsState extends State<ProductsDetails> {
                     borderRadius: BorderRadius.all(Radius.circular(5.0)),
                     child: CachedNetworkImage(
                       imageUrl: i,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.scaleDown,
                       width: 1000.0,
                       placeholder: (context, url) => SizedBox(
                         width: MediaQuery.of(context).size.width * 0.2,
@@ -136,7 +151,7 @@ class _ProductsDetailsState extends State<ProductsDetails> {
             options: CarouselOptions(
               autoPlay: true,
               enlargeCenterPage: true,
-              aspectRatio: 2.0,
+              aspectRatio: 1.5,
               onPageChanged: (index, reason) {
                 setState(() {
                   _current = index;
@@ -181,58 +196,34 @@ class _ProductsDetailsState extends State<ProductsDetails> {
               : Container(),
           widget.product.color == null || widget.product.color.isEmpty
               ? Container()
-              : Container(
-                  width: 100,
-                  height: (widget.product.color.length * 70.0),
-                  child: ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: widget.product.color.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CheckboxListTile(
-                        title: Text(
-                          Localizations.localeOf(context).languageCode == "en"
-                              ? widget.product.color[index].titleen
-                              : widget.product.color[index].titlear,
-                        ),
-                        activeColor: mainColor,
-                        checkColor: mainColor,
-                        selected: widget.product.color[index].colorId ==
-                            selectedColorId,
-                        value: widget.product.color[index].colorId ==
-                            selectedColorId,
-                        onChanged: (bool value) {
-                          selectedColorId = widget.product.color[index].colorId;
-                        },
-                      );
-                    },
+              : RadioGroup<ProductColor>.builder(
+                  activeColor: mainColor,
+                  groupValue: selectedcolor,
+                  onChanged: (value) => setState(() {
+                    selectedcolor = value;
+                    selectedSizeId = value.colorId;
+                  }),
+                  items: widget.product.color,
+                  itemBuilder: (item) => RadioButtonBuilder(
+                    Localizations.localeOf(context).languageCode == "en"
+                        ? item.titleen
+                        : item.titlear,
                   ),
                 ),
           widget.product.size == null || widget.product.size.isEmpty
               ? Container()
-              : Container(
-                  width: 100,
-                  height: (widget.product.color.length * 70.0),
-                  child: ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: widget.product.size.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CheckboxListTile(
-                        title: Text(
-                          Localizations.localeOf(context).languageCode == "en"
-                              ? widget.product.size[index].titleen
-                              : widget.product.size[index].titlear,
-                        ),
-                        activeColor: mainColor,
-                        checkColor: mainColor,
-                        selected:
-                            widget.product.size[index].sizeId == selectedSizeId,
-                        value:
-                            widget.product.size[index].sizeId == selectedSizeId,
-                        onChanged: (bool value) {
-                          selectedSizeId = widget.product.size[index].sizeId;
-                        },
-                      );
-                    },
+              : RadioGroup<ProductSize>.builder(
+                  activeColor: mainColor,
+                  groupValue: selectedsize,
+                  onChanged: (value) => setState(() {
+                    selectedsize = value;
+                    selectedSizeId = value.sizeId;
+                  }),
+                  items: widget.product.size,
+                  itemBuilder: (item) => RadioButtonBuilder(
+                    Localizations.localeOf(context).languageCode == "en"
+                        ? item.titleen
+                        : item.titlear,
                   ),
                 ),
           SizedBox(

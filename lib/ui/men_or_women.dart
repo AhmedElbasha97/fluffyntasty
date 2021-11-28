@@ -203,7 +203,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                               ));
                           },
                           child: Container(
-                            width: 100,
+                            width: 120,
                             height: 40,
                             decoration: BoxDecoration(
                                 borderRadius:
@@ -231,7 +231,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                             ));
                           },
                           child: Container(
-                            width: 100,
+                            width: 120,
                             height: 40,
                             decoration: BoxDecoration(
                                 borderRadius:
@@ -307,12 +307,6 @@ class _MenOrWomenState extends State<MenOrWomen> {
               SizedBox(
                 height: 10,
               ),
-              Divider(
-                height: 1,
-                thickness: 2,
-                endIndent: 30,
-                indent: 30,
-              ),
               token == null || token.isEmpty
                   ? Container()
                   : ListTile(
@@ -332,12 +326,6 @@ class _MenOrWomenState extends State<MenOrWomen> {
                     ),
               SizedBox(
                 height: 10,
-              ),
-              Divider(
-                height: 1,
-                thickness: 2,
-                endIndent: 30,
-                indent: 30,
               ),
               ListTile(
                 title: Text("${AppLocalizations.of(context).translate('home')}",
@@ -443,12 +431,6 @@ class _MenOrWomenState extends State<MenOrWomen> {
                 onTap: () => showCupertinoModalPopup(
                     context: context,
                     builder: (BuildContext context) => changeLangPopUp()),
-              ),
-              Divider(
-                height: 1,
-                thickness: 2,
-                endIndent: 30,
-                indent: 30,
               ),
               token == null || token.isEmpty
                   ? Container()
