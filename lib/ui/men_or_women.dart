@@ -192,7 +192,9 @@ class _MenOrWomenState extends State<MenOrWomen> {
                 height: 10,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: token == null || token.isEmpty
+                    ? MainAxisAlignment.spaceAround
+                    : MainAxisAlignment.center,
                 children: [
                   token == null || token.isEmpty
                       ? InkWell(
@@ -294,7 +296,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                               color: mainColor, fontWeight: FontWeight.bold)),
                       leading: Icon(
                         Icons.shopping_cart,
-                        color: mainColor,
+                        color: secondColor,
                       ),
                       onTap: () async {
                         bool done =
@@ -316,7 +318,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                               color: mainColor, fontWeight: FontWeight.bold)),
                       leading: Icon(
                         Icons.shopping_cart,
-                        color: mainColor,
+                        color: secondColor,
                       ),
                       onTap: () async {
                         Navigator.of(context).push(MaterialPageRoute(
@@ -333,7 +335,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                         color: mainColor, fontWeight: FontWeight.bold)),
                 leading: Icon(
                   Icons.home,
-                  color: mainColor,
+                  color: secondColor,
                 ),
                 onTap: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -354,7 +356,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                         color: mainColor, fontWeight: FontWeight.bold)),
                 leading: Icon(
                   Icons.category,
-                  color: mainColor,
+                  color: secondColor,
                 ),
                 onTap: () => Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => AboutAppScreen(),
@@ -373,7 +375,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                         color: mainColor, fontWeight: FontWeight.bold)),
                 leading: Icon(
                   Icons.description,
-                  color: mainColor,
+                  color: secondColor,
                 ),
                 onTap: () => Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => TermsScreen(),
@@ -392,7 +394,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                         color: mainColor, fontWeight: FontWeight.bold)),
                 leading: Icon(
                   Icons.description,
-                  color: mainColor,
+                  color: secondColor,
                 ),
                 onTap: () => Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => PolicyScreen(),
@@ -408,7 +410,10 @@ class _MenOrWomenState extends State<MenOrWomen> {
                 title: Text("Chat Support",
                     style: TextStyle(
                         color: mainColor, fontWeight: FontWeight.bold)),
-                leading: Icon(Icons.support, color: mainColor),
+                leading: Icon(
+                  Icons.support,
+                  color: secondColor,
+                ),
                 onTap: () {
                   _launchURL("${appInfo.support}");
                 },
@@ -426,7 +431,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                         color: mainColor, fontWeight: FontWeight.bold)),
                 leading: Icon(
                   Icons.language,
-                  color: mainColor,
+                  color: secondColor,
                 ),
                 onTap: () => showCupertinoModalPopup(
                     context: context,
@@ -441,7 +446,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                               color: mainColor, fontWeight: FontWeight.bold)),
                       leading: Icon(
                         Icons.exit_to_app,
-                        color: mainColor,
+                        color: secondColor,
                       ),
                       onTap: () async {
                         SharedPreferences prefs =
@@ -465,7 +470,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                         color: mainColor, fontWeight: FontWeight.bold)),
                 leading: Icon(
                   Icons.phone,
-                  color: mainColor,
+                  color: secondColor,
                 ),
                 onTap: () async {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -771,7 +776,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                       },
                       icon: Icon(
                         Icons.close,
-                        color: mainColor,
+                        color: secondColor,
                       ))
                 ],
               ),

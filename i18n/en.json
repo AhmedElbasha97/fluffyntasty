@@ -51,6 +51,7 @@
   "privacyPolicy": "Privacy Policy",
   "addedToCart": "added To Cart",
   "cart": "cart",
-  "gotoCart":"Go to cart"
-
+  "gotoCart": "Go to cart",
+  "alret": "alert",
+  "signinMsg": "Sign in to continue"
 }

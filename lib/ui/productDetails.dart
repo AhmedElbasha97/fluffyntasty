@@ -48,12 +48,14 @@ class _ProductsDetailsState extends State<ProductsDetails> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     name = prefs.getString('name');
     token = prefs.getString('token') ?? "";
+    setState(() {});
     return prefs;
   }
 
   @override
   void initState() {
     super.initState();
+    getUserData();
     if (widget.product.video.isNotEmpty)
       _controller = YoutubePlayerController(
           initialVideoId:
@@ -108,9 +110,14 @@ class _ProductsDetailsState extends State<ProductsDetails> {
               ),
             ),
             onPressed: () async {
-              String response = await GetProducts().addToFav(widget.product.id);
-              final snackBar = SnackBar(content: Text('$response'));
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              if (token == null || token == "") {
+                showMysigninDialog(context);
+              } else {
+                String response =
+                    await GetProducts().addToFav(widget.product.id);
+                final snackBar = SnackBar(content: Text('$response'));
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              }
             },
           ),
         ],

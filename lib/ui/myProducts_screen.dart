@@ -77,7 +77,7 @@ class _MyProductsScreenState extends State<MyProductsScreen> {
                             ),
                           )
                         : Container(),
-                    title: ordersModelList[index].name,
+                    title: ordersModelList[index].id,
                     date: ordersModelList[index].date,
                     photo: ordersModelList[index].photo,
                     status: ordersModelList[index].status,

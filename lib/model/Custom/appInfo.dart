@@ -17,6 +17,7 @@ class AppInfo {
       this.themeId,
       this.themes,
       this.color,
+      this.secondColor,
       this.support,
       this.logo});
 
@@ -37,6 +38,7 @@ class AppInfo {
   String themeId;
   List<Theme> themes;
   String color;
+  String secondColor;
   String logo;
   String support;
 
@@ -60,6 +62,7 @@ class AppInfo {
           ? null
           : List<Theme>.from(json["themes"].map((x) => Theme.fromJson(x))),
       color: json["color"] == null ? null : json["color"],
+      secondColor: json["icon_color"] == null ? null : json["icon_color"],
       support: json["support"] == null ? null : json["support"],
       logo: json["logo"] == null ? null : json["logo"]);
 }

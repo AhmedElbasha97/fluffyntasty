@@ -63,7 +63,7 @@ class _MyOrderCategoryCardState extends State<MyOrderCategoryCard> {
                     Align(
                       alignment: Alignment.topRight,
                       child: Text(
-                        "${widget.title}",
+                        "${widget.title == null ? "" : widget.title}",
                         style: TextStyle(fontSize: 20, color: Colors.black),
                       ),
                     ),
