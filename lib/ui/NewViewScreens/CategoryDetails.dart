@@ -4,6 +4,7 @@ import 'package:fbTrade/global.dart';
 import 'package:fbTrade/model/Custom/homecategory.dart' as home;
 import 'package:fbTrade/services/get_categories.dart';
 import 'package:fbTrade/ui/cart_screen.dart';
+import 'package:fbTrade/widgets/GridProductCard.dart';
 import 'package:fbTrade/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:fbTrade/model/product.dart';
@@ -24,6 +25,7 @@ class _CategoryDetailsState extends State<CategoryDetails>
   List<Widget> tabsList = [];
   bool isLoading = false;
   bool isbodyLoading = false;
+  bool isLinear = true;
   int apiPage = 1;
   int totalProductsInCart = 0;
   List<ProductModel> productsList = [];
@@ -163,48 +165,123 @@ class _CategoryDetailsState extends State<CategoryDetails>
                     ),
                   ),
                   Padding(padding: EdgeInsets.only(top: 20)),
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      color: Colors.white,
+                      padding: EdgeInsets.symmetric(vertical: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          IconButton(
+                            icon: Icon(
+                              Icons.view_module,
+                              color: mainColor,
+                              size: 40,
+                            ),
+                            onPressed: () {
+                              isLinear = false;
+                              setState(() {});
+                            },
+                          ),
+                          IconButton(
+                            icon: Icon(
+                              Icons.format_list_bulleted,
+                              color: mainColor,
+                              size: 40,
+                            ),
+                            onPressed: () {
+                              isLinear = true;
+                              setState(() {});
+                            },
+                          )
+                        ],
+                      )),
+                  SizedBox(
+                    height: 15,
+                  ),
                   isbodyLoading
                       ? Center(
                           child: CircularProgressIndicator(),
                         )
-                      : ListView.builder(
-                          primary: false,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: productsList.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 5),
-                              child: LinearProductCard(
-                                id: productsList[index].id,
-                                titleEn: productsList[index].titleEn,
-                                titleAr: productsList[index].titleAr,
-                                detailsEn: productsList[index].detailsEn,
-                                detailsAr: productsList[index].detailsAr,
-                                price: productsList[index].price,
-                                video: productsList[index].video ?? "",
-                                salePrice: productsList[index].salePrice,
-                                isAllChecked: false,
-                                totalAmountInCart:
-                                    productsList[index].quantity ?? 0,
-                                addItemToCart: () {
-                                  totalProductsInCart++;
-                                  setState(() {});
-                                },
-                                removeItemFromCart: () {
-                                  totalProductsInCart--;
-                                  setState(() {});
-                                  Future.delayed(Duration(seconds: 1),
-                                      () async {
-                                    setState(() {});
-                                  });
-                                },
-                                imgList: productsList[index].images,
-                              ),
-                            );
-                          },
-                        )
+                      : isLinear
+                          ? ListView.builder(
+                              primary: false,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: productsList.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 5),
+                                  child: LinearProductCard(
+                                    id: productsList[index].id,
+                                    titleEn: productsList[index].titleEn,
+                                    titleAr: productsList[index].titleAr,
+                                    detailsEn: productsList[index].detailsEn,
+                                    detailsAr: productsList[index].detailsAr,
+                                    price: productsList[index].price,
+                                    video: productsList[index].video ?? "",
+                                    salePrice: productsList[index].salePrice,
+                                    isAllChecked: false,
+                                    totalAmountInCart:
+                                        productsList[index].quantity ?? 0,
+                                    addItemToCart: () {
+                                      totalProductsInCart++;
+                                      setState(() {});
+                                    },
+                                    removeItemFromCart: () {
+                                      totalProductsInCart--;
+                                      setState(() {});
+                                      Future.delayed(Duration(seconds: 1),
+                                          () async {
+                                        setState(() {});
+                                      });
+                                    },
+                                    imgList: productsList[index].images,
+                                  ),
+                                );
+                              },
+                            )
+                          : GridView.builder(
+                              primary: false,
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      childAspectRatio: MediaQuery.of(context)
+                                              .size
+                                              .width /
+                                          (MediaQuery.of(context).size.height /
+                                              1.7)),
+                              padding: EdgeInsets.symmetric(horizontal: 5),
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: productsList.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 5),
+                                  child: GridProductCard(
+                                    id: productsList[index].id,
+                                    titleEn: productsList[index].titleEn,
+                                    titleAr: productsList[index].titleAr,
+                                    detailsEn: productsList[index].detailsEn,
+                                    detailsAr: productsList[index].detailsAr,
+                                    price: productsList[index].price,
+                                    video: productsList[index].video ?? "",
+                                    totalAmount: 0,
+                                    addItemToCart: () {
+                                      totalProductsInCart++;
+                                      setState(() {});
+                                    },
+                                    removeItemFromCart: () {
+                                      totalProductsInCart--;
+                                      setState(() {});
+                                    },
+                                    imgList: productsList[index].images,
+                                  ),
+                                );
+                              },
+                            ),
                 ],
               ),
             ),
@@ -215,7 +292,6 @@ class _CategoryDetailsState extends State<CategoryDetails>
     tabsList.add(InkWell(
       onTap: () async {
         tabController.animateTo(0);
-
         apiPage = 1;
         // await getProducts(isSwitch: true);
       },

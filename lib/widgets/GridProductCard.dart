@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fbTrade/global.dart';
 import 'package:flutter/material.dart';
 import 'package:fbTrade/I10n/app_localizations.dart';
 import 'package:fbTrade/services/cart_services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class GridProductCard extends StatefulWidget {
@@ -298,7 +300,7 @@ class _GridProductCardState extends State<GridProductCard> {
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 5),
               child: Text("${Localizations.localeOf(context).languageCode == "en" ? widget.titleEn : widget.titleAr}",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Cairo', fontSize: 14), overflow: TextOverflow.ellipsis),
+                  style: TextStyle(color: mainColor, fontWeight: FontWeight.bold, fontFamily: 'Cairo', fontSize: 14), overflow: TextOverflow.ellipsis),
             ),
           ),
           Align(
@@ -308,7 +310,7 @@ class _GridProductCardState extends State<GridProductCard> {
                 child: Text(
                   "${widget.price} QAR",
                   textDirection: TextDirection.ltr,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontFamily: 'Cairo', fontSize: 13),
+                  style: TextStyle(color:mainColor,fontWeight: FontWeight.bold, fontFamily: 'Cairo', fontSize: 13),
                 ),
               )),
           Row(
@@ -316,18 +318,26 @@ class _GridProductCardState extends State<GridProductCard> {
             children: [
               totalAmount == 0
                   ? InkWell(
-                onTap: () {
+                onTap: () async {
+                                                        SharedPreferences prefs =
+                                          await SharedPreferences.getInstance();
+                                      String token =
+                                          prefs.getString('token') ?? "";
+
+                                      if (token == "") {
+                                        showMysigninDialog(context);
+                                      } else {
                   widget.addItemToCart();
                   addItemToCart();
                   totalAmount++;
-                  setState(() {});
+                  setState(() {});}
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.25,
                   height: MediaQuery.of(context).size.height * 0.045,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(5)),
-                    color: Colors.black,
+                    color: mainColor,
                   ),
                   alignment: Alignment.center,
                   child: Text("Add +", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white,fontSize: 16)),
@@ -428,10 +438,10 @@ class _GridProductCardState extends State<GridProductCard> {
                   height: MediaQuery.of(context).size.height * 0.045,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(5)),
-                      border: Border.all(color: Colors.black)
+                      border: Border.all(color: mainColor)
                   ),
                   alignment: Alignment.center,
-                  child: Text("${AppLocalizations.of(context).translate('more')}",style: TextStyle(fontSize: 16)),
+                  child: Text("${AppLocalizations.of(context).translate('more')}",style: TextStyle(fontSize: 16,color:mainColor)),
                 ),
               ),
             ],
