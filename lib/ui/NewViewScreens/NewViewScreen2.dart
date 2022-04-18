@@ -10,7 +10,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../products_screen.dart';
 
 class NewViewScreenTwo extends StatefulWidget {
-  List<HomeCategory> list = [];
+  List<HomeCategory>? list = [];
   NewViewScreenTwo({this.list});
   @override
   _NewViewScreenTwoState createState() => _NewViewScreenTwoState();
@@ -23,7 +23,7 @@ class _NewViewScreenTwoState extends State<NewViewScreenTwo> {
       primary: false,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      itemCount: widget.list.length,
+      itemCount: widget.list!.length,
       itemBuilder: (context, index) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,8 +35,8 @@ class _NewViewScreenTwoState extends State<NewViewScreenTwo> {
                 children: [
                   Text(
                     Localizations.localeOf(context).languageCode == "en"
-                        ? "${widget.list[index].titleen}"
-                        : "${widget.list[index].titlear}",
+                        ? "${widget.list![index].titleen}"
+                        : "${widget.list![index].titlear}",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.start,
                   ),
@@ -44,12 +44,12 @@ class _NewViewScreenTwoState extends State<NewViewScreenTwo> {
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => CategoryDetails(
-                            widget.list[index],
+                            widget.list![index],
                             Localizations.localeOf(context).languageCode),
                       ));
                     },
                     child: Text(
-                      "${"${AppLocalizations.of(context).translate('seeall')}"}",
+                      "${"${AppLocalizations.of(context)!.translate('seeall')}"}",
                       style: TextStyle(
                           fontSize: 18, fontWeight: FontWeight.normal),
                       textAlign: TextAlign.start,
@@ -61,22 +61,22 @@ class _NewViewScreenTwoState extends State<NewViewScreenTwo> {
             InkWell(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => CategoryDetails(widget.list[index],
+                  builder: (context) => CategoryDetails(widget.list![index],
                       Localizations.localeOf(context).languageCode),
                 ));
               },
               child: Container(
                 height: (Localizations.localeOf(context).languageCode == "en" &&
-                            widget.list[index].picpathEn.isEmpty) ||
+                            widget.list![index].picpathEn!.isEmpty) ||
                         (Localizations.localeOf(context).languageCode == "ar" &&
-                            widget.list[index].picpath.isEmpty)
+                            widget.list![index].picpath!.isEmpty)
                     ? 10
                     : MediaQuery.of(context).size.height * 0.2,
                 width: MediaQuery.of(context).size.width,
                 child: CachedNetworkImage(
                   imageUrl: Localizations.localeOf(context).languageCode == "en"
-                      ? "${widget.list[index].picpathEn}"
-                      : "${widget.list[index].picpath}",
+                      ? "${widget.list![index].picpathEn}"
+                      : "${widget.list![index].picpath}",
                   height: 200,
                   fit: BoxFit.cover,
                 ),
@@ -86,18 +86,18 @@ class _NewViewScreenTwoState extends State<NewViewScreenTwo> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.3,
               child: ListView.builder(
-                itemCount: widget.list[index].products.length,
+                itemCount: widget.list![index].products!.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index2) {
                   return InkWell(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => ProductsDetails(
-                            product: widget.list[index].products[index2]),
+                            product: widget.list![index].products![index2]),
                       ));
                     },
                     child: ProductCard1(
-                      product: widget.list[index].products[index2],
+                      product: widget.list![index].products![index2],
                     ),
                   );
                 },

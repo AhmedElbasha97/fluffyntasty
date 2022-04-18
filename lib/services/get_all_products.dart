@@ -8,7 +8,7 @@ class GetAllProducts {
 
   Future getAllProducts(int page, String token) async {
     Response response;
-    List<ProductModel> productModelList = List<ProductModel>();
+    List<ProductModel> productModelList = <ProductModel>[];
 
     try {
       if (token.isEmpty)
@@ -23,14 +23,14 @@ class GetAllProducts {
         productModelList.add(ProductModel.fromJson(element));
       });
     } on DioError catch (e) {
-      print('error in get products => ${e.response.data}');
+      print('error in get products => ${e.response!.data}');
     }
     return productModelList;
   }
 
-  Future getProductsbyCategory(int page, String token, String id) async {
+  Future getProductsbyCategory(int page, String? token, String? id) async {
     Response response;
-    List<ProductModel> productModelList = List<ProductModel>();
+    List<ProductModel> productModelList = <ProductModel>[];
 
     String link = "$url$byCategory/$id/page/$page";
 
@@ -49,7 +49,7 @@ class GetAllProducts {
         productModelList.add(ProductModel.fromJson(element));
       });
     } on DioError catch (e) {
-      print('error in get products => ${e.response.data}');
+      print('error in get products => ${e.response!.data}');
     }
     return productModelList;
   }

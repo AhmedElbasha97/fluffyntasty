@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fbTrade/global.dart';
 import 'package:fbTrade/ui/men_or_women.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,11 +28,11 @@ class _SplashScreenState extends State<SplashScreen>
                 height: 200,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: appInfo == null ||
-                            appInfo.logo == null ||
-                            appInfo.logo == ""
+                    image: (appInfo == null ||
+                            appInfo!.logo == null ||
+                            appInfo!.logo == ""
                         ? AssetImage("assets/icon/logo.png")
-                        : CachedNetworkImageProvider("${appInfo.logo}"),
+                        : CachedNetworkImageProvider("${appInfo!.logo}")) as ImageProvider<Object>,
                     fit: BoxFit.scaleDown,
                   ),
                 )),

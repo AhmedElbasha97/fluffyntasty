@@ -1,20 +1,20 @@
 class CategoryModel {
-  String id;
-  List<Sub> sub;
-  List<WrokHours> wrokHours;
-  String titleAr;
-  String facebook;
-  String insgram;
-  String youtube;
-  String whatsapp;
-  String snapchat;
-  String titleEn;
-  String detailsAr;
-  String detailsEn;
-  String picpath;
-  String picpathEn;
-  String lat;
-  String long;
+  String? id;
+  List<Sub>? sub;
+  List<WrokHours>? wrokHours;
+  String? titleAr;
+  String? facebook;
+  String? insgram;
+  String? youtube;
+  String? whatsapp;
+  String? snapchat;
+  String? titleEn;
+  String? detailsAr;
+  String? detailsEn;
+  String? picpath;
+  String? picpathEn;
+  String? lat;
+  String? long;
 
   CategoryModel({
     this.id,
@@ -38,15 +38,15 @@ class CategoryModel {
   CategoryModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     if (json['sub'] != null) {
-      sub = new List<Sub>();
+      sub = <Sub>[];
       json['sub'].forEach((v) {
-        sub.add(new Sub.fromJson(v));
+        sub!.add(new Sub.fromJson(v));
       });
     }
     if (json['wrok_hours'] != null) {
-      wrokHours = new List<WrokHours>();
+      wrokHours = <WrokHours>[];
       json['wrok_hours'].forEach((v) {
-        wrokHours.add(new WrokHours.fromJson(v));
+        wrokHours!.add(new WrokHours.fromJson(v));
       });
     }
     titleAr = json['title_ar'];
@@ -66,10 +66,10 @@ class CategoryModel {
 }
 
 class Sub {
-  String id;
-  String titlear;
-  String titleen;
-  String picpath;
+  String? id;
+  String? titlear;
+  String? titleen;
+  String? picpath;
 
   Sub({this.id, this.titlear, this.titleen, this.picpath});
 
@@ -82,10 +82,10 @@ class Sub {
 }
 
 class WrokHours {
-  String id;
-  String titlear;
-  String titleen;
-  String hours;
+  String? id;
+  String? titlear;
+  String? titleen;
+  String? hours;
 
   WrokHours({this.titlear, this.titleen, this.hours, this.id});
 

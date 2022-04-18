@@ -6,10 +6,10 @@ class ProductColor {
     this.code,
   });
 
-  String colorId;
-  String titlear;
-  String titleen;
-  String code;
+  String? colorId;
+  String? titlear;
+  String? titleen;
+  String? code;
 
   factory ProductColor.fromJson(Map<String, dynamic> json) => ProductColor(
         colorId: json["color_id"] == null ? null : json["color_id"],

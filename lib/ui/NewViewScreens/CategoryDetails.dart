@@ -21,16 +21,16 @@ class CategoryDetails extends StatefulWidget {
 
 class _CategoryDetailsState extends State<CategoryDetails>
     with SingleTickerProviderStateMixin {
-  TabController tabController;
+  TabController? tabController;
   List<Widget> tabsList = [];
   bool isLoading = false;
   bool isbodyLoading = false;
   bool isLinear = true;
   int apiPage = 1;
   int totalProductsInCart = 0;
-  List<ProductModel> productsList = [];
-  String selectedSubCategoryId;
-  String token;
+  List<ProductModel>? productsList = [];
+  String? selectedSubCategoryId;
+  String? token;
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _CategoryDetailsState extends State<CategoryDetails>
     super.initState();
     getToken();
     tabController =
-        TabController(length: (widget.category.sub.length + 1), vsync: this);
+        TabController(length: (widget.category.sub!.length + 1), vsync: this);
     initListOfTabs();
   }
 
@@ -116,18 +116,18 @@ class _CategoryDetailsState extends State<CategoryDetails>
                 children: [
                   Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                   widget.category.slider == null ||
-                          widget.category.slider.isEmpty
+                          widget.category.slider!.isEmpty
                       ? Container()
                       : CarouselSlider.builder(
-                          itemCount: widget.category.slider.length,
-                          itemBuilder: (BuildContext context, int itemIndex) =>
-                              Container(
+                          itemCount: widget.category.slider!.length,
+                          itemBuilder: (BuildContext context, int itemIndex,int realIndex) {
+                             return Container(
                             margin: EdgeInsets.all(5.0),
                             child: ClipRRect(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5.0)),
                               child: CachedNetworkImage(
-                                imageUrl: widget.category.slider[itemIndex],
+                                imageUrl: widget.category.slider![itemIndex],
                                 fit: BoxFit.cover,
                                 width: 1000.0,
                                 placeholder: (context, url) => SizedBox(
@@ -142,7 +142,7 @@ class _CategoryDetailsState extends State<CategoryDetails>
                                 ),
                               ),
                             ),
-                          ),
+                          );},
                           options: CarouselOptions(
                             autoPlay: true,
                             enlargeCenterPage: true,
@@ -208,23 +208,23 @@ class _CategoryDetailsState extends State<CategoryDetails>
                               primary: false,
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
-                              itemCount: productsList.length,
+                              itemCount: productsList!.length,
                               itemBuilder: (context, index) {
                                 return Padding(
                                   padding: EdgeInsets.symmetric(
                                       vertical: 5, horizontal: 5),
                                   child: LinearProductCard(
-                                    id: productsList[index].id,
-                                    titleEn: productsList[index].titleEn,
-                                    titleAr: productsList[index].titleAr,
-                                    detailsEn: productsList[index].detailsEn,
-                                    detailsAr: productsList[index].detailsAr,
-                                    price: productsList[index].price,
-                                    video: productsList[index].video ?? "",
-                                    salePrice: productsList[index].salePrice,
+                                    id: productsList![index].id,
+                                    titleEn: productsList![index].titleEn,
+                                    titleAr: productsList![index].titleAr,
+                                    detailsEn: productsList![index].detailsEn,
+                                    detailsAr: productsList![index].detailsAr,
+                                    price: productsList![index].price,
+                                    video: productsList![index].video ?? "",
+                                    salePrice: productsList![index].salePrice,
                                     isAllChecked: false,
                                     totalAmountInCart:
-                                        productsList[index].quantity ?? 0,
+                                        productsList![index].quantity ?? 0,
                                     addItemToCart: () {
                                       totalProductsInCart++;
                                       setState(() {});
@@ -237,7 +237,7 @@ class _CategoryDetailsState extends State<CategoryDetails>
                                         setState(() {});
                                       });
                                     },
-                                    imgList: productsList[index].images,
+                                    imgList: productsList![index].images,
                                   ),
                                 );
                               },
@@ -255,19 +255,19 @@ class _CategoryDetailsState extends State<CategoryDetails>
                                               1.7)),
                               padding: EdgeInsets.symmetric(horizontal: 5),
                               physics: NeverScrollableScrollPhysics(),
-                              itemCount: productsList.length,
+                              itemCount: productsList!.length,
                               itemBuilder: (context, index) {
                                 return Padding(
                                   padding: EdgeInsets.symmetric(
                                       vertical: 5, horizontal: 5),
                                   child: GridProductCard(
-                                    id: productsList[index].id,
-                                    titleEn: productsList[index].titleEn,
-                                    titleAr: productsList[index].titleAr,
-                                    detailsEn: productsList[index].detailsEn,
-                                    detailsAr: productsList[index].detailsAr,
-                                    price: productsList[index].price,
-                                    video: productsList[index].video ?? "",
+                                    id: productsList![index].id,
+                                    titleEn: productsList![index].titleEn,
+                                    titleAr: productsList![index].titleAr,
+                                    detailsEn: productsList![index].detailsEn,
+                                    detailsAr: productsList![index].detailsAr,
+                                    price: productsList![index].price,
+                                    video: productsList![index].video ?? "",
                                     totalAmount: 0,
                                     addItemToCart: () {
                                       totalProductsInCart++;
@@ -277,7 +277,7 @@ class _CategoryDetailsState extends State<CategoryDetails>
                                       totalProductsInCart--;
                                       setState(() {});
                                     },
-                                    imgList: productsList[index].images,
+                                    imgList: productsList![index].images,
                                   ),
                                 );
                               },
@@ -291,7 +291,7 @@ class _CategoryDetailsState extends State<CategoryDetails>
   initListOfTabs() {
     tabsList.add(InkWell(
       onTap: () async {
-        tabController.animateTo(0);
+        tabController!.animateTo(0);
         apiPage = 1;
         // await getProducts(isSwitch: true);
       },
@@ -313,15 +313,15 @@ class _CategoryDetailsState extends State<CategoryDetails>
       ),
     ));
 
-    for (int i = 0; i < widget.category.sub.length; i++) {
+    for (int i = 0; i < widget.category.sub!.length; i++) {
       tabsList.add(InkWell(
         onTap: () async {
-          tabController.animateTo(i + 1);
+          tabController!.animateTo(i + 1);
           apiPage = 1;
           isbodyLoading = true;
           setState(() {});
-          productsList.clear();
-          selectedSubCategoryId = widget.category.sub[i].id;
+          productsList!.clear();
+          selectedSubCategoryId = widget.category.sub![i].id;
           await getProductsBySubCategory(selectedSubCategoryId);
           isbodyLoading = false;
           setState(() {});
@@ -331,10 +331,10 @@ class _CategoryDetailsState extends State<CategoryDetails>
             CircleAvatar(
               radius: 20,
               backgroundImage:
-                  NetworkImage("${widget.category.sub[i].picpath}"),
+                  NetworkImage("${widget.category.sub![i].picpath}"),
             ),
             Text(
-              "${widget.lang == "en" ? widget.category.sub[i].titleen : widget.category.sub[i].titlear}",
+              "${widget.lang == "en" ? widget.category.sub![i].titleen : widget.category.sub![i].titlear}",
               style: TextStyle(fontSize: 14, color: mainColor),
             )
           ],
@@ -343,8 +343,8 @@ class _CategoryDetailsState extends State<CategoryDetails>
     }
   }
 
-  getProductsBySubCategory(String id) async {
-    productsList
+  getProductsBySubCategory(String? id) async {
+    productsList!
         .addAll(await GetCategories().getSubCategoryProducts(id, apiPage));
   }
 }

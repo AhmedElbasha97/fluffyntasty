@@ -1,10 +1,10 @@
 class MainCategory {
-  String mainCategoryId;
-  String titlear;
-  String titleen;
-  String categoryType;
-  String picpath;
-  String picpathEn;
+  String? mainCategoryId;
+  String? titlear;
+  String? titleen;
+  String? categoryType;
+  String? picpath;
+  String? picpathEn;
 
   MainCategory(
       {this.mainCategoryId,

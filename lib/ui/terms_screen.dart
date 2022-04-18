@@ -10,7 +10,7 @@ class TermsScreen extends StatefulWidget {
 }
 
 class _TermsScreenState extends State<TermsScreen> {
-  String term = "";
+  String? term = "";
 
   getTermTxt() async {
     Response response =
@@ -32,7 +32,7 @@ class _TermsScreenState extends State<TermsScreen> {
         iconTheme: new IconThemeData(color: Colors.white),
         backgroundColor: mainColor,
         title: Text(
-          "${AppLocalizations.of(context).translate('terms')}",
+          "${AppLocalizations.of(context)!.translate('terms')}",
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,

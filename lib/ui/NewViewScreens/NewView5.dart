@@ -7,7 +7,7 @@ import 'package:fbTrade/ui/productDetails.dart';
 import 'package:flutter/material.dart';
 
 class NewViewScreen5 extends StatefulWidget {
-  List<HomeCategory> list = [];
+  List<HomeCategory>? list = [];
 
   NewViewScreen5({this.list});
 
@@ -25,12 +25,12 @@ class _NewViewScreen5State extends State<NewViewScreen5> {
         primary: true,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemCount: widget.list.length,
+        itemCount: widget.list!.length,
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => CategoryDetails(widget.list[index],
+                  builder: (context) => CategoryDetails(widget.list![index],
                       Localizations.localeOf(context).languageCode),
                 ));
             },
@@ -44,8 +44,8 @@ class _NewViewScreen5State extends State<NewViewScreen5> {
                       child: CachedNetworkImage(
                         imageUrl:
                             Localizations.localeOf(context).languageCode == "en"
-                                ? "${widget.list[index].picpathEn}"
-                                : "${widget.list[index].picpath}",
+                                ? "${widget.list![index].picpathEn}"
+                                : "${widget.list![index].picpath}",
                         fit: BoxFit.cover,
                       ),
                       decoration: BoxDecoration(boxShadow: [
@@ -63,7 +63,7 @@ class _NewViewScreen5State extends State<NewViewScreen5> {
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4,
                     ),
-                    itemCount: widget.list[index].products.length,
+                    itemCount: widget.list![index].products!.length,
                     itemBuilder: (BuildContext context, int index2) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 5.0),
@@ -71,7 +71,7 @@ class _NewViewScreen5State extends State<NewViewScreen5> {
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => ProductsDetails(
-                                  product: widget.list[index].products[index2]),
+                                  product: widget.list![index].products![index2]),
                             ));
                           },
                           child: Column(
@@ -82,14 +82,14 @@ class _NewViewScreen5State extends State<NewViewScreen5> {
                                     radius: 28,
                                     backgroundColor: mainColor,
                                     backgroundImage: NetworkImage(
-                                      "${widget.list[index].products[index2].images.isEmpty ? "" : widget.list[index].products[index2].images.first}",
+                                      "${widget.list![index].products![index2].images!.isEmpty ? "" : widget.list![index].products![index2].images!.first}",
                                     )),
                               ),
                               Text(
                                 Localizations.localeOf(context).languageCode ==
                                         "en"
-                                    ? "${widget.list[index].products[index2].titleEn}"
-                                    : "${widget.list[index].products[index2].titleAr}",
+                                    ? "${widget.list![index].products![index2].titleEn}"
+                                    : "${widget.list![index].products![index2].titleAr}",
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,

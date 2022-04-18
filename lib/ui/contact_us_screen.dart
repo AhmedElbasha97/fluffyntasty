@@ -11,8 +11,8 @@ class ContactUsScreen extends StatefulWidget {
 }
 
 class _ContactUsScreenState extends State<ContactUsScreen> {
-  String phoneTxt;
-  String emailTxt;
+  String? phoneTxt;
+  String? emailTxt;
   bool isLoading = true;
 
   getContacts() async {
@@ -57,7 +57,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mainColor,
-        title: Text("${AppLocalizations.of(context).translate('callUs')}",
+        title: Text("${AppLocalizations.of(context)!.translate('callUs')}",
             style: TextStyle(color: Colors.white)),
         centerTitle: true,
         leading: IconButton(

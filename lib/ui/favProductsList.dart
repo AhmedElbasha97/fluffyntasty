@@ -36,15 +36,15 @@ class _FavProductsScreenState extends State<FavProductsScreen> {
           return ListTile(
             leading: Text(
               Localizations.localeOf(context).languageCode == "en"
-                  ? products[index].titleEn
-                  : products[index].titleAr,
+                  ? products[index].titleEn!
+                  : products[index].titleAr!,
             ),
             trailing: Container(
               height: 50,
               width: 50,
-              child: Image.network(products[index].photos.isEmpty
+              child: Image.network(products[index].photos!.isEmpty
                   ? ""
-                  : products[index].photos.first),
+                  : products[index].photos!.first),
             ),
           );
         },

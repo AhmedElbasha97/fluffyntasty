@@ -8,19 +8,19 @@ class CartServices {
   final String addToCartEndpoint = "cart";
   final String removeFromCartEndpoint = "deletecart";
   final String decreaseFromCartEnPoint = "updatecart";
-  static int totalPrice;
-  static int totalQuantity;
+  static int? totalPrice;
+  static int? totalQuantity;
 
   Future<List<CartProductModel>> viewCart(bool inCartSelected) async {
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String token = prefs.getString('token');
+    String? token = prefs.getString('token');
 
-    List<CartProductModel> cartProductModelList = List<CartProductModel>();
+      List<CartProductModel> cartProductModelList = <CartProductModel>[];
     try {
       response = await Dio().post("$url$viewCartEndpoint",
           options: Options(headers: {"token": "$token"}));
-      List data = response.data['data'];
+      List? data = response.data['data'];
       totalPrice = response.data['total'];
       totalQuantity = response.data['total_quantity'];
       if (data != null)
@@ -33,10 +33,10 @@ class CartServices {
     return cartProductModelList;
   }
 
-  addToCart(var productId, [String colorId, String sizeId]) async {
+  addToCart(var productId, [String? colorId, String? sizeId]) async {
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String token = prefs.getString('token');
+    String? token = prefs.getString('token');
     try {
       var body = FormData.fromMap({
         "product_id": "$productId",
@@ -52,10 +52,10 @@ class CartServices {
     }
   }
 
-  decreaseFromCart(var productId, int quantity) async {
+  decreaseFromCart(var productId, int? quantity) async {
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String token = prefs.getString('token');
+    String? token = prefs.getString('token');
     try {
       response = await Dio().post('$url$decreaseFromCartEnPoint',
           data: {"product_id": "$productId", "quantity": "$quantity"},
@@ -69,7 +69,7 @@ class CartServices {
   removeFromCart(var productId) async {
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String token = prefs.getString('token');
+    String? token = prefs.getString('token');
     try {
       response = await Dio().post('$url$removeFromCartEndpoint',
           data: {"product_id": "$productId"},

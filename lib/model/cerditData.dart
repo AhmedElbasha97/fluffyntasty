@@ -4,8 +4,8 @@ class CreditData {
     this.data,
   });
 
-  bool status;
-  List<Datum> data;
+  bool? status;
+  List<Datum>? data;
 
   factory CreditData.fromJson(Map<String, dynamic> json) => CreditData(
         status: json["status"],
@@ -21,8 +21,8 @@ class Datum {
     this.active,
   });
 
-  String codes;
-  String active;
+  String? codes;
+  String? active;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         codes: json["codes"],

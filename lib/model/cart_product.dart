@@ -1,14 +1,14 @@
 class CartProductModel {
-  String id;
-  String titleAr;
-  String titleEn;
-  String price;
-  String quantity;
-  int quantityInCart;
-  String salePrice;
-  String image;
-  String categoryAr;
-  String categoryEn;
+  String? id;
+  String? titleAr;
+  String? titleEn;
+  String? price;
+  String? quantity;
+  int? quantityInCart;
+  String? salePrice;
+  String? image;
+  String? categoryAr;
+  String? categoryEn;
 
   CartProductModel(
       {this.id,

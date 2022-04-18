@@ -8,20 +8,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class GridProductCard extends StatefulWidget {
-  String id;
-  Function addItemToCart;
-  Function removeItemFromCart;
-  List imgList;
+  String? id;
+  Function? addItemToCart;
+  Function? removeItemFromCart;
+  List? imgList;
   String image;
-  String detailsEn;
-  String detailsAr;
-  bool isAllChecked;
+  String? detailsEn;
+  String? detailsAr;
+  bool? isAllChecked;
   bool hideCheckBox;
   bool checkBoxMark;
-  String titleAr;
-  String titleEn;
-  String price;
-  String video;
+  String? titleAr;
+  String? titleEn;
+  String? price;
+  String? video;
   int totalAmount;
 
   GridProductCard(
@@ -47,20 +47,20 @@ class GridProductCard extends StatefulWidget {
 
 class _GridProductCardState extends State<GridProductCard> {
   int totalAmount = 0;
-  List child;
+  List? child;
   int _current = 0;
-  bool checkBoxValue;
+  bool? checkBoxValue;
 
   // VideoPlayerController _controller;
-  YoutubePlayerController _controller;
+  YoutubePlayerController? _controller;
 
 
   bool isLoadingVideo = false;
   bool _isPlayerReady = false;
 
 
-  static List<T> map<T>(List list, Function handler) {
-    List<T> result = [];
+  static List<T?> map<T>(List list, Function handler) {
+    List<T?> result = [];
     for (var i = 0; i < list.length; i++) {
       result.add(handler(i, list[i]));
     }
@@ -70,7 +70,7 @@ class _GridProductCardState extends State<GridProductCard> {
 
   photoSlider() {
     child = map<Widget>(
-      widget.imgList,
+      widget.imgList!,
           (index, i) {
         return Container(
           margin: EdgeInsets.all(5.0),
@@ -94,15 +94,15 @@ class _GridProductCardState extends State<GridProductCard> {
                 alignment: Alignment.topRight,
                 child: IconButton(
                   onPressed: (){
-                    if (widget.video.isNotEmpty) _controller.pause();
+                    if (widget.video!.isNotEmpty) _controller!.pause();
                     Navigator.of(context).pop();
                   },
                   icon: Icon(Icons.clear,color: Colors.red,),
                 ),
               ),
-              child.isNotEmpty ?
+              child!.isNotEmpty ?
               CarouselSlider(
-                items: child,
+                items: child as List<Widget>?,
                 options: CarouselOptions(
                   autoPlay: true,
                   enlargeCenterPage: true,
@@ -131,17 +131,17 @@ class _GridProductCardState extends State<GridProductCard> {
 //                ),
 //              ),
               Padding(padding: EdgeInsets.only(top: 10)),
-              widget.video.isNotEmpty
+              widget.video!.isNotEmpty
                   ? InkWell(
                 onTap: () {
                   setState(() {
-                    _controller.value.isPlaying ? _controller.pause() : _controller.play();
+                    _controller!.value.isPlaying ? _controller!.pause() : _controller!.play();
                   });
                 },
                 child: SizedBox(
                   height: 200,
                   child: YoutubePlayer(
-                    controller: _controller,
+                    controller: _controller!,
                     showVideoProgressIndicator: true,
                     aspectRatio: 16 / 9,
 //                    onReady: (){
@@ -212,7 +212,7 @@ class _GridProductCardState extends State<GridProductCard> {
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
                 child: CachedNetworkImage(
-                  imageUrl: widget.image.isEmpty ? widget.imgList.first : widget.image,
+                  imageUrl: widget.image.isEmpty ? widget.imgList!.first : widget.image,
                   fit: BoxFit.cover,
                 ),
               )
@@ -252,16 +252,16 @@ class _GridProductCardState extends State<GridProductCard> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    if (widget.video.isNotEmpty)
+    if (widget.video!.isNotEmpty)
       _controller = YoutubePlayerController(
-          initialVideoId: YoutubePlayer.convertUrlToId("${widget.video}"),
+          initialVideoId: YoutubePlayer.convertUrlToId("${widget.video}")!,
           flags: YoutubePlayerFlags(
             autoPlay: true,
           ));
 
     totalAmount = widget.totalAmount;
 
-    if (widget.imgList.isNotEmpty) photoSlider();
+    if (widget.imgList!.isNotEmpty) photoSlider();
   }
 
   @override
@@ -282,7 +282,7 @@ class _GridProductCardState extends State<GridProductCard> {
                 borderRadius: BorderRadius.all(Radius.circular(8)),
               ),
               child: CachedNetworkImage(
-                imageUrl: widget.image.isEmpty ? "${widget.imgList.first}" : "${widget.image}",
+                imageUrl: widget.image.isEmpty ? "${widget.imgList!.first}" : "${widget.image}",
                 placeholder: (context, url) => SizedBox(
                   width: MediaQuery.of(context).size.width * 0.2,
                   height: MediaQuery.of(context).size.height * 0.1,
@@ -327,7 +327,7 @@ class _GridProductCardState extends State<GridProductCard> {
                                       if (token == "") {
                                         showMysigninDialog(context);
                                       } else {
-                  widget.addItemToCart();
+                  widget.addItemToCart!();
                   addItemToCart();
                   totalAmount++;
                   setState(() {});}
@@ -353,7 +353,7 @@ class _GridProductCardState extends State<GridProductCard> {
                       flex: 1,
                       child: InkWell(
                         onTap: () {
-                          widget.addItemToCart();
+                          widget.addItemToCart!();
                           addItemToCart();
                           totalAmount++;
                           print(widget.totalAmount);
@@ -388,7 +388,7 @@ class _GridProductCardState extends State<GridProductCard> {
                       child: InkWell(
                         onTap: () {
                           if (totalAmount > 0) {
-                            widget.removeItemFromCart();
+                            widget.removeItemFromCart!();
                             totalAmount--;
                             decreaseItemFromCart(totalAmount);
                             if (totalAmount == 0) {
@@ -441,7 +441,7 @@ class _GridProductCardState extends State<GridProductCard> {
                       border: Border.all(color: mainColor)
                   ),
                   alignment: Alignment.center,
-                  child: Text("${AppLocalizations.of(context).translate('more')}",style: TextStyle(fontSize: 16,color:mainColor)),
+                  child: Text("${AppLocalizations.of(context)!.translate('more')}",style: TextStyle(fontSize: 16,color:mainColor)),
                 ),
               ),
             ],

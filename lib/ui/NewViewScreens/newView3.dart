@@ -5,7 +5,7 @@ import 'package:fbTrade/ui/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class NewViewScreenThree extends StatefulWidget {
-  List<HomeCategory> list = [];
+  List<HomeCategory>? list = [];
 
   NewViewScreenThree({this.list});
 
@@ -22,14 +22,14 @@ class _NewViewScreenThreeState extends State<NewViewScreenThree> {
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
       ),
-      itemCount: widget.list.length,
+      itemCount: widget.list!.length,
       itemBuilder: (BuildContext context, int index) {
         return Padding(
           padding: const EdgeInsets.all(10.0),
           child: InkWell(
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => CategoryDetails(widget.list[index], 
+                builder: (context) => CategoryDetails(widget.list![index], 
                     Localizations.localeOf(context).languageCode),
               ));
             },
@@ -42,14 +42,14 @@ class _NewViewScreenThreeState extends State<NewViewScreenThree> {
                     backgroundColor: mainColor,
                     backgroundImage: NetworkImage(
                         Localizations.localeOf(context).languageCode == "en"
-                            ? "${widget.list[index].picpathEn}"
-                            : "${widget.list[index].picpath}"),
+                            ? "${widget.list![index].picpathEn}"
+                            : "${widget.list![index].picpath}"),
                   ),
                 ),
                 Text(
                   Localizations.localeOf(context).languageCode == "en"
-                      ? "${widget.list[index].titleen}"
-                      : "${widget.list[index].titlear}",
+                      ? "${widget.list![index].titleen}"
+                      : "${widget.list![index].titlear}",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,

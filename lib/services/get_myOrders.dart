@@ -10,8 +10,8 @@ class GetMyOrders {
   Future<List<OrdersModel>> getMyOrders() async {
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String token = prefs.getString('token');
-    List<OrdersModel> ordersModelList = List<OrdersModel>();
+    String? token = prefs.getString('token');
+    List<OrdersModel> ordersModelList = <OrdersModel>[];
     try {
       response = await Dio().post(
         "$url$orders",
@@ -20,7 +20,7 @@ class GetMyOrders {
       print('***************************************');
       print(response.data);
       print('***************************************');
-      List data = response.data['data'];
+      List? data = response.data['data'];
       if (data != null && data.isNotEmpty) {
         ordersModelList.clear();
         data.forEach((element) {
@@ -34,10 +34,10 @@ class GetMyOrders {
     return ordersModelList;
   }
 
-  orderRecieved({String id}) async {
+  orderRecieved({String? id}) async {
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String token = prefs.getString('token');
+    String? token = prefs.getString('token');
     String userId = prefs.getString('id') ?? "";
 
     var body = {"checkout_id": id, "member_id": userId};

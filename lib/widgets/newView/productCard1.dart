@@ -2,7 +2,7 @@ import 'package:fbTrade/model/product.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard1 extends StatefulWidget {
-  ProductModel product;
+  ProductModel? product;
   ProductCard1({this.product});
   @override
   _ProductCard1State createState() => _ProductCard1State();
@@ -31,7 +31,7 @@ class _ProductCard1State extends State<ProductCard1> {
                   image: DecorationImage(
                     fit: BoxFit.cover,
                     image: NetworkImage(
-                        '${widget.product.images.isEmpty ? "" : widget.product.images.first}'),
+                        '${widget.product!.images!.isEmpty ? "" : widget.product!.images!.first}'),
                   ),
                 ),
               ),
@@ -43,8 +43,8 @@ class _ProductCard1State extends State<ProductCard1> {
                       Flexible(
                         child: Text(
                           Localizations.localeOf(context).languageCode == "en"
-                              ? '${widget.product.titleEn}'
-                              : '${widget.product.titleAr}',
+                              ? '${widget.product!.titleEn}'
+                              : '${widget.product!.titleAr}',
                           style: TextStyle(fontSize: 15.0),
                         ),
                       ),
@@ -93,7 +93,7 @@ class _ProductCard1State extends State<ProductCard1> {
     );
   }
 
-  Icon starIcon(Color color) {
+  Icon starIcon(Color? color) {
     return Icon(
       Icons.star,
       size: 10.0,

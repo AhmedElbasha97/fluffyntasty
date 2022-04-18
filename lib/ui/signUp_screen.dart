@@ -1,12 +1,17 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fbTrade/I10n/app_localizations.dart';
 import 'package:fbTrade/global.dart';
 import 'package:fbTrade/services/registration.dart';
 import 'package:fbTrade/ui/men_or_women.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_place_picker/google_maps_place_picker.dart';
+// import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import 'map_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   bool isCheck;
@@ -30,13 +35,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool phoneError = false;
   bool passwordError = false;
   bool dateError = false;
-  PickResult selectedPlace;
+  // late PickResult selectedPlace;
   TextEditingController addressController = TextEditingController();
-  Position position;
+  LatLng? position;
+  void _navigateAndDisplaySelection(BuildContext context) async {
 
-  getLocation() async {
-    position = await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MapScreen()),
+    );
+    position =result;
+    List<Placemark> i =
+    await placemarkFromCoordinates(result.latitude, result.longitude);
+    Placemark placeMark = i.first;
+    addressController.text="${placeMark.street},${placeMark.subAdministrativeArea},${placeMark.subLocality},${placeMark.country}";
+    ScaffoldMessenger.of(context)
+      ..removeCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text('"${placeMark.street},${placeMark.subAdministrativeArea},${placeMark.subLocality},${placeMark.country}"')));
   }
+
 
   validate(BuildContext context) async {
     if (nameController.text.isEmpty)
@@ -63,7 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         !phoneError &&
         !passwordError &&
         !dateError) {
-      String response = await RegistrationService().registrationService(
+      String? response = await (RegistrationService().registrationService(
         name: nameController.text,
         email: emailController.text,
         phone: phoneController.text,
@@ -71,9 +88,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         gender: "male",
         address: addressController.text,
         birthdayDate: "${dateTime.day}/${dateTime.month}/${dateTime.year}",
-        lat: position == null ? 0.0 : position.latitude,
-        long: position == null ? 0.0 : position.longitude,
-      );
+        lat: position == null ? 0.0 : position!.latitude,
+        long: position == null ? 0.0 : position!.longitude,
+      ) );
       if (response == 'success') {
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => MenOrWomen(),
@@ -92,7 +109,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       appBar: AppBar(
         backgroundColor: mainColor,
         title: Text(
-          "${AppLocalizations.of(context).translate('signUp')}",
+          "${AppLocalizations.of(context)!.translate('signUp')}",
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -113,13 +130,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 Padding(
                     padding: EdgeInsets.only(
                         top: MediaQuery.of(context).padding.top + 20)),
-                appInfo.logo == null || appInfo.logo == ""
+                appInfo!.logo == null || appInfo!.logo == ""
                     ? Image.asset(
                         "assets/icon/logo.png",
                         scale: 3,
                       )
                     : CachedNetworkImage(
-                        imageUrl: "${appInfo.logo}",
+                        imageUrl: "${appInfo!.logo}",
                         fit: BoxFit.scaleDown,
                       ),
                 Padding(
@@ -147,7 +164,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                             borderSide: BorderSide(color: Colors.green)),
                         hintText:
-                            "${AppLocalizations.of(context).translate('name')}"),
+                            "${AppLocalizations.of(context)!.translate('name')}"),
                   ),
                 ),
                 nameError
@@ -177,7 +194,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                             borderSide: BorderSide(color: Colors.green)),
                         hintText:
-                            "${AppLocalizations.of(context).translate('email')}"),
+                            "${AppLocalizations.of(context)!.translate('email')}"),
                   ),
                 ),
                 emailError
@@ -207,7 +224,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                             borderSide: BorderSide(color: Colors.green)),
                         hintText:
-                            "${AppLocalizations.of(context).translate('phoneNumber')}"),
+                            "${AppLocalizations.of(context)!.translate('phoneNumber')}"),
                   ),
                 ),
                 phoneError
@@ -236,7 +253,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             borderRadius: BorderRadius.all(Radius.circular(20)),
                             borderSide: BorderSide(color: Colors.green)),
                         hintText:
-                            "${AppLocalizations.of(context).translate('password')}"),
+                            "${AppLocalizations.of(context)!.translate('password')}"),
                   ),
                 ),
                 passwordError
@@ -251,30 +268,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 RaisedButton(
                   child: Text("select address"),
                   onPressed: () async {
-                    await getLocation();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return PlacePicker(
-                            selectInitialPosition: true,
-                            apiKey: "AIzaSyCCz1qSCW7Q8fiV8cbhro0OqtW-9Z-U-CM",
-                            initialPosition:
-                                LatLng(position.latitude, position.longitude),
-                            useCurrentLocation: true,
-                            onPlacePicked: (result) {
-                              try {
-                                selectedPlace = result;
-                                addressController.text =
-                                    selectedPlace.formattedAddress;
-                                Navigator.of(context).pop();
-                                setState(() {});
-                              } catch (e) {}
-                            },
-                          );
-                        },
-                      ),
-                    );
+                    _navigateAndDisplaySelection(context);
                   },
                 ),
                 SizedBox(
@@ -313,7 +307,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       color: mainColor,
                     ),
                     child: Text(
-                      "${AppLocalizations.of(context).translate('login')}",
+                      "${AppLocalizations.of(context)!.translate('login')}",
                       style: TextStyle(color: Colors.white),
                     ),
                   ),

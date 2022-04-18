@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class MyProductCard extends StatefulWidget {
 
-  final String titleEn;
-  final String price;
-  final String titleAr;
-  final String photo;
+  final String? titleEn;
+  final String? price;
+  final String? titleAr;
+  final String? photo;
 
 
   MyProductCard({this.titleEn, this.price, this.titleAr, this.photo});

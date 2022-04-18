@@ -22,7 +22,6 @@ import 'package:fbTrade/ui/myProducts_screen.dart';
 import 'package:fbTrade/ui/notificationsScreen.dart';
 import 'package:fbTrade/ui/privacyPolicy.dart';
 import 'package:fbTrade/ui/signUp_screen.dart';
-import 'package:fbTrade/ui/supportChat.dart';
 import 'package:fbTrade/ui/terms_screen.dart';
 import 'package:fbTrade/widgets/product_card.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,10 +32,9 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'home_screen.dart';
 
 class MenOrWomen extends StatefulWidget {
-  String id;
+  String? id;
   MenOrWomen({this.id});
   @override
   _MenOrWomenState createState() => _MenOrWomenState();
@@ -45,11 +43,11 @@ class MenOrWomen extends StatefulWidget {
 class _MenOrWomenState extends State<MenOrWomen> {
   TextEditingController searchController = TextEditingController();
   FocusNode searchFocusNode = FocusNode();
-
+  final CarouselController _controller = CarouselController();
   List<HomeCategory> list = [];
   List<ProductModel> products = [];
-  List imgList;
-  List child;
+   List? imgList =[];
+  List<Widget?>? child =[];
   int _current = 0;
   String whatsappNubmer = "";
   bool isCircleView = false;
@@ -61,8 +59,8 @@ class _MenOrWomenState extends State<MenOrWomen> {
   bool isLoading = true;
   bool isSearchClicked = false;
 
-  String name;
-  String token;
+  String? name;
+  String? token;
 
   Future getUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -83,8 +81,8 @@ class _MenOrWomenState extends State<MenOrWomen> {
     imgList = await GetPhotoSlider().getPhotoSlider();
   }
 
-  List<T> map<T>(List list, Function handler) {
-    List<T> result = [];
+  List<T?> map<T>(List list, Function handler) {
+    List<T?> result = [];
     for (var i = 0; i < list.length; i++) {
       result.add(handler(i, list[i]));
     }
@@ -93,9 +91,9 @@ class _MenOrWomenState extends State<MenOrWomen> {
 
   photoSlider() async {
     await getPhotoSlider();
-    print(imgList.first);
+    print(imgList!.first);
     child = map<Widget>(
-      imgList,
+      imgList!,
       (index, i) {
         return Container(
           margin: EdgeInsets.all(5.0),
@@ -149,7 +147,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
       appBar: AppBar(
         backgroundColor: mainColor,
         iconTheme: new IconThemeData(color: Colors.white),
-        title: appInfo.logo == null || appInfo.logo == ""
+        title: appInfo!.logo == null || appInfo!.logo == ""
             ? Image.asset(
                 "assets/icon/appBarLogo.png",
                 scale: 30,
@@ -159,7 +157,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                 height: 50,
                 width: 50,
                 child: CachedNetworkImage(
-                  imageUrl: "${appInfo.logo}",
+                  imageUrl: "${appInfo!.logo}",
                   fit: BoxFit.scaleDown,
                 ),
               ),
@@ -177,13 +175,13 @@ class _MenOrWomenState extends State<MenOrWomen> {
               SizedBox(
                 height: 150,
                 child: Container(
-                  child: appInfo.logo == null || appInfo.logo == ""
+                  child: appInfo!.logo == null || appInfo!.logo == ""
                       ? Image.asset(
                           "assets/icon/logo.png",
                           scale: 3,
                         )
                       : CachedNetworkImage(
-                          imageUrl: "${appInfo.logo}",
+                          imageUrl: "${appInfo!.logo}",
                           fit: BoxFit.scaleDown,
                         ),
                 ),
@@ -192,14 +190,14 @@ class _MenOrWomenState extends State<MenOrWomen> {
                 height: 10,
               ),
               Row(
-                mainAxisAlignment: token == null || token.isEmpty
+                mainAxisAlignment: token == null || token!.isEmpty
                     ? MainAxisAlignment.spaceAround
                     : MainAxisAlignment.center,
                 children: [
-                  token == null || token.isEmpty
+                  token == null || token!.isEmpty
                       ? InkWell(
                           onTap: () {
-                            if (token.isEmpty)
+                            if (token!.isEmpty)
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => SignUpScreen(),
                               ));
@@ -215,7 +213,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                             child: Center(
                               child: Text(
                                 name == null || name == ""
-                                    ? "${AppLocalizations.of(context).translate('newUser')}"
+                                    ? "${AppLocalizations.of(context)!.translate('newUser')}"
                                     : "$name",
                                 style: TextStyle(
                                     color: Colors.white,
@@ -225,7 +223,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                           ),
                         )
                       : Container(),
-                  token == null || token.isEmpty
+                  token == null || token!.isEmpty
                       ? InkWell(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
@@ -242,7 +240,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                                 color: mainColor),
                             child: Center(
                               child: Text(
-                                "${AppLocalizations.of(context).translate('login')}",
+                                "${AppLocalizations.of(context)!.translate('login')}",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
@@ -252,7 +250,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                         )
                       : InkWell(
                           onTap: () async {
-                            bool done = await Navigator.of(context)
+                            bool? done = await Navigator.of(context)
                                 .push(MaterialPageRoute(
                               builder: (context) => EditProfileScreen(),
                             ));
@@ -270,7 +268,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                                 color: mainColor),
                             child: Center(
                               child: Text(
-                                  "${AppLocalizations.of(context).translate('editProfile')}",
+                                  "${AppLocalizations.of(context)!.translate('editProfile')}",
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold)),
@@ -279,7 +277,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                         ),
                 ],
               ),
-              token == null || token.isEmpty
+              token == null || token!.isEmpty
                   ? Container()
                   : Divider(
                       height: 1,
@@ -287,11 +285,11 @@ class _MenOrWomenState extends State<MenOrWomen> {
                       endIndent: 30,
                       indent: 30,
                     ),
-              token == null || token.isEmpty
+              token == null || token!.isEmpty
                   ? Container()
                   : ListTile(
                       title: Text(
-                          "${AppLocalizations.of(context).translate('myProducts')}",
+                          "${AppLocalizations.of(context)!.translate('myProducts')}",
                           style: TextStyle(
                               color: mainColor, fontWeight: FontWeight.bold)),
                       leading: Icon(
@@ -299,7 +297,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                         color: secondColor,
                       ),
                       onTap: () async {
-                        bool done =
+                        bool? done =
                             await Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => MyProductsScreen(),
                         ));
@@ -309,11 +307,11 @@ class _MenOrWomenState extends State<MenOrWomen> {
               SizedBox(
                 height: 10,
               ),
-              token == null || token.isEmpty
+              token == null || token!.isEmpty
                   ? Container()
                   : ListTile(
                       title: Text(
-                          "${AppLocalizations.of(context).translate('cart')}",
+                          "${AppLocalizations.of(context)!.translate('cart')}",
                           style: TextStyle(
                               color: mainColor, fontWeight: FontWeight.bold)),
                       leading: Icon(
@@ -330,7 +328,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                 height: 10,
               ),
               ListTile(
-                title: Text("${AppLocalizations.of(context).translate('home')}",
+                title: Text("${AppLocalizations.of(context)!.translate('home')}",
                     style: TextStyle(
                         color: mainColor, fontWeight: FontWeight.bold)),
                 leading: Icon(
@@ -351,7 +349,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
               ),
               ListTile(
                 title: Text(
-                    "${AppLocalizations.of(context).translate('whoAreWe')}",
+                    "${AppLocalizations.of(context)!.translate('whoAreWe')}",
                     style: TextStyle(
                         color: mainColor, fontWeight: FontWeight.bold)),
                 leading: Icon(
@@ -370,7 +368,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
               ),
               ListTile(
                 title: Text(
-                    "${AppLocalizations.of(context).translate('terms')}",
+                    "${AppLocalizations.of(context)!.translate('terms')}",
                     style: TextStyle(
                         color: mainColor, fontWeight: FontWeight.bold)),
                 leading: Icon(
@@ -389,7 +387,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
               ),
               ListTile(
                 title: Text(
-                    "${AppLocalizations.of(context).translate('privacyPolicy')}",
+                    "${AppLocalizations.of(context)!.translate('privacyPolicy')}",
                     style: TextStyle(
                         color: mainColor, fontWeight: FontWeight.bold)),
                 leading: Icon(
@@ -415,7 +413,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                   color: secondColor,
                 ),
                 onTap: () {
-                  _launchURL("${appInfo.support}");
+                  _launchURL("${appInfo!.support}");
                 },
               ),
               Divider(
@@ -426,7 +424,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
               ),
               ListTile(
                 title: Text(
-                    "${AppLocalizations.of(context).translate('changeLang')}",
+                    "${AppLocalizations.of(context)!.translate('changeLang')}",
                     style: TextStyle(
                         color: mainColor, fontWeight: FontWeight.bold)),
                 leading: Icon(
@@ -437,11 +435,11 @@ class _MenOrWomenState extends State<MenOrWomen> {
                     context: context,
                     builder: (BuildContext context) => changeLangPopUp()),
               ),
-              token == null || token.isEmpty
+              token == null || token!.isEmpty
                   ? Container()
                   : ListTile(
                       title: Text(
-                          "${AppLocalizations.of(context).translate('signOut')}",
+                          "${AppLocalizations.of(context)!.translate('signOut')}",
                           style: TextStyle(
                               color: mainColor, fontWeight: FontWeight.bold)),
                       leading: Icon(
@@ -465,7 +463,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
               ),
               ListTile(
                 title: Text(
-                    "${AppLocalizations.of(context).translate('callUs')}",
+                    "${AppLocalizations.of(context)!.translate('callUs')}",
                     style: TextStyle(
                         color: mainColor, fontWeight: FontWeight.bold)),
                 leading: Icon(
@@ -484,14 +482,14 @@ class _MenOrWomenState extends State<MenOrWomen> {
                 children: [
                   Padding(padding: EdgeInsets.symmetric(horizontal: 1)),
                   InkWell(
-                    onTap: () => _launchURL("${appInfo.facebook}"),
+                    onTap: () => _launchURL("${appInfo!.facebook}"),
                     child: Image.asset(
                       "assets/icon/facebook.png",
                       scale: 1.5,
                     ),
                   ),
                   InkWell(
-                    onTap: () => _launchURL("${appInfo.instagram}"),
+                    onTap: () => _launchURL("${appInfo!.instagram}"),
                     child: Image.asset(
                       "assets/icon/instagram.png",
                       scale: 1.5,
@@ -499,14 +497,14 @@ class _MenOrWomenState extends State<MenOrWomen> {
                   ),
                   InkWell(
                       onTap: () {
-                        _launchURL("https://wa.me/${appInfo.whatsapp}");
+                        _launchURL("https://wa.me/${appInfo!.whatsapp}");
                       },
                       child: Image.asset(
                         "assets/icon/whatsapp.png",
                         scale: 1.5,
                       )),
                   InkWell(
-                    onTap: () => _launchURL("${appInfo.twitter}"),
+                    onTap: () => _launchURL("${appInfo!.twitter}"),
                     child: Image.asset(
                       "assets/icon/twitter.png",
                       scale: 1.5,
@@ -520,7 +518,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                  "${AppLocalizations.of(context).translate('policy1')}",
+                  "${AppLocalizations.of(context)!.translate('policy1')}",
                   style: TextStyle(fontSize: 15),
                 ),
               ),
@@ -528,7 +526,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
                   children: [
-                    Text("${AppLocalizations.of(context).translate('policy2')}",
+                    Text("${AppLocalizations.of(context)!.translate('policy2')}",
                         style: TextStyle(fontSize: 16)),
                     InkWell(
                       onTap: () => _launchURL("https://www.syncqatar.com/"),
@@ -554,7 +552,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Center(
                     child: Text(
-                        "${AppLocalizations.of(context).translate('noCats')}"),
+                        "${AppLocalizations.of(context)!.translate('noCats')}"),
                   ),
                 )
               : GestureDetector(
@@ -564,8 +562,12 @@ class _MenOrWomenState extends State<MenOrWomen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        CarouselSlider(
-                          items: child,
+                        CarouselSlider.builder(
+                          carouselController: _controller,
+                          itemCount: child!.length,
+                          itemBuilder: (BuildContext context, int index, int realIndex) {
+                            return child![index]!;
+                          },
                           options: CarouselOptions(
                             autoPlay: true,
                             enlargeCenterPage: true,
@@ -586,7 +588,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                             children: [
                               IconButton(
                                   onPressed: () {
-                                    _launchURL("${appInfo.support}");
+                                    _launchURL("${appInfo!.support}");
                                   },
                                   icon: Icon(
                                     Icons.chat,
@@ -742,15 +744,15 @@ class _MenOrWomenState extends State<MenOrWomen> {
                                   },
                                 ),
                               )
-                            : appInfo.themeId == "1"
+                            : appInfo!.themeId == "1"
                                 ? NewViewOne(
                                     list: list,
                                   )
-                                : appInfo.themeId == "2"
+                                : appInfo!.themeId == "2"
                                     ? NewViewScreenTwo(list: list)
-                                    : appInfo.themeId == "3"
+                                    : appInfo!.themeId == "3"
                                         ? ScreenViewFour(list: list)
-                                        : appInfo.themeId == "4"
+                                        : appInfo!.themeId == "4"
                                             ? NewViewScreen5(list: list)
                                             : NewViewScreenThree(list: list)
                       ],
@@ -786,7 +788,7 @@ class _MenOrWomenState extends State<MenOrWomen> {
                 color: mainColor,
                 child: Center(
                     child: Text(
-                        '${AppLocalizations.of(context).translate('aboutTheApp')}',
+                        '${AppLocalizations.of(context)!.translate('aboutTheApp')}',
                         style: TextStyle(color: Colors.white))),
               ),
             ],
@@ -795,14 +797,14 @@ class _MenOrWomenState extends State<MenOrWomen> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Html(
-                data: "${appInfo.aboutApp}",
+                data: "${appInfo!.aboutApp}",
               ),
             ),
           ),
           actions: <Widget>[
             Center(
               child: FlatButton(
-                child: Text('${AppLocalizations.of(context).translate('back')}',
+                child: Text('${AppLocalizations.of(context)!.translate('back')}',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -818,9 +820,9 @@ class _MenOrWomenState extends State<MenOrWomen> {
   Widget changeLangPopUp() {
     var appLanguage = Provider.of<AppLanguage>(context);
     return CupertinoActionSheet(
-      title: new Text('${AppLocalizations.of(context).translate('language')}'),
+      title: new Text('${AppLocalizations.of(context)!.translate('language')}'),
       message: new Text(
-          '${AppLocalizations.of(context).translate('changeLanguage')}'),
+          '${AppLocalizations.of(context)!.translate('changeLanguage')}'),
       actions: <Widget>[
         CupertinoActionSheetAction(
           child: new Text('English'),

@@ -5,7 +5,7 @@ class RegistrationService{
   final String url = "https://fluffyandtasty.com/api/";
   final String registrationEndPoint="register";
 
-  Future registrationService({String name, String email, String phone,String password,String gender, String address, String birthdayDate,double lat,double long}) async{
+  Future registrationService({String? name, String? email, String? phone,String? password,String? gender, String? address, String? birthdayDate,double? lat,double? long}) async{
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     FormData formData = FormData.fromMap({

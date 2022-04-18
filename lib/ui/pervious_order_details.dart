@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 
 class PreviousOrderDetails extends StatefulWidget {
 
-  List<ProductsModel> products;
-  String totalPrice;
+  List<ProductsModel>? products;
+  String? totalPrice;
 
 
   PreviousOrderDetails(this.products, this.totalPrice);
@@ -22,7 +22,7 @@ class _PreviousOrderDetailsState extends State<PreviousOrderDetails> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mainColor,
-        title: Text("${AppLocalizations.of(context).translate('myProducts')}",style: TextStyle(color: Colors.black),),
+        title: Text("${AppLocalizations.of(context)!.translate('myProducts')}",style: TextStyle(color: Colors.black),),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(
@@ -39,13 +39,13 @@ class _PreviousOrderDetailsState extends State<PreviousOrderDetails> {
               primary: false,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: widget.products.length,
+              itemCount: widget.products!.length,
               itemBuilder: (context,index){
                 return MyProductCard(
-                  titleAr: widget.products[index].titleAr,
-                  titleEn: widget.products[index].titleEn,
-                  price: widget.products[index].price,
-                  photo: widget.products[index].photo,
+                  titleAr: widget.products![index].titleAr,
+                  titleEn: widget.products![index].titleEn,
+                  price: widget.products![index].price,
+                  photo: widget.products![index].photo,
                 );
               },
             ),
@@ -59,7 +59,7 @@ class _PreviousOrderDetailsState extends State<PreviousOrderDetails> {
               ),
               alignment: Alignment.center,
               child: Text(
-                "${AppLocalizations.of(context).translate('totalPrice')} : ${widget.totalPrice}",
+                "${AppLocalizations.of(context)!.translate('totalPrice')} : ${widget.totalPrice}",
                 style: TextStyle(color: Colors.white),
               ),
             ),

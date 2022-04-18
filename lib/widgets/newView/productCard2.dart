@@ -4,7 +4,7 @@ import 'package:fbTrade/services/get_products.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard2 extends StatefulWidget {
-  ProductModel product;
+  ProductModel? product;
   ProductCard2({this.product});
   @override
   _ProductCard2State createState() => _ProductCard2State();
@@ -40,7 +40,7 @@ class _ProductCard2State extends State<ProductCard2> {
                         image: DecorationImage(
                           fit: BoxFit.cover,
                           image: NetworkImage(
-                              '${widget.product.images.isEmpty ? "" : widget.product.images.first}'),
+                              '${widget.product!.images!.isEmpty ? "" : widget.product!.images!.first}'),
                         ),
                       ),
                     ),
@@ -54,8 +54,8 @@ class _ProductCard2State extends State<ProductCard2> {
                             child: Text(
                               Localizations.localeOf(context).languageCode ==
                                       "en"
-                                  ? '${widget.product.titleEn}'
-                                  : '${widget.product.titleAr}',
+                                  ? '${widget.product!.titleEn}'
+                                  : '${widget.product!.titleAr}',
                               style: TextStyle(
                                 fontSize: 16.0,
                               ),
@@ -79,13 +79,13 @@ class _ProductCard2State extends State<ProductCard2> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text('${widget.product.price}',
+                                          Text('${widget.product!.price}',
                                               style: TextStyle(fontSize: 20)),
                                           double.parse(widget
-                                                      .product.salePrice) !=
+                                                      .product!.salePrice!) !=
                                                   0
                                               ? Text(
-                                                  '${widget.product.salePrice}',
+                                                  '${widget.product!.salePrice}',
                                                   style: TextStyle(
                                                       fontSize: 17,
                                                       color: Colors.red,
@@ -101,7 +101,7 @@ class _ProductCard2State extends State<ProductCard2> {
                               ),
                               IconButton(
                                   onPressed: () {
-                                    GetProducts().addToFav(widget.product.id);
+                                    GetProducts().addToFav(widget.product!.id);
                                   },
                                   icon: Icon(
                                     Icons.favorite,
@@ -116,7 +116,7 @@ class _ProductCard2State extends State<ProductCard2> {
                 ],
               ),
             ),
-            double.parse(widget.product.salePrice) == 0
+            double.parse(widget.product!.salePrice!) == 0
                 ? Container()
                 : Positioned(
                     top: 0,

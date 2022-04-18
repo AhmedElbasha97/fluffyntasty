@@ -5,7 +5,7 @@ class LoginService {
   final String url = "https://fluffyandtasty.com/api/";
   final String loginEndPoint = "login";
 
-  loginService({String phone, String password}) async {
+  loginService({String? phone, String? password}) async {
     Response response;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {

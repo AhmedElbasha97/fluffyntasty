@@ -21,26 +21,26 @@ class AppInfo {
       this.support,
       this.logo});
 
-  String siteName;
-  String welcome;
-  String aboutApp;
-  String terms;
-  String mobile;
-  String email;
-  String address;
-  String whatsapp;
-  String facebook;
-  String twitter;
-  String youtube;
-  String instagram;
-  String url;
-  String theme;
-  String themeId;
-  List<Theme> themes;
-  String color;
-  String secondColor;
-  String logo;
-  String support;
+  String? siteName;
+  String? welcome;
+  String? aboutApp;
+  String? terms;
+  String? mobile;
+  String? email;
+  String? address;
+  String? whatsapp;
+  String? facebook;
+  String? twitter;
+  String? youtube;
+  String? instagram;
+  String? url;
+  String? theme;
+  String? themeId;
+  List<Theme>? themes;
+  String? color;
+  String? secondColor;
+  String? logo;
+  String? support;
 
   factory AppInfo.fromJson(Map<String, dynamic> json) => AppInfo(
       siteName: json["site_name"] == null ? null : json["site_name"],
@@ -73,8 +73,8 @@ class Theme {
     this.title,
   });
 
-  String themeId;
-  String title;
+  String? themeId;
+  String? title;
 
   factory Theme.fromJson(Map<String, dynamic> json) => Theme(
         themeId: json["theme_id"] == null ? null : json["theme_id"],

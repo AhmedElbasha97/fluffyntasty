@@ -12,7 +12,7 @@ class MyProductsScreen extends StatefulWidget {
 }
 
 class _MyProductsScreenState extends State<MyProductsScreen> {
-  List<OrdersModel> ordersModelList = List<OrdersModel>();
+   List<OrdersModel> ordersModelList = <OrdersModel>[] ;
   bool isLoading = true;
 
   getMyOrders() async {
@@ -21,7 +21,7 @@ class _MyProductsScreenState extends State<MyProductsScreen> {
     setState(() {});
   }
 
-  received(String id) async {
+  received(String? id) async {
     isLoading = true;
     setState(() {});
     await GetMyOrders().orderRecieved(id: id);
@@ -40,7 +40,7 @@ class _MyProductsScreenState extends State<MyProductsScreen> {
       appBar: AppBar(
         backgroundColor: mainColor,
         title: Text(
-          "${AppLocalizations.of(context).translate('myProducts')}",
+          "${AppLocalizations.of(context)!.translate('myProducts')}",
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,

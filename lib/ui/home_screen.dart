@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
@@ -20,7 +22,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'logIn_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  final String id;
+  final String? id;
   HomeScreen({this.id});
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -34,19 +36,19 @@ class _HomeScreenState extends State<HomeScreen> {
   int apiPage = 1;
   int totalProductsInCart = 0;
 
-  List imgList;
-  List child;
-  List photoSliderList;
+  late List imgList;
+  List? child;
+  List? photoSliderList;
   List<CategoryModel> categoryModelList = [];
   List<ProductModel> productModelList = [];
   List<String> cart = [];
-  Position position;
+  late Position position;
 
-  String name;
-  String token;
-  String whatsappUrl;
+  String? name;
+  String? token;
+  String? whatsappUrl;
 
-  ScrollController _loadMoreDataController;
+  ScrollController? _loadMoreDataController;
   bool isLocationActive = false;
   FocusNode searchFocusNode = FocusNode();
   TextEditingController searchController = TextEditingController();
@@ -66,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   getLocation() async {
-    position = await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     await getCategoriesByLocation(position.latitude, position.longitude);
   }
 
@@ -75,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {});
     productModelList.clear();
     productModelList =
-        await GetAllProducts().getProductsbyCategory(apiPage, token, widget.id);
+        await (GetAllProducts().getProductsbyCategory(apiPage, token, widget.id) as FutureOr<List<ProductModel>>);
     print('******************************************');
     print(token);
     print('---');
@@ -98,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
       apiPage++;
       print(apiPage);
       List<ProductModel> productModelList = [];
-      productModelList = await GetAllProducts().getAllProducts(apiPage, token);
+      productModelList = await (GetAllProducts().getAllProducts(apiPage, token!) as FutureOr<List<ProductModel>>);
       if (productModelList.isNotEmpty) {
         this.productModelList.addAll(productModelList);
       } else
@@ -118,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future getUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     name = prefs.getString('name') ??
-        "${AppLocalizations.of(context).translate('newUser')}";
+        "${AppLocalizations.of(context)!.translate('newUser')}";
     token = prefs.getString('token') ?? "";
     return prefs;
   }
@@ -195,17 +197,17 @@ class _HomeScreenState extends State<HomeScreen> {
     getSocialMediaLinks();
     getTotalNumberProductsInCart();
     _loadMoreDataController = new ScrollController();
-    _loadMoreDataController.addListener(() async {
-      if (_loadMoreDataController.position.pixels ==
-          _loadMoreDataController.position.maxScrollExtent) {
+    _loadMoreDataController!.addListener(() async {
+      if (_loadMoreDataController!.position.pixels ==
+          _loadMoreDataController!.position.maxScrollExtent) {
         getMoreData();
       }
     });
     photoSlider();
   }
 
-  List<T> map<T>(List list, Function handler) {
-    List<T> result = [];
+  List<T?> map<T>(List list, Function handler) {
+    List<T?> result = [];
     for (var i = 0; i < list.length; i++) {
       result.add(handler(i, list[i]));
     }
@@ -254,7 +256,7 @@ class _HomeScreenState extends State<HomeScreen> {
         automaticallyImplyLeading: true,
         backgroundColor: mainColor,
         iconTheme: new IconThemeData(color: Colors.white),
-        title: appInfo.logo == null || appInfo.logo == ""
+        title: appInfo!.logo == null || appInfo!.logo == ""
             ? Image.asset(
                 "assets/icon/appBarLogo.png",
                 scale: 30,
@@ -264,7 +266,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 50,
                 width: 50,
                 child: CachedNetworkImage(
-                  imageUrl: "${appInfo.logo}",
+                  imageUrl: "${appInfo!.logo}",
                   fit: BoxFit.scaleDown,
                 ),
               ),
@@ -288,7 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 children: <Widget>[
                   CarouselSlider(
-                    items: child,
+                    items: child as List<Widget>?,
                     options: CarouselOptions(
                       autoPlay: true,
                       enlargeCenterPage: true,
@@ -317,12 +319,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   : Color(0xFFD8D8D8)),
                         );
                       },
-                    ),
+                    ) as List<Widget>,
                   ),
                   productModelList.isEmpty
                       ? Center(
                           child: Text(
-                              "${AppLocalizations.of(context).translate('noProducts')}"),
+                              "${AppLocalizations.of(context)!.translate('noProducts')}"),
                         )
                       : ListView.builder(
                           primary: false,
@@ -361,9 +363,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   }
                                 },
                                 imgList: productModelList[index].images,
-                                image: productModelList[index].images.isEmpty
+                                image: productModelList[index].images!.isEmpty
                                     ? ""
-                                    : productModelList[index].images.first,
+                                    : productModelList[index].images!.first,
                               ),
                             );
                           },

@@ -6,10 +6,10 @@ class NotificationModel {
     this.created,
   });
 
-  String notificationId;
-  String title;
-  String message;
-  DateTime created;
+  String? notificationId;
+  String? title;
+  String? message;
+  DateTime? created;
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) =>
       NotificationModel(

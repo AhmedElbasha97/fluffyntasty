@@ -6,14 +6,14 @@ import 'package:flutter/widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeCard extends StatefulWidget {
-  String title;
-  String image;
-  String facebookUrl;
-  String whatsappUrl;
-  String instagramUrl;
-  String snapChatUrl;
-  String twitterUrl;
-  List<Sub> subCategory;
+  String? title;
+  String? image;
+  String? facebookUrl;
+  String? whatsappUrl;
+  String? instagramUrl;
+  String? snapChatUrl;
+  String? twitterUrl;
+  List<Sub>? subCategory;
 
   HomeCard({this.image,this.title,this.subCategory,this.facebookUrl,this.snapChatUrl,this.whatsappUrl,this.twitterUrl,this.instagramUrl});
 
@@ -52,7 +52,7 @@ class ExpandableContainer extends StatelessWidget {
   final Widget child;
 
   ExpandableContainer({
-    @required this.child,
+    required this.child,
     this.collapsedHeight = 0.0,
     this.expandedHeight = 100.0,
     this.expanded = true,

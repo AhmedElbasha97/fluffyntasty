@@ -8,9 +8,9 @@ class AppInfoService {
   final String info = "settings";
   final String notifyLink = "notifications/user/";
 
-  Future<AppInfo> getAppInfo() async {
+  Future<AppInfo?> getAppInfo() async {
     Response response;
-    AppInfo infoData;
+    AppInfo? infoData;
     try {
       response = await Dio().get(
         '$url$info',

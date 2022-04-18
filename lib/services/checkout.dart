@@ -7,23 +7,23 @@ class Checkout {
   final String creditData = "credit";
 
   checkout(
-      {String token,
-      String name,
-      String mobile,
-      String email,
-      String address,
-      String birthDate,
-      String streetNumber,
-      String lat,
-      String long,
-      String buildingNumber,
-      String discretNumber,
-      String selectedShift,
-      String paymentType,
-      String creditId,
-      String notes,
-      int totalPrice,
-      int isSale
+      {String? token,
+      String? name,
+      String? mobile,
+      String? email,
+      String? address,
+      String? birthDate,
+      String? streetNumber,
+      String? lat,
+      String? long,
+      String? buildingNumber,
+      String? discretNumber,
+      String? selectedShift,
+      String? paymentType,
+      String? creditId,
+      String? notes,
+      int? totalPrice,
+      int? isSale
       }) async {
     Response response;
     try {
@@ -50,12 +50,12 @@ class Checkout {
           options: Options(headers: {"token": "$token"}));
       print(response.data);
     } on DioError catch (e) {
-      print('error in checkout => ${e.response.data}');
+      print('error in checkout => ${e.response!.data}');
     }
   }
 
-  Future<CreditData> getCreditData(
-      {String token, String id, String categoryId}) async {
+  Future<CreditData?> getCreditData(
+      {String? token, String? id, String? categoryId}) async {
     Response response;
     CreditData crData;
     try {
@@ -66,7 +66,7 @@ class Checkout {
       print(response.data);
       return crData;
     } on DioError catch (e) {
-      print('error in checkout => ${e.response.data}');
+      print('error in checkout => ${e.response!.data}');
     }
   }
 }

@@ -32,7 +32,7 @@ class _PolicyScreenState extends State<PolicyScreen> {
         iconTheme: new IconThemeData(color: Colors.white),
         backgroundColor: mainColor,
         title: Text(
-          "${AppLocalizations.of(context).translate('terms')}",
+          "${AppLocalizations.of(context)!.translate('terms')}",
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,

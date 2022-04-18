@@ -9,7 +9,7 @@ class FavorateProductScreen extends StatefulWidget {
 }
 
 class _FavorateProductScreenState extends State<FavorateProductScreen> {
-  List<FavProduct> list = [];
+  List<FavProduct>? list = [];
   bool isLoading = true;
 
   @override
@@ -34,18 +34,18 @@ class _FavorateProductScreenState extends State<FavorateProductScreen> {
       body: isLoading
           ? Center(child: CircularProgressIndicator())
           : ListView.builder(
-              itemCount: list.length,
+              itemCount: list!.length,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListTile(
                     title: Text(
                         Localizations.localeOf(context).languageCode == "en"
-                            ? "${list[index].titleEn}"
-                            : "${list[index].titleAr}"),
-                    trailing: list[index].photos.isEmpty
+                            ? "${list![index].titleEn}"
+                            : "${list![index].titleAr}"),
+                    trailing: list![index].photos!.isEmpty
                         ? Icon(Icons.shop)
-                        : Image.network("${list[index].photos.first}"),
+                        : Image.network("${list![index].photos!.first}"),
                   ),
                 );
               },

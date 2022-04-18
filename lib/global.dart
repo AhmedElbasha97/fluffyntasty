@@ -5,10 +5,10 @@ import 'package:fbTrade/ui/logIn_screen.dart';
 import 'package:fbTrade/ui/signUp_screen.dart';
 import 'package:flutter/material.dart';
 
-appinfo.AppInfo appInfo;
+appinfo.AppInfo? appInfo;
 Color mainColor = Color(0xFFFa44088);
 Color secondColor = Colors.pink;
-appinfo.Theme selectedThme;
+appinfo.Theme? selectedThme;
 
 getAppInfo() async {
   appInfo = await AppInfoService().getAppInfo();
@@ -18,8 +18,8 @@ getAppInfo() async {
 }
 
 updateMainColor() {
-  mainColor = appInfo.color.toColor();
-  secondColor = appInfo.secondColor.toColor();
+  mainColor = appInfo!.color!.toColor();
+  secondColor = appInfo!.secondColor!.toColor();
 }
 
 extension ColorExtension on String {
@@ -57,7 +57,7 @@ Future<void> showMysigninDialog(context) async {
                             child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
-                              "${AppLocalizations.of(context).translate('alret')}",
+                              "${AppLocalizations.of(context)!.translate('alret')}",
                               style: TextStyle(color: Colors.white)),
                         ))),
                     Align(
@@ -77,7 +77,7 @@ Future<void> showMysigninDialog(context) async {
                 ),
                 Center(
                     child: Text(
-                  "${AppLocalizations.of(context).translate('signinMsg')}",
+                  "${AppLocalizations.of(context)!.translate('signinMsg')}",
                   textAlign: TextAlign.center,
                 )),
                 SizedBox(
@@ -89,7 +89,7 @@ Future<void> showMysigninDialog(context) async {
                     FlatButton(
                       color: mainColor,
                       child: Text(
-                        "${AppLocalizations.of(context).translate('login')}",
+                        "${AppLocalizations.of(context)!.translate('login')}",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, color: Colors.white),
                       ),
@@ -104,7 +104,7 @@ Future<void> showMysigninDialog(context) async {
                     FlatButton(
                       color: mainColor,
                       child: Text(
-                          "${AppLocalizations.of(context).translate('newUser')}",
+                          "${AppLocalizations.of(context)!.translate('newUser')}",
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.white)),

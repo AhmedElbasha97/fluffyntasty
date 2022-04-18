@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-
 import 'I10n/AppLanguage.dart';
 import 'I10n/app_localizations.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,8 +19,9 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
-  final AppLanguage appLanguage;
+  final AppLanguage? appLanguage;
   MyApp({this.appLanguage});
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -28,8 +29,9 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return ChangeNotifierProvider(
-        create: (_) => appLanguage,
-        child: Consumer<AppLanguage>(
+        create: (context) => appLanguage,
+
+        child:  Consumer<AppLanguage>(
           builder: (context, model, child) {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
@@ -56,6 +58,6 @@ class MyApp extends StatelessWidget {
             );
           },
         ));
-  
+
   }
 }

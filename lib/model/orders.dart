@@ -1,12 +1,12 @@
 class OrdersModel{
-  String id;
-  String orderNumber;
-  String status;
-  String date;
-  String photo;
-  String name;
-  String totalPrice;
-  List<ProductsModel> products;
+  String? id;
+  String? orderNumber;
+  String? status;
+  String? date;
+  String? photo;
+  String? name;
+  String? totalPrice;
+  List<ProductsModel>? products;
 
   OrdersModel({this.status, this.date, this.photo, this.name, this.id, this.orderNumber, this.products, this.totalPrice});
 
@@ -29,11 +29,11 @@ class OrdersModel{
 }
 
 class ProductsModel{
-  String id;
-  String price;
-  String titleAr;
-  String titleEn;
-  String photo;
+  String? id;
+  String? price;
+  String? titleAr;
+  String? titleEn;
+  String? photo;
 
   ProductsModel({this.id, this.price, this.titleAr, this.titleEn, this.photo});
 

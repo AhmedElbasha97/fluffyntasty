@@ -7,18 +7,21 @@ import 'package:fbTrade/services/checkout.dart';
 import 'package:fbTrade/splash_screen.dart';
 import 'package:fbTrade/ui/terms_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_maps_place_picker/google_maps_place_picker.dart';
+// import 'package:google_maps_place_picker/google_maps_place_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'map_screen.dart';
+
 class PaymentScreen extends StatefulWidget {
-  List<String> cart;
-  int totalPrice;
-  int isSale;
-  List<WrokHours> shifts;
+  List<String?>? cart;
+  int? totalPrice;
+  int? isSale;
+  List<WrokHours>? shifts;
   // CreditData creditData;
-  String name;
+  String? name;
 
   PaymentScreen(
       {this.cart,
@@ -33,7 +36,7 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  String token;
+  String? token;
   bool _agree1 = false;
   bool _agree2 = false;
   bool _agree3 = false;
@@ -42,7 +45,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   DateTime dateTime = DateTime.now();
   String birthDate =
       "${DateTime.now().day} / ${DateTime.now().month} / ${DateTime.now().year} ";
-  PickResult selectedPlace;
+  Position? selectedPlace;
   TextEditingController nameController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -52,21 +55,28 @@ class _PaymentScreenState extends State<PaymentScreen> {
   TextEditingController streetNumberController = TextEditingController();
   TextEditingController notesController = TextEditingController();
 
-  String lat;
-  String long;
+  String? lat;
+  String? long;
   int selcetedIndex = 0;
-  Position position;
+  late LatLng position;
   String payment = "cash";
 
-  getLocation() async {
-    try {
-      position =
-          await getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    } catch (e) {
-      position = Position(latitude: 25.3548, longitude: 51.1839);
-    }
+  void _navigateAndDisplaySelection(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MapScreen()),
+    );
+    selectedPlace =result;
+    List<Placemark> i =
+    await placemarkFromCoordinates(result.latitude, result.longitude);
+    Placemark placeMark = i.first;
+    addressController.text="${placeMark.street},${placeMark.subAdministrativeArea},${placeMark.subLocality},${placeMark.country}";
+    ScaffoldMessenger.of(context)
+      ..removeCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text("${placeMark.street},${placeMark.subAdministrativeArea},${placeMark.subLocality},${placeMark.country}")));
   }
-
   Future<void> _showMyDialog() async {
     return showDialog<void>(
       context: context,
@@ -105,22 +115,22 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   checkout() async {
     await Checkout().checkout(
-      name: nameController.text ?? "",
-      mobile: mobileController.text ?? "",
-      address: addressController.text ?? "",
-      email: emailController.text ?? "",
+      name: nameController.text,
+      mobile: mobileController.text,
+      address: addressController.text,
+      email: emailController.text,
       birthDate: birthDate,
       totalPrice: widget.totalPrice,
       isSale: widget.isSale,
       token: token,
-      long: selectedPlace == null ? long : selectedPlace.geometry.location.lng,
-      lat: selectedPlace == null ? lat : selectedPlace.geometry.location.lat,
+      long: selectedPlace == null ? long : selectedPlace!.longitude as String?,
+      lat: selectedPlace == null ? lat : selectedPlace!.latitude as String?,
       streetNumber: streetNumberController.text,
       buildingNumber: buildingNumberController.text,
       discretNumber: addressNumberController.text,
       // selectedShift: widget.shifts[selcetedIndex].id,
       paymentType: payment,
-      notes: notesController.text ?? "",
+      notes: notesController.text,
       // creditId: widget.creditData.data[0].codes
     );
     isPaying = false;
@@ -131,7 +141,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   getUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('token');
-    await getLocation();
+
     Response response = await Dio().post("https://fluffyandtasty.com/api/info",
         options: Options(headers: {"token": "$token"}));
     print('**************************');
@@ -154,7 +164,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   void initState() {
     super.initState();
     print('******************************');
-    widget.cart.forEach((element) {
+    widget.cart!.forEach((element) {
       print(element);
     });
     print('******************************');
@@ -167,7 +177,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       appBar: AppBar(
         backgroundColor: mainColor,
         title: Text(
-          "${AppLocalizations.of(context).translate('buyConfirm')}",
+          "${AppLocalizations.of(context)!.translate('buyConfirm')}",
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -214,7 +224,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   BorderRadius.all(Radius.circular(20)),
                               borderSide: BorderSide(color: Colors.blue)),
                           hintText:
-                              "${AppLocalizations.of(context).translate('name')}"),
+                              "${AppLocalizations.of(context)!.translate('name')}"),
                     ),
                     Padding(
                         padding: EdgeInsets.only(
@@ -242,7 +252,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   BorderRadius.all(Radius.circular(20)),
                               borderSide: BorderSide(color: Colors.blue)),
                           hintText:
-                              "${AppLocalizations.of(context).translate('phoneNumber')}"),
+                              "${AppLocalizations.of(context)!.translate('phoneNumber')}"),
                     ),
                     Padding(
                         padding: EdgeInsets.only(
@@ -270,7 +280,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   BorderRadius.all(Radius.circular(20)),
                               borderSide: BorderSide(color: Colors.blue)),
                           hintText:
-                              "${AppLocalizations.of(context).translate('email')}"),
+                              "${AppLocalizations.of(context)!.translate('email')}"),
                     ),
                     Padding(
                         padding: EdgeInsets.only(
@@ -278,30 +288,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     RaisedButton(
                       child: Text("select address"),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return PlacePicker(
-                                apiKey:
-                                    "AIzaSyCCz1qSCW7Q8fiV8cbhro0OqtW-9Z-U-CM",
-                                initialPosition: LatLng(
-                                    position.latitude, position.longitude),
-                                useCurrentLocation: true,
-                                selectInitialPosition: true,
-                                onPlacePicked: (result) {
-                                  try {
-                                    selectedPlace = result;
-                                    addressController.text =
-                                        selectedPlace.formattedAddress;
-                                    Navigator.of(context).pop();
-                                    setState(() {});
-                                  } catch (e) {}
-                                },
-                              );
-                            },
-                          ),
-                        );
+                        _navigateAndDisplaySelection(context);
                       },
                     ),
                     Container(
@@ -427,7 +414,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                       borderSide:
                                           BorderSide(color: Colors.blue)),
                                   hintText:
-                                      "${AppLocalizations.of(context).translate('notes')}"),
+                                      "${AppLocalizations.of(context)!.translate('notes')}"),
                             ),
                           ),
                         ],
@@ -445,7 +432,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       ),
                       alignment: Alignment.center,
                       child: Text(
-                        "${AppLocalizations.of(context).translate('totalPrice')} : ${widget.totalPrice}",
+                        "${AppLocalizations.of(context)!.translate('totalPrice')} : ${widget.totalPrice}",
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -494,7 +481,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               ));
                             },
                             child: Text(
-                              "${AppLocalizations.of(context).translate('termsAgree')}",
+                              "${AppLocalizations.of(context)!.translate('termsAgree')}",
                               style: TextStyle(
                                   color: _agree1 ? Colors.black : Colors.red),
                             ),
@@ -642,7 +629,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               ),
                               alignment: Alignment.center,
                               child: Text(
-                                "${AppLocalizations.of(context).translate('buyConfirm')}",
+                                "${AppLocalizations.of(context)!.translate('buyConfirm')}",
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),

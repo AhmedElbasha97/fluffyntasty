@@ -16,20 +16,20 @@ class FavProduct {
     this.detailsEn,
   });
 
-  String productId;
-  List<String> photos;
-  int inMycart;
-  List<Color> colors;
-  List<dynamic> sizes;
-  String titleAr;
-  String titleEn;
-  String price;
-  String sale;
-  String youtube1;
-  String category;
-  String refcategory;
-  String detailsAr;
-  String detailsEn;
+  String? productId;
+  List<String>? photos;
+  int? inMycart;
+  List<Color>? colors;
+  List<dynamic>? sizes;
+  String? titleAr;
+  String? titleEn;
+  String? price;
+  String? sale;
+  String? youtube1;
+  String? category;
+  String? refcategory;
+  String? detailsAr;
+  String? detailsEn;
 
   factory FavProduct.fromJson(Map<String, dynamic> json) => FavProduct(
         productId: json["product_id"] == null ? null : json["product_id"],
@@ -63,10 +63,10 @@ class Color {
     this.code,
   });
 
-  String colorId;
-  String titlear;
-  String titleen;
-  String code;
+  String? colorId;
+  String? titlear;
+  String? titleen;
+  String? code;
 
   factory Color.fromJson(Map<String, dynamic> json) => Color(
         colorId: json["color_id"] == null ? null : json["color_id"],

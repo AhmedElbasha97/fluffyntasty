@@ -15,7 +15,7 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
-  String welcomeText = "";
+  String? welcomeText = "";
   bool isLoading = true;
 
   getWelcomeTxt() async {
@@ -25,7 +25,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     setState(() {});
   }
 
-  String token;
+  late String token;
   checkToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('token') ?? "";
@@ -64,7 +64,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               width: MediaQuery.of(context).size.width * 0.8,
               alignment: Alignment.topRight,
               child: Text(
-                "${AppLocalizations.of(context).translate('skip')}",
+                "${AppLocalizations.of(context)!.translate('skip')}",
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -73,13 +73,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
               child: Column(
                 children: <Widget>[
-                  appInfo.logo == null || appInfo.logo == ""
+                  appInfo!.logo == null || appInfo!.logo == ""
                       ? Image.asset(
                           "assets/icon/logo.png",
                           scale: 2,
                         )
                       : CachedNetworkImage(
-                          imageUrl: "${appInfo.logo}",
+                          imageUrl: "${appInfo!.logo}",
                           fit: BoxFit.scaleDown,
                         ),
                   Padding(
@@ -114,7 +114,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             border: Border.all(color: Colors.white),
                             color: Colors.white),
                         child: Text(
-                          "${AppLocalizations.of(context).translate('login')}",
+                          "${AppLocalizations.of(context)!.translate('login')}",
                           style: TextStyle(color: Colors.black),
                         ),
                       ),
@@ -132,7 +132,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             border: Border.all(color: Colors.white),
                             color: Colors.white),
                         child: Text(
-                            "${AppLocalizations.of(context).translate('signUp')}",
+                            "${AppLocalizations.of(context)!.translate('signUp')}",
                             style: TextStyle(color: Colors.black)),
                       ),
                     )

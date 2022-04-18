@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fbTrade/global.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fbTrade/I10n/app_localizations.dart';
 import 'package:fbTrade/services/cart_services.dart';
@@ -10,21 +9,21 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class LinearProductCard extends StatefulWidget {
-  String id;
-  Function addItemToCart;
-  Function removeItemFromCart;
-  List imgList;
-  String image;
-  String detailsEn;
-  String detailsAr;
-  bool isAllChecked;
-  String titleAr;
-  String titleEn;
-  String price;
-  String salePrice;
-  String video;
-  int totalAmountInCart;
-  String totalAmount;
+  String? id;
+  Function? addItemToCart;
+  Function? removeItemFromCart;
+  List? imgList;
+  String? image;
+  String? detailsEn;
+  String? detailsAr;
+  bool? isAllChecked;
+  String? titleAr;
+  String? titleEn;
+  String? price;
+  String? salePrice;
+  String? video;
+  int? totalAmountInCart;
+  String? totalAmount;
 
   LinearProductCard(
       {this.id,
@@ -48,15 +47,15 @@ class LinearProductCard extends StatefulWidget {
 }
 
 class _LinearProductCardState extends State<LinearProductCard> {
-  int totalAmount;
-  List child;
+late  int totalAmount;
+  List? child;
   int _current = 0;
-  bool checkBoxValue;
-  YoutubePlayerController _controller;
+  bool? checkBoxValue;
+  YoutubePlayerController? _controller;
   bool isLoadingVideo = false;
 
-  static List<T> map<T>(List list, Function handler) {
-    List<T> result = [];
+  static List<T?> map<T>(List list, Function handler) {
+    List<T?> result = [];
     for (var i = 0; i < list.length; i++) {
       result.add(handler(i, list[i]));
     }
@@ -65,7 +64,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
 
   photoSlider() {
     child = map<Widget>(
-      widget.imgList,
+      widget.imgList!,
       (index, i) {
         return Container(
           margin: EdgeInsets.all(5.0),
@@ -97,7 +96,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
                   alignment: Alignment.topRight,
                   child: IconButton(
                     onPressed: () {
-                      if (widget.video.isNotEmpty) _controller.pause();
+                      if (widget.video!.isNotEmpty) _controller!.pause();
                       Navigator.of(context).pop();
                     },
                     icon: Icon(
@@ -106,9 +105,9 @@ class _LinearProductCardState extends State<LinearProductCard> {
                     ),
                   ),
                 ),
-                child.isNotEmpty
+                child!.isNotEmpty
                     ? CarouselSlider(
-                        items: child,
+                        items: child as List<Widget>?,
                         options: CarouselOptions(
                           autoPlay: true,
                           enlargeCenterPage: true,
@@ -123,19 +122,19 @@ class _LinearProductCardState extends State<LinearProductCard> {
                       )
                     : Container(),
                 Padding(padding: EdgeInsets.only(top: 10)),
-                widget.video.isNotEmpty
+                widget.video!.isNotEmpty
                     ? InkWell(
                         onTap: () {
                           setState(() {
-                            _controller.value.isPlaying
-                                ? _controller.pause()
-                                : _controller.play();
+                            _controller!.value.isPlaying
+                                ? _controller!.pause()
+                                : _controller!.play();
                           });
                         },
                         child: SizedBox(
                           height: 200,
                           child: YoutubePlayer(
-                            controller: _controller,
+                            controller: _controller!,
                             showVideoProgressIndicator: true,
                             aspectRatio: 16 / 9,
                           ),
@@ -192,9 +191,9 @@ class _LinearProductCardState extends State<LinearProductCard> {
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
                 child: CachedNetworkImage(
-                  imageUrl: widget.imgList.isEmpty
-                      ? widget.image
-                      : widget.imgList.first,
+                  imageUrl: widget.imgList!.isEmpty
+                      ? widget.image!
+                      : widget.imgList!.first,
                   fit: BoxFit.cover,
                 ),
               )
@@ -209,7 +208,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
     CartServices().addToCart(widget.id);
   }
 
-  decreaseItemFromCart(int newQuantity) async {
+  decreaseItemFromCart(int? newQuantity) async {
     await CartServices().decreaseFromCart(widget.id, newQuantity);
   }
 
@@ -220,19 +219,19 @@ class _LinearProductCardState extends State<LinearProductCard> {
   @override
   void initState() {
     super.initState();
-    if (widget.video.isNotEmpty)
+    if (widget.video!.isNotEmpty)
       _controller = YoutubePlayerController(
-          initialVideoId: YoutubePlayer.convertUrlToId("${widget.video}"),
+          initialVideoId: YoutubePlayer.convertUrlToId("${widget.video}")!,
           flags: YoutubePlayerFlags(
             autoPlay: true,
           ));
 
-    if (widget.imgList.isNotEmpty) photoSlider();
+    if (widget.imgList!.isNotEmpty) photoSlider();
 
-    if (widget.totalAmount == null || widget.totalAmount.isEmpty) {
-      totalAmount = widget.totalAmountInCart;
+    if (widget.totalAmount == null || widget.totalAmount!.isEmpty) {
+      totalAmount = widget.totalAmountInCart!;
     } else {
-      totalAmount = int.parse(widget.totalAmount);
+      totalAmount = int.parse(widget.totalAmount!);
     }
   }
 
@@ -294,7 +293,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
                                       if (token == "") {
                                         showMysigninDialog(context);
                                       } else {
-                                        widget.addItemToCart();
+                                        widget.addItemToCart!();
                                         addItemToCart();
                                         totalAmount++;
                                         setState(() {});
@@ -313,7 +312,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
                                     children: [
                                       InkWell(
                                         onTap: () {
-                                          widget.addItemToCart();
+                                          widget.addItemToCart!();
                                           addItemToCart();
                                           totalAmount++;
                                           print(widget.totalAmount);
@@ -334,7 +333,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
                                             horizontal: 10, vertical: 5),
                                         color: mainColor,
                                         child: Text(
-                                          "${totalAmount ?? 0}",
+                                          "${totalAmount}",
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white),
@@ -343,7 +342,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
                                       InkWell(
                                         onTap: () {
                                           if (totalAmount > 0) {
-                                            widget.removeItemFromCart();
+                                            widget.removeItemFromCart!();
                                             totalAmount--;
                                             decreaseItemFromCart(totalAmount);
                                             if (totalAmount == 0) {
@@ -375,7 +374,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5)),
                                   border: Border.all(color: Colors.black)),
-                              child: double.parse(widget.salePrice) == 0
+                              child: double.parse(widget.salePrice!) == 0
                                   ? Text(
                                       "${widget.price} .Qr",
                                       textDirection: TextDirection.ltr,
@@ -459,7 +458,7 @@ class _LinearProductCardState extends State<LinearProductCard> {
                                       BorderRadius.all(Radius.circular(5)),
                                   border: Border.all(color: Colors.black)),
                               child: Text(
-                                  "${AppLocalizations.of(context).translate('more')}",
+                                  "${AppLocalizations.of(context)!.translate('more')}",
                                   style: TextStyle(fontSize: 16)),
                             ),
                           ),
@@ -481,8 +480,8 @@ class _LinearProductCardState extends State<LinearProductCard> {
                     border: Border.all(color: Colors.black)),
                 margin: EdgeInsets.only(left: 10),
                 child: CachedNetworkImage(
-                  imageUrl: widget.image.isEmpty
-                      ? "${widget.imgList.first}"
+                  imageUrl: widget.image!.isEmpty
+                      ? "${widget.imgList!.first}"
                       : "${widget.image}",
                   placeholder: (context, url) => SizedBox(
                     width: MediaQuery.of(context).size.width * 0.3,

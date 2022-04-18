@@ -63,7 +63,7 @@ class _LogInScreenState extends State<LogInScreen> {
         appBar: AppBar(
           backgroundColor: mainColor,
           title: Text(
-            "${AppLocalizations.of(context).translate('login')}",
+            "${AppLocalizations.of(context)!.translate('login')}",
             style: TextStyle(color: Colors.white),
           ),
           centerTitle: true,
@@ -87,13 +87,13 @@ class _LogInScreenState extends State<LogInScreen> {
                   Padding(
                       padding: EdgeInsets.only(
                           top: MediaQuery.of(context).padding.top + 100)),
-                  appInfo.logo == null || appInfo.logo == ""
+                  appInfo!.logo == null || appInfo!.logo == ""
                       ? Image.asset(
                           "assets/icon/logo.png",
                           scale: 3,
                         )
                       : CachedNetworkImage(
-                          imageUrl: "${appInfo.logo}",
+                          imageUrl: "${appInfo!.logo}",
                           fit: BoxFit.scaleDown,
                         ),
                   Column(
@@ -124,7 +124,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                       BorderRadius.all(Radius.circular(20)),
                                   borderSide: BorderSide(color: Colors.green)),
                               hintText:
-                                  "${AppLocalizations.of(context).translate('phoneNumber')}"),
+                                  "${AppLocalizations.of(context)!.translate('phoneNumber')}"),
                         ),
                       ),
                       phoneError
@@ -156,7 +156,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                       BorderRadius.all(Radius.circular(20)),
                                   borderSide: BorderSide(color: Colors.green)),
                               hintText:
-                                  "${AppLocalizations.of(context).translate('password')}"),
+                                  "${AppLocalizations.of(context)!.translate('password')}"),
                         ),
                       ),
                       passwordError
@@ -182,7 +182,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                   color: mainColor,
                                 ),
                                 child: Text(
-                                    "${AppLocalizations.of(context).translate('login')}",
+                                    "${AppLocalizations.of(context)!.translate('login')}",
                                     style: TextStyle(color: Colors.white)),
                               ),
                             )

@@ -11,7 +11,7 @@ class AboutAppScreen extends StatefulWidget {
 }
 
 class _AboutAppScreenState extends State<AboutAppScreen> {
-  String term = "";
+  String? term = "";
 
   getTermTxt() async {
     Response response =
@@ -33,7 +33,7 @@ class _AboutAppScreenState extends State<AboutAppScreen> {
         backgroundColor: mainColor,
         iconTheme: new IconThemeData(color: Colors.white),
         title: Text(
-          "${AppLocalizations.of(context).translate('aboutApp')}",
+          "${AppLocalizations.of(context)!.translate('aboutApp')}",
         ),
         centerTitle: true,
       ),

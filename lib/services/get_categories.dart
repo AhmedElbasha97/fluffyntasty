@@ -14,7 +14,7 @@ class GetCategories {
 
   Future<List<CategoryModel>> getCategory(String id) async {
     Response response;
-    List<CategoryModel> categoryModelList = List<CategoryModel>();
+    List<CategoryModel> categoryModelList = <CategoryModel>[];
     try {
       response = await Dio().get('$url$category/$id');
       List data = response.data;
@@ -29,7 +29,7 @@ class GetCategories {
 
   Future<List<MainCategory>> getMainCategory() async {
     Response response;
-    List<MainCategory> categoryModelList = List<MainCategory>();
+    List<MainCategory> categoryModelList = <MainCategory>[];
     try {
       response = await Dio().get('$url$main$category');
       List data = response.data;
@@ -42,7 +42,7 @@ class GetCategories {
     return categoryModelList;
   }
 
-  Future<List<ProductModel>> getSubCategoryProducts(String id, int page) async {
+  Future<List<ProductModel>> getSubCategoryProducts(String? id, int page) async {
     Response response;
     List<ProductModel> productslList = [];
     try {
@@ -60,7 +60,7 @@ class GetCategories {
 
   Future<List<CategoryModel>> searchCategory(String keyword) async {
     Response response;
-    List<CategoryModel> categoryModelList = List<CategoryModel>();
+    List<CategoryModel> categoryModelList = <CategoryModel>[];
     try {
       response = await Dio().get('$url$category?keyword=$keyword');
       List data = response.data;
@@ -74,9 +74,9 @@ class GetCategories {
   }
 
   Future<List<CategoryModel>> getCategoryByLocation(
-      double lat, double long, String id) async {
+      double lat, double long, String? id) async {
     Response response;
-    List<CategoryModel> categoryModelList = List<CategoryModel>();
+    List<CategoryModel> categoryModelList = <CategoryModel>[];
     try {
       response = await Dio().post('$url$category$location',
           data: {"lat": "$lat", "long": "$long", "main_category_id": "$id"});

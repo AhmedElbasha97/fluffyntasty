@@ -12,14 +12,14 @@ class HomeCategory {
     this.picpathEn,
   });
 
-  String mainCategoryId;
-  List<Sub> sub;
-  List<ProductModel> products;
-  List<String> slider;
-  String titlear;
-  String titleen;
-  String picpath;
-  String picpathEn;
+  String? mainCategoryId;
+  List<Sub>? sub;
+  List<ProductModel>? products;
+  List<String>? slider;
+  String? titlear;
+  String? titleen;
+  String? picpath;
+  String? picpathEn;
 
   factory HomeCategory.fromJson(Map<String, dynamic> json) => HomeCategory(
         mainCategoryId:
@@ -49,10 +49,10 @@ class Sub {
     this.picpath,
   });
 
-  String id;
-  String titlear;
-  String titleen;
-  String picpath;
+  String? id;
+  String? titlear;
+  String? titleen;
+  String? picpath;
 
   factory Sub.fromJson(Map<String, dynamic> json) => Sub(
         id: json["id"] == null ? null : json["id"],

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class MyOrderCategoryCard extends StatefulWidget {
-  final String title;
-  final String status;
-  final String date;
-  final String photo;
-  final bool isMyOrder;
-  final Widget extraWidget;
+  final String? title;
+  final String? status;
+  final String? date;
+  final String? photo;
+  final bool? isMyOrder;
+  final Widget? extraWidget;
 
   MyOrderCategoryCard(
       {this.title,
@@ -78,7 +78,7 @@ class _MyOrderCategoryCardState extends State<MyOrderCategoryCard> {
                     Padding(padding: EdgeInsets.only(top: 10)),
                     Center(
                         child:
-                            widget.isMyOrder ? widget.extraWidget : Container())
+                            widget.isMyOrder! ? widget.extraWidget : Container())
                   ],
                 ),
               ),

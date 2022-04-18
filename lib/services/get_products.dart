@@ -10,14 +10,14 @@ class GetProducts {
   final String fav = "myfav";
   final String addFav = "addfav";
   final String search = "search";
-  static List categoryPhotos;
-  static String offerDialogAr;
-  static String offerDialogEn;
+  static List? categoryPhotos;
+  static String? offerDialogAr;
+  static String? offerDialogEn;
 
   Future<List<ProductModel>> getProducts(String categoryId, int page,
       [bool isSubCats = false]) async {
     Response response;
-    List<ProductModel> productModelList = List<ProductModel>();
+    List<ProductModel> productModelList = <ProductModel>[];
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String token = preferences.getString("token") ?? "";
 
@@ -34,7 +34,7 @@ class GetProducts {
         productModelList.add(ProductModel.fromJson(element));
       });
     } on DioError catch (e) {
-      print('error in get products => ${e.response.data}');
+      print('error in get products => ${e.response!.data}');
     }
 
     return productModelList;
@@ -42,7 +42,7 @@ class GetProducts {
 
   Future<List<ProductModel>> searchForProducts(String searchKey) async {
     Response response;
-    List<ProductModel> productModelList = List<ProductModel>();
+    List<ProductModel> productModelList = <ProductModel>[];
     try {
       response = await Dio().post("$url$search", data: {"keyword": searchKey});
       List data = response.data['products'];
@@ -50,7 +50,7 @@ class GetProducts {
         productModelList.add(ProductModel.fromJson(element));
       });
     } on DioError catch (e) {
-      print('error in search products => ${e.response.data}');
+      print('error in search products => ${e.response!.data}');
     }
 
     return productModelList;
@@ -59,7 +59,7 @@ class GetProducts {
   Future<List<ProductModel>> getSubCategoryProducts(
       String categoryId, int page) async {
     Response response;
-    List<ProductModel> productModelList = List<ProductModel>();
+    List<ProductModel> productModelList = <ProductModel>[];
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String token = preferences.getString("token") ?? "";
 
@@ -73,7 +73,7 @@ class GetProducts {
         productModelList.add(ProductModel.fromJson(element));
       });
     } on DioError catch (e) {
-      print('error in get products => ${e.response.data}');
+      print('error in get products => ${e.response!.data}');
     }
 
     return productModelList;
@@ -98,7 +98,7 @@ class GetProducts {
     return FavProducts;
   }
 
-  Future<String> addToFav(String id) async {
+  Future<String?> addToFav(String? id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userId = prefs.getString('id') ?? "";
     var body = FormData.fromMap({"product_id": id, "member_id": userId});

@@ -2,18 +2,18 @@ import 'package:fbTrade/model/productColor.dart';
 import 'package:fbTrade/model/productSize.dart';
 
 class ProductModel {
-  String id;
-  String titleAr;
-  String titleEn;
-  String price;
-  String salePrice;
-  String video;
-  List images;
-  String detailsAr;
-  String detailsEn;
-  int quantity;
-  List<ProductColor> color;
-  List<ProductSize> size;
+  String? id;
+  String? titleAr;
+  String? titleEn;
+  String? price;
+  String? salePrice;
+  String? video;
+  List? images;
+  String? detailsAr;
+  String? detailsEn;
+  int? quantity;
+  List<ProductColor>? color;
+  List<ProductSize>? size;
 
   ProductModel(
       {this.id,

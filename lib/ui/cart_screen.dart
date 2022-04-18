@@ -11,8 +11,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fbTrade/global.dart';
 
 class CartScreen extends StatefulWidget {
-  String id;
-  String name;
+  String? id;
+  String? name;
   CartScreen({this.id, this.name = ""});
 
   @override
@@ -21,15 +21,15 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   bool isLoading = true;
-  String token;
-  int totalPrice;
-  List<CartProductModel> productModelList = List<CartProductModel>();
-  List<String> cart = List<String>();
+  String? token;
+  int? totalPrice;
+   List<CartProductModel> productModelList = <CartProductModel>[] ;
+  List<String?> cart=<String?>[] ;
   // CreditData credit;
 
   getData() async {
     await checkToken();
-    if (token.isNotEmpty) {
+    if (token!.isNotEmpty) {
       await getProducts();
       // await getCredit();
     }
@@ -85,7 +85,7 @@ class _CartScreenState extends State<CartScreen> {
                           child: Padding(
                             padding: EdgeInsets.only(top: 50),
                             child: Text(
-                              "${AppLocalizations.of(context).translate('noProducts')}",
+                              "${AppLocalizations.of(context)!.translate('noProducts')}",
                               style: TextStyle(fontSize: 30),
                             ),
                           ),
@@ -111,38 +111,38 @@ class _CartScreenState extends State<CartScreen> {
                                 salePrice: productModelList[index].salePrice,
                                 video: "",
                                 addItemToCart: () {
-                                  totalPrice = totalPrice +
+                                  totalPrice = totalPrice! +
                                       double.parse(
-                                              productModelList[index].price)
+                                              productModelList[index].price!)
                                           .toInt();
                                   setState(() {});
                                   Future.delayed(
                                       Duration(
                                         microseconds: 500,
                                       ), () async {
-                                    if (token.isNotEmpty) await getProducts();
+                                    if (token!.isNotEmpty) await getProducts();
                                     print(productModelList.length);
                                     setState(() {});
                                   });
                                 },
                                 removeItemFromCart: () async {
-                                  totalPrice = totalPrice <= 0
+                                  totalPrice = totalPrice! <= 0
                                       ? 0
-                                      : totalPrice -
+                                      : totalPrice! -
                                           double.parse(
-                                                  productModelList[index].price)
+                                                  productModelList[index].price!)
                                               .toInt();
                                   setState(() {});
                                   Future.delayed(
                                       Duration(
                                         microseconds: 500,
                                       ), () async {
-                                    if (token.isNotEmpty) await getProducts();
+                                    if (token!.isNotEmpty) await getProducts();
                                     print(productModelList.length);
                                     setState(() {});
                                   });
                                 },
-                                imgList: List(),
+                                imgList: List.empty(),
                                 image: productModelList[index].image,
                               ),
                             );
@@ -160,7 +160,7 @@ class _CartScreenState extends State<CartScreen> {
                           ),
                           alignment: Alignment.center,
                           child: Text(
-                            "${"${AppLocalizations.of(context).translate('totalPrice')}"} : $totalPrice",
+                            "${"${AppLocalizations.of(context)!.translate('totalPrice')}"} : $totalPrice",
                             style: TextStyle(color: Colors.white, fontSize: 20),
                           ),
                         ),
@@ -192,7 +192,7 @@ class _CartScreenState extends State<CartScreen> {
                             ),
                             alignment: Alignment.center,
                             child: Text(
-                              "${AppLocalizations.of(context).translate('buy')}",
+                              "${AppLocalizations.of(context)!.translate('buy')}",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20),
                             ),

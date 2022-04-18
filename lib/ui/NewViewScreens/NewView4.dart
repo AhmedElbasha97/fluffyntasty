@@ -8,7 +8,7 @@ import 'package:fbTrade/widgets/newView/productCard2.dart';
 import 'package:flutter/material.dart';
 
 class ScreenViewFour extends StatefulWidget {
-  List<HomeCategory> list = [];
+  List<HomeCategory>? list = [];
   ScreenViewFour({this.list});
   @override
   _ScreenViewFourState createState() => _ScreenViewFourState();
@@ -21,7 +21,7 @@ class _ScreenViewFourState extends State<ScreenViewFour> {
       primary: false,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      itemCount: widget.list.length,
+      itemCount: widget.list!.length,
       itemBuilder: (context, index) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,13 +33,13 @@ class _ScreenViewFourState extends State<ScreenViewFour> {
                 children: [
                   Text(
                     Localizations.localeOf(context).languageCode == "en"
-                        ? "${widget.list[index].titleen}"
-                        : "${widget.list[index].titlear}",
+                        ? "${widget.list![index].titleen}"
+                        : "${widget.list![index].titlear}",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.start,
                   ),
                   Text(
-                    "${"${AppLocalizations.of(context).translate('seeall')}"}",
+                    "${"${AppLocalizations.of(context)!.translate('seeall')}"}",
                     style:
                         TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
                     textAlign: TextAlign.start,
@@ -50,15 +50,15 @@ class _ScreenViewFourState extends State<ScreenViewFour> {
             InkWell(
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => CategoryDetails(widget.list[index], 
+                  builder: (context) => CategoryDetails(widget.list![index], 
                       Localizations.localeOf(context).languageCode),
                 ));
               },
               child: Container(
                 height: (Localizations.localeOf(context).languageCode == "en" &&
-                            widget.list[index].picpathEn.isEmpty) ||
+                            widget.list![index].picpathEn!.isEmpty) ||
                         (Localizations.localeOf(context).languageCode == "ar" &&
-                            widget.list[index].picpath.isEmpty)
+                            widget.list![index].picpath!.isEmpty)
                     ? 10
                     : MediaQuery.of(context).size.height * 0.2,
                 width: MediaQuery.of(context).size.width,
@@ -72,8 +72,8 @@ class _ScreenViewFourState extends State<ScreenViewFour> {
                 ]),
                 child: CachedNetworkImage(
                   imageUrl: Localizations.localeOf(context).languageCode == "en"
-                      ? "${widget.list[index].picpathEn}"
-                      : "${widget.list[index].picpath}",
+                      ? "${widget.list![index].picpathEn}"
+                      : "${widget.list![index].picpath}",
                   height: 200,
                   fit: BoxFit.cover,
                 ),
@@ -86,18 +86,18 @@ class _ScreenViewFourState extends State<ScreenViewFour> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.4,
               child: ListView.builder(
-                itemCount: widget.list[index].products.length,
+                itemCount: widget.list![index].products!.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index2) {
                   return InkWell(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => ProductsDetails(
-                            product: widget.list[index].products[index2]),
+                            product: widget.list![index].products![index2]),
                       ));
                     },
                     child: ProductCard2(
-                      product: widget.list[index].products[index2],
+                      product: widget.list![index].products![index2],
                     ),
                   );
                 },

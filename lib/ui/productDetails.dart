@@ -15,7 +15,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 class ProductsDetails extends StatefulWidget {
-  ProductModel product;
+  ProductModel? product;
   ProductsDetails({this.product});
   @override
   _ProductsDetailsState createState() => _ProductsDetailsState();
@@ -23,16 +23,16 @@ class ProductsDetails extends StatefulWidget {
 
 class _ProductsDetailsState extends State<ProductsDetails> {
   int _current = 0;
-  String selectedColorId;
-  ProductColor selectedcolor;
-  String selectedSizeId;
-  ProductSize selectedsize;
-  String name;
-  String token;
-  YoutubePlayerController _controller;
+  String? selectedColorId;
+  ProductColor? selectedcolor;
+  String? selectedSizeId;
+  ProductSize? selectedsize;
+  String? name;
+  String? token;
+  late YoutubePlayerController _controller;
 
-  List<T> map<T>(List list, Function handler) {
-    List<T> result = [];
+  List<T?> map<T>(List list, Function handler) {
+    List<T?> result = [];
     for (var i = 0; i < list.length; i++) {
       result.add(handler(i, list[i]));
     }
@@ -41,7 +41,7 @@ class _ProductsDetailsState extends State<ProductsDetails> {
 
   addItemToCart() async {
     CartServices()
-        .addToCart(widget.product.id, selectedColorId, selectedSizeId);
+        .addToCart(widget.product!.id, selectedColorId, selectedSizeId);
   }
 
   Future getUserData() async {
@@ -56,10 +56,10 @@ class _ProductsDetailsState extends State<ProductsDetails> {
   void initState() {
     super.initState();
     getUserData();
-    if (widget.product.video.isNotEmpty)
+    if (widget.product!.video!.isNotEmpty)
       _controller = YoutubePlayerController(
           initialVideoId:
-              YoutubePlayer.convertUrlToId("${widget.product.video}"),
+              YoutubePlayer.convertUrlToId("${widget.product!.video}")!,
           flags: YoutubePlayerFlags(
             autoPlay: true,
           ));
@@ -86,10 +86,10 @@ class _ProductsDetailsState extends State<ProductsDetails> {
                 addItemToCart();
                 final snackBar = SnackBar(
                   content: Text(
-                      "${AppLocalizations.of(context).translate('addedToCart')}"),
+                      "${AppLocalizations.of(context)!.translate('addedToCart')}"),
                   action: SnackBarAction(
                     label:
-                        "${AppLocalizations.of(context).translate('gotoCart')}",
+                        "${AppLocalizations.of(context)!.translate('gotoCart')}",
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => CartScreen(),
@@ -113,8 +113,8 @@ class _ProductsDetailsState extends State<ProductsDetails> {
               if (token == null || token == "") {
                 showMysigninDialog(context);
               } else {
-                String response =
-                    await GetProducts().addToFav(widget.product.id);
+                String? response =
+                    await GetProducts().addToFav(widget.product!.id);
                 final snackBar = SnackBar(content: Text('$response'));
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
               }
@@ -132,7 +132,7 @@ class _ProductsDetailsState extends State<ProductsDetails> {
         children: [
           CarouselSlider(
             items: map<Widget>(
-              widget.product.images,
+              widget.product!.images!,
               (index, i) {
                 return Container(
                   margin: EdgeInsets.all(5.0),
@@ -154,7 +154,7 @@ class _ProductsDetailsState extends State<ProductsDetails> {
                   ),
                 );
               },
-            ).toList(),
+            ).toList() as List<Widget>?,
             options: CarouselOptions(
               autoPlay: true,
               enlargeCenterPage: true,
@@ -170,8 +170,8 @@ class _ProductsDetailsState extends State<ProductsDetails> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               Localizations.localeOf(context).languageCode == "en"
-                  ? "${widget.product.titleEn}"
-                  : "${widget.product.titleAr}",
+                  ? "${widget.product!.titleEn}"
+                  : "${widget.product!.titleAr}",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               textAlign: TextAlign.start,
             ),
@@ -181,10 +181,10 @@ class _ProductsDetailsState extends State<ProductsDetails> {
           ),
           Html(
             data: Localizations.localeOf(context).languageCode == "en"
-                ? "${widget.product.detailsEn}"
-                : "${widget.product.detailsAr}",
+                ? "${widget.product!.detailsEn}"
+                : "${widget.product!.detailsAr}",
           ),
-          widget.product.video.isNotEmpty
+          widget.product!.video!.isNotEmpty
               ? InkWell(
                   onTap: () {
                     setState(() {
@@ -201,36 +201,36 @@ class _ProductsDetailsState extends State<ProductsDetails> {
                         aspectRatio: 16 / 9,
                       )))
               : Container(),
-          widget.product.color == null || widget.product.color.isEmpty
+          widget.product!.color == null || widget.product!.color!.isEmpty
               ? Container()
-              : RadioGroup<ProductColor>.builder(
+              : RadioGroup<ProductColor?>.builder(
                   activeColor: mainColor,
                   groupValue: selectedcolor,
                   onChanged: (value) => setState(() {
                     selectedcolor = value;
-                    selectedSizeId = value.colorId;
+                    selectedSizeId = value!.colorId;
                   }),
-                  items: widget.product.color,
+                  items: widget.product!.color!,
                   itemBuilder: (item) => RadioButtonBuilder(
                     Localizations.localeOf(context).languageCode == "en"
-                        ? item.titleen
-                        : item.titlear,
+                        ? item!.titleen!
+                        : item!.titlear!,
                   ),
                 ),
-          widget.product.size == null || widget.product.size.isEmpty
+          widget.product!.size == null || widget.product!.size!.isEmpty
               ? Container()
-              : RadioGroup<ProductSize>.builder(
+              : RadioGroup<ProductSize?>.builder(
                   activeColor: mainColor,
                   groupValue: selectedsize,
                   onChanged: (value) => setState(() {
                     selectedsize = value;
-                    selectedSizeId = value.sizeId;
+                    selectedSizeId = value!.sizeId;
                   }),
-                  items: widget.product.size,
+                  items: widget.product!.size!,
                   itemBuilder: (item) => RadioButtonBuilder(
                     Localizations.localeOf(context).languageCode == "en"
-                        ? item.titleen
-                        : item.titlear,
+                        ? item!.titleen!
+                        : item!.titlear!,
                   ),
                 ),
           SizedBox(

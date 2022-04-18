@@ -4,11 +4,13 @@ import 'package:fbTrade/I10n/app_localizations.dart';
 import 'package:fbTrade/global.dart';
 import 'package:fbTrade/ui/men_or_women.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_place_picker/google_maps_place_picker.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home_screen.dart';
+import 'map_screen.dart';
 
 class EditProfileScreen extends StatefulWidget {
   @override
@@ -16,17 +18,33 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  String token;
-  String userAddress;
+  String? token;
+  String? userAddress;
   DateTime dateTime = DateTime.now();
-  String birthDate = "";
-  PickResult selectedPlace;
+  String? birthDate = "";
+   late LatLng selectedPlace;
   TextEditingController nameController = TextEditingController();
   TextEditingController mobileController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isLoading = true;
 
+  void _navigateAndDisplaySelection(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MapScreen()),
+    );
+    selectedPlace =result;
+    List<Placemark> i =
+    await placemarkFromCoordinates(result.latitude, result.longitude);
+    Placemark placeMark = i.first;
+    userAddress="${placeMark.street},${placeMark.subAdministrativeArea},${placeMark.subLocality},${placeMark.country}";
+    ScaffoldMessenger.of(context)
+      ..removeCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text("${placeMark.street},${placeMark.subAdministrativeArea},${placeMark.subLocality},${placeMark.country}")));
+  }
   getUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString('token');
@@ -75,9 +93,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       prefs.setString("name", nameController.text);
       prefs.setString("phone", mobileController.text);
       prefs.setString("email", emailController.text);
-      prefs.setString("address", userAddress);
+      prefs.setString("address", userAddress!);
       prefs.setString("gender", "male");
-      prefs.setString("birthdayDate", birthDate);
+      prefs.setString("birthdayDate", birthDate!);
 
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => MenOrWomen(),
@@ -100,7 +118,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       appBar: AppBar(
         backgroundColor: mainColor,
         title: Text(
-          "${AppLocalizations.of(context).translate('editProfile')}",
+          "${AppLocalizations.of(context)!.translate('editProfile')}",
           style: TextStyle(color: Colors.blue),
         ),
         centerTitle: true,
@@ -124,12 +142,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   Padding(
                     padding: EdgeInsets.only(
                         top: MediaQuery.of(context).padding.top),
-                    child: appInfo.logo == null || appInfo.logo == ""
+                    child: appInfo!.logo == null || appInfo!.logo == ""
                         ? Image.asset(
                             "assets/icon/logo.png",
                             scale: 7,
                           )
-                        : CachedNetworkImage(imageUrl: "${appInfo.logo}"),
+                        : CachedNetworkImage(imageUrl: "${appInfo!.logo}"),
                   ),
                   Column(
                     children: <Widget>[
@@ -163,7 +181,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     BorderRadius.all(Radius.circular(20)),
                                 borderSide: BorderSide(color: Colors.blue)),
                             hintText:
-                                "${AppLocalizations.of(context).translate('name')}"),
+                                "${AppLocalizations.of(context)!.translate('name')}"),
                       ),
                       Padding(
                           padding: EdgeInsets.only(
@@ -192,7 +210,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     BorderRadius.all(Radius.circular(20)),
                                 borderSide: BorderSide(color: Colors.blue)),
                             hintText:
-                                "${AppLocalizations.of(context).translate('phoneNumber')}"),
+                                "${AppLocalizations.of(context)!.translate('phoneNumber')}"),
                       ),
                       Padding(
                           padding: EdgeInsets.only(
@@ -221,7 +239,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     BorderRadius.all(Radius.circular(20)),
                                 borderSide: BorderSide(color: Colors.blue)),
                             hintText:
-                                "${AppLocalizations.of(context).translate('email')}"),
+                                "${AppLocalizations.of(context)!.translate('email')}"),
                       ),
                       Padding(
                           padding: EdgeInsets.only(
@@ -250,7 +268,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     BorderRadius.all(Radius.circular(20)),
                                 borderSide: BorderSide(color: Colors.blue)),
                             hintText:
-                                "${AppLocalizations.of(context).translate('password')}"),
+                                "${AppLocalizations.of(context)!.translate('password')}"),
                       ),
                       Padding(
                           padding: EdgeInsets.only(
@@ -261,30 +279,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       RaisedButton(
                         child: Text("Selcet Location"),
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return PlacePicker(
-                                  apiKey:
-                                      "AIzaSyCCz1qSCW7Q8fiV8cbhro0OqtW-9Z-U-CM",
-                                  initialPosition:
-                                      LatLng(-33.8567844, 151.213108),
-                                  useCurrentLocation: true,
-                                  selectInitialPosition: true,
-                                  onPlacePicked: (result) {
-                                    try {
-                                      selectedPlace = result;
-                                      userAddress =
-                                          selectedPlace.formattedAddress;
-                                      Navigator.of(context).pop();
-                                      setState(() {});
-                                    } catch (e) {}
-                                  },
-                                );
-                              },
-                            ),
-                          );
+                          _navigateAndDisplaySelection(context);
                         },
                       ),
                       Text("${userAddress == null ? "" : userAddress}"),
@@ -300,7 +295,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                   BorderRadius.all(Radius.circular(20)),
                               color: Colors.green),
                           child: Text(
-                              "${AppLocalizations.of(context).translate('edit')}",
+                              "${AppLocalizations.of(context)!.translate('edit')}",
                               style: TextStyle(color: Colors.white)),
                         ),
                       ),
